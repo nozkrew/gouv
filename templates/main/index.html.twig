@@ -9,7 +9,7 @@
     <form method="get" class="form-inline">
         <select name="dpt_code" class="form-control">
             {% for department in departments %}
-                <option value="{{department.code}}">{{department.name}} ({{department.code}})</option>
+                <option value="{{department.code}}" {% if app.request.get('dpt_code') == department.code %}selected="selected"{%endif%}>{{department.name}} ({{department.code}})</option>
             {% endfor %}
         </select>
         
@@ -29,7 +29,7 @@
              {% for city in cities %}
                 {% if city.price is not null %}
                     <tr>
-                        <td>{{city.name}}</td>
+                        <td>{{city.name}} ({{city.zipCode}})</td>
                         <td>{{(city.price.houseRental * 12 / city.price.houseSale * 100)|round(2)}} %</td>
                         <td>{{(city.price.apartmentRental * 12 / city.price.apartmentSale * 100)|round(2)}} %</td>
                         <td><a href="{{url_datafrance~(city.slug)|replace({' ':'-'})~"-"~city.zipCode}}" target="_blank">Voir</a></td>
@@ -44,8 +44,6 @@
 {% block javascripts %}
     {{parent()}}
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('#table').DataTable();
-        } );
+        
     </script>
 {% endblock %}

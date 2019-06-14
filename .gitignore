@@ -20,7 +20,6 @@
 
 /nbproject/
 
-/assets/
 webpack.config.js
 /node_modules/
 ###> symfony/webpack-encore-bundle ###
