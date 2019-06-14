@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Rentabilité par ville{% endblock %}
 
 {% block body %}
 
@@ -20,7 +20,9 @@
         <thead>
             <tr>
                 <th>Ville</th>
+                <th>Prix Moy. m² Maison</th>
                 <th>Renta Maison</th>
+                <th>Prix Moy. m² Appt</th>
                 <th>Renta Appt</th>
                 <th>Lien Data France</th>
             </tr>
@@ -30,8 +32,20 @@
                 {% if city.price is not null %}
                     <tr>
                         <td>{{city.name}} ({{city.zipCode}})</td>
-                        <td>{{(city.price.houseRental * 12 / city.price.houseSale * 100)|round(2)}} %</td>
-                        <td>{{(city.price.apartmentRental * 12 / city.price.apartmentSale * 100)|round(2)}} %</td>
+                        <td>{{city.price.houseSale}} €</td>
+                        {% if city.price.houseSale != 0 %}
+                            {% set rentaHouse = (city.price.houseRental * 12 / city.price.houseSale * 100)|round(2) %}
+                            <td data-order={{rentaHouse}}>{{rentaHouse}} %</td>
+                        {% else %}
+                            <td data-order="0">N/A</td>
+                        {% endif %}
+                        <td>{{city.price.apartmentSale}} €</td>
+                        {% if city.price.apartmentSale != 0 %}
+                            {% set rentaAppart =  (city.price.apartmentRental * 12 / city.price.apartmentSale * 100)|round(2) %}
+                            <td data-order={{rentaAppart}}>{{rentaAppart}} %</td>
+                        {% else %}
+                            <td data-order="0">N/A</td>
+                        {% endif %}
                         <td><a href="{{url_datafrance~(city.slug)|replace({' ':'-'})~"-"~city.zipCode}}" target="_blank">Voir</a></td>
                     </tr>
                 {% endif %}
