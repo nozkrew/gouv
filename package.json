@@ -5,5 +5,8 @@
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
     "webpack-notifier": "1.6.0"
+  },
+  "dependencies": {
+    "datatables.net-dt": "^1.10.19"
   }
 }

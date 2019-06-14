@@ -6,7 +6,17 @@
 
 <div class="container">
 
-    <table class="table table-striped">
+    <form method="get" class="form-inline">
+        <select name="dpt_code" class="form-control">
+            {% for department in departments %}
+                <option value="{{department.code}}">{{department.name}} ({{department.code}})</option>
+            {% endfor %}
+        </select>
+        
+        <button type="submit" class="btn btn-success">Voir</button> 
+    </form>
+    
+    <table class="table table-striped" id="table">
         <thead>
             <tr>
                 <th>Ville</th>
@@ -29,4 +39,13 @@
         </tbody>
     </table>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#table').DataTable();
+        } );
+    </script>
 {% endblock %}
