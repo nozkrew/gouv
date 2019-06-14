@@ -39,10 +39,8 @@ class Prices
     /**
      * @var \Cities
      *
-     * @ORM\ManyToOne(targetEntity="Cities")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="city", referencedColumnName="id")
-     * })
+     * @ORM\OneToOne(targetEntity="Cities", inversedBy="price")
+     * @ORM\JoinColumn(name="city", referencedColumnName="id")
      */
     private $city;
 

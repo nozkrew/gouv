@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,16 +43,20 @@ class Departments
      * @ORM\Column(name="slug", type="string", length=255, nullable=false)
      */
     private $slug;
-
+    
     /**
-     * @var \Regions
+     * @var string|null
      *
-     * @ORM\ManyToOne(targetEntity="Regions")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="region_code", referencedColumnName="code")
-     * })
+     * @ORM\Column(name="region_code", type="string", length=3)
      */
     private $regionCode;
+    
+
+    public function __construct()
+    {
+        $this->cities = new ArrayCollection();
+    }
+    
 
     public function getId(): ?int
     {
@@ -93,12 +99,12 @@ class Departments
         return $this;
     }
 
-    public function getRegionCode(): ?Regions
+    public function getRegionCode(): ?string
     {
         return $this->regionCode;
     }
 
-    public function setRegionCode(?Regions $regionCode): self
+    public function setRegionCode(string $regionCode): self
     {
         $this->regionCode = $regionCode;
 

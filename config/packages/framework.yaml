@@ -15,3 +15,7 @@ framework:
     #fragments: true
     php_errors:
         log: true
+        
+parameters:
+    url_base: https://datafrance.info/
+    url_second: /immobilier/prix.json?city_code=

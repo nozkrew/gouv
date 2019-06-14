@@ -4,16 +4,31 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Cities;
+use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends AbstractController
 {
     /**
-     * @Route("/main", name="main")
+     * @Route("/", name="main")
      */
-    public function index()
-    {
+    public function index(Request $request)
+    {        
+        if($request->query->get('dpt_code') !== null && $request->query->get('dpt_code') !== ""){
+            $cities = $this->getCitiesRepository()->findBy(array(
+                'departmentCode' => $request->query->get('dpt_code')
+            ));
+        }
+        else{
+            $cities = $this->getCitiesRepository()->findAll();
+        }
+        
         return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
+            'cities' => $cities,
         ]);
+    }
+    
+    private function getCitiesRepository(){
+        return $this->container->get('doctrine')->getRepository(Cities::class);
     }
 }

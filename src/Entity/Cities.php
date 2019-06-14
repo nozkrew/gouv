@@ -64,14 +64,19 @@ class Cities
     private $gpsLng;
 
     /**
-     * @var \Departments
+     * @var string|null
      *
-     * @ORM\ManyToOne(targetEntity="Departments")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="department_code", referencedColumnName="code")
-     * })
+     * @ORM\Column(name="department_code", type="string", length=3)
      */
     private $departmentCode;
+    
+    /**
+     * @var \Prices
+     *
+     * @ORM\OneToOne(targetEntity="Prices", mappedBy="city")
+     */
+    private $price;
+    
 
     public function getId(): ?int
     {
@@ -150,14 +155,32 @@ class Cities
         return $this;
     }
 
-    public function getDepartmentCode(): ?Departments
+    public function getDepartmentCode(): ?string
     {
         return $this->departmentCode;
     }
 
-    public function setDepartmentCode(?Departments $departmentCode): self
+    public function setDepartmentCode(string $departmentCode): self
     {
         $this->departmentCode = $departmentCode;
+
+        return $this;
+    }
+
+    public function getPrice(): ?Prices
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?Prices $price): self
+    {
+        $this->price = $price;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newCity = $price === null ? null : $this;
+        if ($newCity !== $price->getCity()) {
+            $price->setCity($newCity);
+        }
 
         return $this;
     }
