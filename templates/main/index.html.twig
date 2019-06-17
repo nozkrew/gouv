@@ -25,6 +25,7 @@
                 <th>Prix Moy. m² Appt</th>
                 <th>Renta Appt</th>
                 <th>Lien Data France</th>
+                <th>Détails</th>
             </tr>
         </thead>
         <tbody>
@@ -47,6 +48,7 @@
                             <td data-order="0">N/A</td>
                         {% endif %}
                         <td><a href="{{url_datafrance~(city.slug)|replace({' ':'-'})~"-"~city.zipCode}}" target="_blank">Voir</a></td>
+                        <td><a href="{{path("app_main_detailcity", {'city_id':city.id})}}" target="_blank">Détails</a></td>
                     </tr>
                 {% endif %}
             {% endfor %}

@@ -35,6 +35,19 @@ class MainController extends AbstractController
         ]);
     }
     
+    /**
+     * @Route("/{city_id}")
+     */
+    public function detailCityAction($city_id){
+        $city = $this->getCitiesRepository()->find($city_id);
+        
+        return $this->render('main/detail.html.twig', [
+            'city' => $city,
+        ]);
+    }
+    
+    
+    
     private function getCitiesRepository(){
         return $this->container->get('doctrine')->getRepository(Cities::class);
     }
