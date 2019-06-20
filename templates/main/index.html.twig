@@ -24,6 +24,7 @@
                 <th>Renta Maison</th>
                 <th>Prix Moy. m² Appt</th>
                 <th>Renta Appt</th>
+                <th>Population</th>
                 <th>Lien Data France</th>
                 <th>Détails</th>
             </tr>
@@ -44,6 +45,11 @@
                         {% if city.price.apartmentSale != 0 %}
                             {% set rentaAppart =  (city.price.apartmentRental * 12 / city.price.apartmentSale * 100)|round(2) %}
                             <td data-order={{rentaAppart}}>{{rentaAppart}} %</td>
+                        {% else %}
+                            <td data-order="0">N/A</td>
+                        {% endif %}
+                        {% if city.population is not null %}
+                            <td data-order="{{city.population.total}}">{{city.population.total}}</td>
                         {% else %}
                             <td data-order="0">N/A</td>
                         {% endif %}

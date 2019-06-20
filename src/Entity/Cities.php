@@ -77,6 +77,13 @@ class Cities
      */
     private $price;
     
+    /**
+     * @var \Population
+     *
+     * @ORM\OneToOne(targetEntity="Population", mappedBy="city")
+     */
+    private $population;
+    
 
     public function getId(): ?int
     {
@@ -180,6 +187,24 @@ class Cities
         $newCity = $price === null ? null : $this;
         if ($newCity !== $price->getCity()) {
             $price->setCity($newCity);
+        }
+
+        return $this;
+    }
+
+    public function getPopulation(): ?Population
+    {
+        return $this->population;
+    }
+
+    public function setPopulation(?Population $population): self
+    {
+        $this->population = $population;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newCity = $population === null ? null : $this;
+        if ($newCity !== $population->getCity()) {
+            $population->setCity($newCity);
         }
 
         return $this;

@@ -11,6 +11,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use App\Entity\Cities;
 use App\Entity\Prices;
+use App\Entity\Population;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 class RecoverDataCommand extends Command
@@ -53,17 +54,10 @@ class RecoverDataCommand extends Command
         
         $em = $this->container->get('doctrine')->getManager();
         
-        $ch = curl_init();
         foreach($cities as $city){
             $url = $this->container->getParameter("url_base").str_replace(" ", "-", $city->getSlug())."-".$city->getZipCode().$this->container->getParameter("url_second").$city->getInseeCode();
             
-            curl_setopt($ch, CURLOPT_URL, $url); 
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $result = curl_exec($ch);
-
-            $data = json_decode($result,true);
+            $data = $this->curl($url);
             
             $apartSale = null;
             $apartRent = null;
@@ -143,6 +137,25 @@ class RecoverDataCommand extends Command
                 }
             }
             
+            //recupérer la popoulation avec l'url suivante:
+            //https://geo.api.gouv.fr/communes/33063?fields=nom,code,codesPostaux,codeDepartement,codeRegion,population&format=geojson&geometry=centre
+            $urlGeoGouv = $this->container->getParameter("url_api_geo_gouv").$city->getInseeCode().$this->container->getParameter("url_api_geo_gouv_second");
+            
+            $data = $this->curl($urlGeoGouv);
+            if(isset($data['properties']['population'])){
+                //si la ville n'a pas de population en bdd
+                if($city->getPopulation() == null){
+                    $population = new Population();
+                    $population->setCity($city);
+                    $em->persist($population);
+                }
+                else{
+                    $population = $city->getPopulation();
+                }
+                $population->setTotal($data['properties']['population']);
+                
+            }
+            
             $progressBar->advance();
         }
         
@@ -154,6 +167,19 @@ class RecoverDataCommand extends Command
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
         }        
+    }
+    
+    private function curl($url){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url); 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+
+        $data = json_decode($result,true);
+        
+        return $data;
     }
     
     private function getCitiesRepository(){
