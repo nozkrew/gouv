@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Cities;
 use App\Entity\Departments;
 use Symfony\Component\HttpFoundation\Request;
+use App\Form\SearchType;
 
 class MainController extends AbstractController
 {
@@ -16,22 +17,24 @@ class MainController extends AbstractController
     public function index(Request $request)
     {        
         
-        $departments = $this->getDepartmentsRepository()->findBy(array(),array(
-            'name' => 'ASC'
-        ));
+        //traiter le formulaire ici
         
-        if($request->query->get('dpt_code') !== null && $request->query->get('dpt_code') !== ""){
+        if($request->query->get('dpt') !== null && $request->query->get('dpt') !== ""){
             $cities = $this->getCitiesRepository()->findBy(array(
-                'departmentCode' => $request->query->get('dpt_code')
+                'departmentCode' => $request->query->get('dpt')
             ));
         }
         else{
             $cities = $this->getCitiesRepository()->findAll();
         }
         
+        $form = $this->createForm(SearchType::class, null, array(
+            'method' => 'GET'
+        ));
+        
         return $this->render('main/index.html.twig', [
-            'departments' => $departments,
             'cities' => $cities,
+            'form' => $form->createView()
         ]);
     }
     

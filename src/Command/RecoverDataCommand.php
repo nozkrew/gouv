@@ -13,6 +13,7 @@ use App\Entity\Cities;
 use App\Entity\Prices;
 use App\Entity\Population;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Goutte\Client;
 
 class RecoverDataCommand extends Command
 {    
@@ -54,87 +55,32 @@ class RecoverDataCommand extends Command
         
         $em = $this->container->get('doctrine')->getManager();
         
+        $client = new Client();
+        
         foreach($cities as $city){
-            $url = $this->container->getParameter("url_base").str_replace(" ", "-", $city->getSlug())."-".$city->getZipCode().$this->container->getParameter("url_second").$city->getInseeCode();
+    
             
-            $data = $this->curl($url);
-            
-            $apartSale = null;
-            $apartRent = null;
-            $houseSale = null;
-            $houseRent = null;
-            
-            //vente maison
-            if(isset($data['data'][1])){
-                $houseSale = $data['data'][1][4];
-                //retire le signe euros
-                $houseSale = str_replace(chr(0xE2).chr(0x82).chr(0xAC),"",$houseSale);
-                //retir les espace
-                $houseSale = str_replace(" ", "", $houseSale);
-                //converti en int
-                $houseSale = (int) $houseSale;
-            }
-            
-            //vente appartement
-            if(isset($data['data'][2])){
-                $apartSale = $data['data'][2][4];
-                //retire le signe euros
-                $apartSale = str_replace(chr(0xE2).chr(0x82).chr(0xAC),"",$apartSale);
-                //retir les espace
-                $apartSale = str_replace(" ", "", $apartSale);
-                //converti en int
-                $apartSale = (int) $apartSale;
-            }
-            
-            //location maison
-            if(isset($data['data'][3])){
-                $houseRent = $data['data'][3][4];
-                //retire le signe €
-                $houseRent = str_replace(chr(0xE2).chr(0x82).chr(0xAC),"",$houseRent);
-                // supprime les espaces 
-                $houseRent = str_replace(" ", "", $houseRent);
-                //supprimer le /
-                $houseRent = str_replace("/", "", $houseRent);
-                //Supprime le "mois"
-                $houseRent = str_replace("mois", "", $houseRent);
-                //passage en int
-                $houseRent = (int) $houseRent;
-            }
-            
-            //location appartement
-            if(isset($data['data'][4])){
-                $apartRent = $data['data'][4][4];
-                //retire le signe €
-                $apartRent = str_replace(chr(0xE2).chr(0x82).chr(0xAC),"",$apartRent);
-                // supprime les espaces 
-                $apartRent = str_replace(" ", "", $apartRent);
-                //supprimer le /
-                $apartRent = str_replace("/", "", $apartRent);
-                //Supprime le "mois"
-                $apartRent = str_replace("mois", "", $apartRent);
-                //passage en int
-                $apartRent = (int) $apartRent;
-            }
-            
-            //verifie qu'il y est au moins 1 des 4 valeurs non null
-            if($apartSale !== null || $apartRent !== null || $houseSale !== null || $houseRent !== null){
-                
-                if($city->getPrice() == null){
-                    $price = new Prices();
-                    $price->setCity($city);
+            $priceMeter = null;
+            $crawler = $client->request('GET', 'https://www.rendementlocatif.com/investissement/villes/'.$city->getName().'/'.$city->getZipCode());
+            $crawler->filter('.report_sub_block .value')->each(function ($node) use (&$priceMeter) {
+                if(strpos($node->text(), "/m2") !== false){
+                    $priceMeter = str_replace("€ /m2", "", $node->text());
+                    $priceMeter = str_replace(" ", "", $priceMeter);
                 }
-                else{
-                    $price = $city->getPrice();
-                }
-
-                $price->setApartmentSale($apartSale);
-                $price->setApartmentRental($apartRent);
-                $price->setHouseSale($houseSale);
-                $price->setHouseRental($houseRent);
-
-                if($price->getId() == null){
-                    $em->persist($price);
-                }
+            });
+            
+            if($city->getPrice() == null){
+                $price = new Prices();
+                $price->setCity($city);
+            }
+            else{
+                $price = $city->getPrice();
+            }
+            
+            $price->setPriceMeter($priceMeter);
+            
+            if($price->getId() == null){
+                $em->persist($price);
             }
             
             //recupérer la popoulation avec l'url suivante:

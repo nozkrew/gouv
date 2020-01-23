@@ -5,25 +5,17 @@
 {% block body %}
 
 <div class="container">
-
-    <form method="get" class="form-inline">
-        <select name="dpt_code" class="form-control">
-            {% for department in departments %}
-                <option value="{{department.code}}" {% if app.request.get('dpt_code') == department.code %}selected="selected"{%endif%}>{{department.name}} ({{department.code}})</option>
-            {% endfor %}
-        </select>
-        
-        <button type="submit" class="btn btn-success">Voir</button> 
-    </form>
+    
+    {{form_start(form)}}
+    {{form_rest(form)}}
+    <button type="submit" class="btn btn-primary">Rechercher</button>
+    {{form_end(form)}}
     
     <table class="table table-striped" id="table">
         <thead>
             <tr>
                 <th>Ville</th>
-                <th>Prix Moy. m² Maison</th>
-                <th>Renta Maison</th>
-                <th>Prix Moy. m² Appt</th>
-                <th>Renta Appt</th>
+                <th>Prix m²</th>
                 <th>Population</th>
                 <th>Lien Data France</th>
                 <th>Détails</th>
@@ -34,17 +26,8 @@
                 {% if city.price is not null %}
                     <tr>
                         <td>{{city.name}} ({{city.zipCode}})</td>
-                        <td>{{city.price.houseSale}} €</td>
-                        {% if city.price.houseSale != 0 %}
-                            {% set rentaHouse = (city.price.houseRental * 12 / city.price.houseSale * 100)|round(2) %}
-                            <td data-order={{rentaHouse}}>{{rentaHouse}} %</td>
-                        {% else %}
-                            <td data-order="0">N/A</td>
-                        {% endif %}
-                        <td>{{city.price.apartmentSale}} €</td>
-                        {% if city.price.apartmentSale != 0 %}
-                            {% set rentaAppart =  (city.price.apartmentRental * 12 / city.price.apartmentSale * 100)|round(2) %}
-                            <td data-order={{rentaAppart}}>{{rentaAppart}} %</td>
+                        {% if city.price.priceMeter is not null %}
+                            <td data-order="{{city.price.priceMeter}}">{{city.price.priceMeter}}</td>
                         {% else %}
                             <td data-order="0">N/A</td>
                         {% endif %}
