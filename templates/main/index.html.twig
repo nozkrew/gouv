@@ -23,10 +23,10 @@
         </thead>
         <tbody>
              {% for city in cities %}
-                {% if city.price is not null %}
+                
                     <tr>
                         <td>{{city.name}} ({{city.zipCode}})</td>
-                        {% if city.price.priceMeter is not null %}
+                        {% if city.price is not null and city.price.priceMeter is not null %}
                             <td data-order="{{city.price.priceMeter}}">{{city.price.priceMeter}}</td>
                         {% else %}
                             <td data-order="0">N/A</td>
@@ -39,7 +39,6 @@
                         <td><a href="{{url_datafrance~(city.slug)|replace({' ':'-'})~"-"~city.zipCode}}" target="_blank">Voir</a></td>
                         <td><a href="{{path("app_main_detailcity", {'city_id':city.id})}}" target="_blank">Détails</a></td>
                     </tr>
-                {% endif %}
             {% endfor %}
         </tbody>
     </table>

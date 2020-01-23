@@ -17,20 +17,29 @@ class MainController extends AbstractController
     public function index(Request $request)
     {        
         
-        //traiter le formulaire ici
-        
-        if($request->query->get('dpt') !== null && $request->query->get('dpt') !== ""){
-            $cities = $this->getCitiesRepository()->findBy(array(
-                'departmentCode' => $request->query->get('dpt')
-            ));
-        }
-        else{
-            $cities = $this->getCitiesRepository()->findAll();
-        }
+       $cities = array();
         
         $form = $this->createForm(SearchType::class, null, array(
             'method' => 'GET'
         ));
+        
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            
+            $param = [
+                'dpt' => $form->get('dpt')->getData(),
+                'population' => [
+                    'min' => $form->get('populationMin')->getData(),
+                    'max' => $form->get('populationMax')->getData()
+                ],
+                'price' => [
+                    'min' => $form->get('priceMeterMin')->getData(),
+                    'max' => $form->get('priceMeterMax')->getData()
+                ]
+            ];
+            
+            $cities = $this->getCitiesRepository()->findByParams($param);            
+        }
         
         return $this->render('main/index.html.twig', [
             'cities' => $cities,

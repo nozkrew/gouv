@@ -19,6 +19,9 @@ class SearchType extends AbstractType
             'choice_label' => function ($department) {
                 return $department->getCode()." - ".$department->getName();
             },
+            'choice_value' => function ($department = null) {
+                return $department ? $department->getCode() : '';
+            },
             'query_builder' => function (DepartmentsRepository $er) {
                 return $er->createQueryBuilder('u')
                     ->orderBy('u.code', 'ASC');
