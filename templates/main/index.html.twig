@@ -2,47 +2,101 @@
 
 {% block title %}Rentabilité par ville{% endblock %}
 
-{% block body %}
+{% block title_h1 %}Rechercher une ville{% endblock %}
 
-<div class="container">
-    
-    {{form_start(form)}}
-    {{form_rest(form)}}
-    <button type="submit" class="btn btn-primary">Rechercher</button>
-    {{form_end(form)}}
-    
-    <table class="table table-striped" id="table">
-        <thead>
-            <tr>
-                <th>Ville</th>
-                <th>Prix m²</th>
-                <th>Population</th>
-                <th>Lien Data France</th>
-                <th>Détails</th>
-            </tr>
-        </thead>
-        <tbody>
-             {% for city in cities %}
-                
-                    <tr>
-                        <td>{{city.name}} ({{city.zipCode}})</td>
-                        {% if city.price is not null and city.price.priceMeter is not null %}
-                            <td data-order="{{city.price.priceMeter}}">{{city.price.priceMeter}}</td>
-                        {% else %}
-                            <td data-order="0">N/A</td>
-                        {% endif %}
-                        {% if city.population is not null %}
-                            <td data-order="{{city.population.total}}">{{city.population.total}}</td>
-                        {% else %}
-                            <td data-order="0">N/A</td>
-                        {% endif %}
-                        <td><a href="{{url_datafrance~(city.slug)|replace({' ':'-'})~"-"~city.zipCode}}" target="_blank">Voir</a></td>
-                        <td><a href="{{path("app_main_detailcity", {'city_id':city.id})}}" target="_blank">Détails</a></td>
-                    </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+{% block body %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Recherche</h6>
+                </div>
+                <div class="card-body">
+                    {{form_start(form, {'attr':{'class':'mt-3 mb-3'}})}}
+
+                    <div class="form-group row">
+                        {{ form_label(form.dpt, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.dpt, {'attr':{'class':"form-control"}}) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        {{ form_label(form.populationMin, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
+                        <div class="col-sm-4">
+                        {{ form_widget(form.populationMin, {'attr':{'class':"form-control"}}) }}
+                        </div>
+
+                        {{ form_label(form.populationMax, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
+                        <div class="col-sm-4">
+                            {{ form_widget(form.populationMax, {'attr':{'class':"form-control"}}) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        {{ form_label(form.priceMeterMin, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
+                        <div class="col-sm-4">
+                        {{ form_widget(form.priceMeterMin, {'attr':{'class':"form-control"}}) }}
+                        </div>
+
+                        {{ form_label(form.priceMeterMax, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
+                        <div class="col-sm-4">
+                            {{ form_widget(form.priceMeterMax, {'attr':{'class':"form-control"}}) }}
+                        </div>
+                    </div>
+
+                    {{form_rest(form)}}
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-primary">Rechercher</button>
+                        </div>
+                    </div>
+                    {{form_end(form)}}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Résultats ({{ cities|length }})</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped" id="table">
+                        <thead>
+                            <tr>
+                                <th>Ville</th>
+                                <th>Prix m²</th>
+                                <th>Population</th>
+                                <th>Lien Data France</th>
+                                <th>Détails</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             {% for city in cities %}
+
+                                    <tr>
+                                        <td>{{city.name}} ({{city.zipCode}})</td>
+                                        {% if city.price is not null and city.price.priceMeter is not null %}
+                                            <td data-order="{{city.price.priceMeter}}">{{city.price.priceMeter}}</td>
+                                        {% else %}
+                                            <td data-order="0">N/A</td>
+                                        {% endif %}
+                                        {% if city.population is not null %}
+                                            <td data-order="{{city.population.total}}">{{city.population.total}}</td>
+                                        {% else %}
+                                            <td data-order="0">N/A</td>
+                                        {% endif %}
+                                        <td><a href="{{url_datafrance~(city.slug)|replace({' ':'-'})~"-"~city.zipCode}}" target="_blank">Voir</a></td>
+                                        <td><a href="{{path("app_main_detailcity", {'city_id':city.id})}}" target="_blank">Détails</a></td>
+                                    </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block javascripts %}

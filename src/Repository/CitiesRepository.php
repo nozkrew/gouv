@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Cities;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * @method Prices|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class CitiesRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Cities::class);
     }
@@ -24,11 +24,33 @@ class CitiesRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder("c");
         if($param['dpt'] !== null){
             $qb->leftJoin('App:Departments', 'd', 'WITH', 'd.code = c.departmentCode');
-            $qb->where('d.code = :dpt');
-            $qb->setParameter('dpt', $param['dpt']->getCode());
+            $qb->andWhere('d.code IN (:dpt)');
+            $qb->setParameter('dpt', $param['dpt']);
         }
         
-        // traiter les min max a la suite
+        if($param['price']['min']){
+            $qb->leftJoin('App:Prices', 'p', 'WITH', 'p.city = c.id');
+            $qb->andWhere('p.priceMeter > :min');
+            $qb->setParameter('min', $param['price']['min']);
+        }
+        
+        if($param['price']['max']){
+            $qb->leftJoin('App:Prices', 'p', 'WITH', 'p.city = c.id');
+            $qb->andWhere('p.priceMeter < :max');
+            $qb->setParameter('max', $param['price']['max']);
+        }
+        
+        if($param['population']['min']){
+            $qb->leftJoin('App:Population', 'pop', 'WITH', 'pop.city = c.id');
+            $qb->andWhere('pop.total > :min');
+            $qb->setParameter('min', $param['population']['min']);
+        }
+        
+        if($param['population']['max']){
+            $qb->leftJoin('App:Population', 'pop', 'WITH', 'pop.city = c.id');
+            $qb->andWhere('pop.total < :max');
+            $qb->setParameter('max', $param['population']['max']);
+        }
         
         
         return $qb->getQuery()->getResult();

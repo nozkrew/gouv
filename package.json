@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "datatables.net-bs4": "^1.10.19",
-    "datatables.net-dt": "^1.10.19"
+    "datatables.net-dt": "^1.10.19",
+    "startbootstrap-sb-admin-2": "^4.0.7"
   }
 }

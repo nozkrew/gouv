@@ -25,9 +25,8 @@ class MainController extends AbstractController
         
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            
             $param = [
-                'dpt' => $form->get('dpt')->getData(),
+                'dpt' => array_map(create_function('$d', 'return $d->getCode();'), $form->get('dpt')->getData()->toArray()),
                 'population' => [
                     'min' => $form->get('populationMin')->getData(),
                     'max' => $form->get('populationMax')->getData()
@@ -62,9 +61,5 @@ class MainController extends AbstractController
     
     private function getCitiesRepository(){
         return $this->container->get('doctrine')->getRepository(Cities::class);
-    }
-    
-    private function getDepartmentsRepository(){
-        return $this->container->get('doctrine')->getRepository(Departments::class);
     }
 }

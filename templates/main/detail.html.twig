@@ -1,37 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{city.name}}{% endblock %}
+{% block title_h1 %}{{city.name}}{% endblock %}
 
 {% block body %}
+    
+    <div class="row">
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Prix m²</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{ city.price.priceMeter }}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-euro-sign fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<div class="container">
-    <h3>{{city.name}}</h3>
-    
-    <h4>Démographie</h4>
-    <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://datafrance.info:443/{{city.slug|replace({' ':'-'})}}-{{city.zipCode}}/population/evolution-population?iframe=true" allowfullscreen></iframe>
     </div>
     
-    <h4>Locataires / Propriétaires</h4>
-    <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://datafrance.info:443/{{city.slug|replace({' ':'-'})}}-{{city.zipCode}}/immobilier/location-achat?iframe=true" allowfullscreen></iframe>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Emplacement</h6>
+                </div>
+                <div class="card-body">
+                    <div class="embed-responsive embed-responsive-4by3">
+                        <iframe class="embed-responsive-item" src="https://maps.google.com/maps?q={{ city.name }}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
+                    style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <h4>Appartement / Maison</h4>
-    <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://datafrance.info:443/{{city.slug|replace({' ':'-'})}}-{{city.zipCode}}/immobilier/maison-appartement?iframe=true" allowfullscreen></iframe>
-    </div>
-    
-    <h4>Nombre de pièces</h4>
-    <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://datafrance.info:443/{{city.slug|replace({' ':'-'})}}-{{city.zipCode}}/immobilier/nombre-pieces?iframe=true" allowfullscreen></iframe>
-    </div>
-    
-    <h4>Taxe foncière</h4>
-    <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://datafrance.info:443/{{city.slug|replace({' ':'-'})}}-{{city.zipCode}}/immobilier/taxe-fonciere-bati?iframe=true" allowfullscreen></iframe>
-    </div>    
-</div>
 {% endblock %}
 
 {% block javascripts %}
