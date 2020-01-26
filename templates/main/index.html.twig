@@ -87,7 +87,7 @@
                                             <td data-order="0">N/A</td>
                                         {% endif %}
                                         <td><a href="{{url_datafrance~(city.slug)|replace({' ':'-'})~"-"~city.zipCode}}" target="_blank">Voir</a></td>
-                                        <td><a href="{{path("app_main_detailcity", {'city_id':city.id})}}" target="_blank">Détails</a></td>
+                                        <td><a href="{{path("app_main_detailcity", {'city_name':(city.slug)|replace({' ':'-'}), 'insee_code':city.inseeCode})}}" target="_blank">Détails</a></td>
                                     </tr>
                             {% endfor %}
                         </tbody>
@@ -102,6 +102,8 @@
 {% block javascripts %}
     {{parent()}}
     <script type="text/javascript">
-        
+        $(function () {
+            $('#search_dpt').selectpicker();
+        });
     </script>
 {% endblock %}

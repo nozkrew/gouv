@@ -18,6 +18,10 @@ require('@fortawesome/fontawesome-free/js/all.js');
 require('startbootstrap-sb-admin-2/css/sb-admin-2.min.css');
 require('startbootstrap-sb-admin-2/js/sb-admin-2.min.js');
 
+require('chart.js/dist/Chart.min.js');
+
+//var bootstrapMultiselect = require("bootstrap-multiselect");
+
 // or you can include specific pieces
 // require('bootstrap/js/dist/tooltip');
 // require('bootstrap/js/dist/popover');

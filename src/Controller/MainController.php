@@ -8,6 +8,7 @@ use App\Entity\Cities;
 use App\Entity\Departments;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\SearchType;
+use App\Entity\IndicatorValue;
 
 class MainController extends AbstractController
 {
@@ -47,13 +48,22 @@ class MainController extends AbstractController
     }
     
     /**
-     * @Route("/{city_id}")
+     * @Route("/{city_name}/{insee_code}")
      */
-    public function detailCityAction($city_id){
-        $city = $this->getCitiesRepository()->find($city_id);
+    public function detailCityAction($city_name, $insee_code){
+        $city = $this->getCitiesRepository()->findOneByInseeCode($insee_code);
         
+        $popByAge = $this->getIndicatorValueRepository()->findByCityAndIndicator($city, 'POP_T0');
+        $evoPop = $this->getIndicatorValueRepository()->findByCityAndIndicator($city, 'POP_T1');
+        $type = $this->getIndicatorValueRepository()->findByCityAndIndicator($city, 'LOG_T3');
+        $popType = $this->getIndicatorValueRepository()->findByCityAndIndicator($city, 'EMP_G1');
+
         return $this->render('main/detail.html.twig', [
             'city' => $city,
+            'popByAge' => $popByAge,
+            'evoPop' => $evoPop,
+            'type' => $type,
+            'popType' => $popType,
         ]);
     }
     
@@ -61,5 +71,9 @@ class MainController extends AbstractController
     
     private function getCitiesRepository(){
         return $this->container->get('doctrine')->getRepository(Cities::class);
+    }
+    
+    private function getIndicatorValueRepository(){
+        return $this->container->get('doctrine')->getRepository(IndicatorValue::class);
     }
 }

@@ -14,6 +14,9 @@ use App\Entity\Prices;
 use App\Entity\Population;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Goutte\Client;
+use Symfony\Component\DomCrawler\Crawler;
+use App\Entity\IndicatorValue;
+use App\Entity\Indicator;
 
 class RecoverDataCommand extends Command
 {    
@@ -47,6 +50,8 @@ class RecoverDataCommand extends Command
             $cities = $this->getCitiesRepository()->findAll();
         }
         
+        $indicators = $this->getIndicatorRepository()->findAll();
+                        
         // creates a new progress bar (50 units)
         $progressBar = new ProgressBar($output, count($cities));
 
@@ -59,7 +64,7 @@ class RecoverDataCommand extends Command
         
         foreach($cities as $city){
     
-            
+            //Gestion du prix au m²
             $priceMeter = null;
             $crawler = $client->request('GET', 'https://www.rendementlocatif.com/investissement/villes/'.$city->getName().'/'.$city->getZipCode());
             $crawler->filter('.report_sub_block .value')->each(function ($node) use (&$priceMeter) {
@@ -68,6 +73,100 @@ class RecoverDataCommand extends Command
                     $priceMeter = str_replace(" ", "", $priceMeter);
                 }
             });
+            
+            //Gestion des indicateur INSEE
+            $crawler = $client->request('GET', 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-'.$city->getInseeCode());
+            
+            //POP T1 entete tableau
+            $popTitle = array();
+            //Valeur
+            $popValue = array();
+            try{
+                $crawler->filter('#produit-tableau-POP_T1 tbody tr')
+                        ->first()
+                        ->children()
+                        ->each(function (Crawler $node, $i) use (&$popTitle) {
+                            if($i !== 0){
+                                $year = str_replace('(*)', "", $node->text());
+                                $popTitle[] = $year;
+                            }
+                        });
+                $crawler->filter('#produit-tableau-POP_T1 tbody tr')
+                        ->eq(1)
+                        ->children()
+                        ->each(function (Crawler $node, $i) use (&$popValue) {
+                            if($i !== 0){
+                            //Ligne avec les valeur que l'on souhaite
+                                $popValue[] = $node->text();
+                            }
+                        });
+            } catch (\Exception $ex) {
+
+            }
+                    
+            $popCombine = array_combine( $popTitle, $popValue );
+            
+            //LOG_T3
+            $piecesCombine = array();
+            try{
+                $crawler->filter('#produit-tableau-LOG_T3 tr')
+                        ->each(function (Crawler $node, $i) use (&$piecesCombine) {
+                            if($i > 1){
+                                $piecesCombine[$node->filter('th')->text()] = $node->filter('td')->eq(1)->text();
+                            }
+
+                        });
+            } catch (Exception $ex) {
+
+            }
+                    
+            //EMG_G1
+            $typeCombine = array();
+            try{
+                $crawler->filter('#produit-tableau-EMP_G1 tr')
+                        ->each(function (Crawler $node, $i) use (&$typeCombine) {
+                            if($i > 0){
+                                $typeCombine[$node->filter('th')->text()] = $node->filter('td')->text();
+                            }
+
+                        });
+            } catch (Exception $ex) {
+
+            }
+                    
+            //POP_T0
+            $ageCombine = array();
+            try{
+                $crawler->filter('#produit-tableau-POP_T0 tr')
+                        ->each(function (Crawler $node, $i) use (&$ageCombine) {
+                            if($i > 1){
+                                $ageCombine[$node->filter('th')->text()] = $node->filter('td')->eq(1)->text();
+                            }
+                        });
+            } catch (Exception $ex) {
+
+            }
+                    
+            $indicatorsRef = ['POP_T1'=>$popCombine, 'LOG_T3'=>$piecesCombine, 'EMP_G1'=>$typeCombine, 'POP_T0'=>$ageCombine];    
+            //boucle sur la liste d'indicateurs
+            foreach($indicators as $indicator){
+                $indic = null;
+                //boucle sur les indicateurs existantq de la ville
+                foreach($city->getIndicatorValues() as $cityIndic){
+                    if($cityIndic->getIndicator()->getCode() == $indicator->getCode()){
+                        $indic = $cityIndic;
+                        break;
+                    }
+                }
+                //si l'indicateur n'existe pas pour la ville
+                if($indic === null){
+                    $indic = new IndicatorValue();
+                    $indic->setCity($city);
+                    $indic->setIndicator($indicator);
+                    $em->persist($indic);
+                }
+                $indic->setTabData($indicatorsRef[$indicator->getCode()]);
+            }
             
             if($city->getPrice() == null){
                 $price = new Prices();
@@ -128,7 +227,18 @@ class RecoverDataCommand extends Command
         return $data;
     }
     
+    private function clean($string) {
+        $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+        $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+
+        return preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
+    }
+    
     private function getCitiesRepository(){
         return $this->container->get('doctrine')->getRepository(Cities::class);
+    }
+    
+    private function getIndicatorRepository(){
+        return $this->container->get('doctrine')->getRepository(Indicator::class);
     }
 }

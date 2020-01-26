@@ -22,6 +22,22 @@
             </div>
           </div>
         </div>
+                
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Population</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{% if city.population is not null %}{{ city.population.total }}{% else %}N/A{% endif %}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-users fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
     </div>
     
@@ -39,6 +55,62 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{evoPop.indicator.title}}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="evoPop"></canvas>
+                        <hr>
+                        Une population en hausse signifie (généralement) que la ville est attractive.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{type.indicator.title}} ({{ type.indicator.unity }})</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie">
+                        <canvas id="type"></canvas>
+                        <hr>
+                        Vérifiez que le type de bien <b>corresponde à la demande</b>.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{popByAge.indicator.title}} ({{ popByAge.indicator.unity }})</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="popByAge"></canvas>
+                        <hr>
+                        En fonction de votre <b>mode d'exploitation</b> et du <b>type de bien</b> que vous souhaitez acheter, vérifier les tranches d'ages intéréssés
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{popType.indicator.title}} ({{ popType.indicator.unity }})</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="popType"></canvas>
+                        <hr>
+                        Assurez-vous qu'il y est une majorité d'<b>actifs et d'étudiants</b> dans la ville.
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
@@ -46,5 +118,75 @@
     {{parent()}}
     <script type="text/javascript">
         
+        var ctxEvo = document.getElementById('evoPop').getContext('2d');
+        var evoPopChart = new Chart(ctxEvo, {
+            type: 'bar',
+            data: {
+                labels: [{{ evoPop.tabData|keys|join(',') }}],
+                datasets: [{
+                    label: '{{evoPop.indicator.title}}',
+                    data: [{{ evoPop.tabData|join(',') }}],
+                    borderWidth: 1,
+                    backgroundColor: "#4e73df",
+                    hoverBackgroundColor: "#2e59d9",
+                    borderColor: "#4e73df",
+                }]
+            },
+            options: {
+            }
+        });
+        
+        var colors = ['#446AD8', '#1cc88a', '#36b9cc', '#6f42c1', '#e83e8c'];
+        var ctxType = document.getElementById('type').getContext('2d');
+        var typeChart = new Chart(ctxType, {
+            type: 'doughnut',
+            data: {
+                labels: [{% for key, data in type.tabData %}"{{ key }}"{% if loop.last == false %},{% endif %}{% endfor %}],
+                datasets: [{
+                    label: '{{type.indicator.title}}',
+                    data: [{% for data in type.tabData %}{{data|replace({ ',':'.' })}}{% if loop.last == false %},{% endif %}{% endfor %}],
+                   //borderWidth: 1,
+                   backgroundColor: colors
+                }]
+            },
+            options: {
+            }
+        });
+        
+        var ctxPopByAge = document.getElementById('popByAge').getContext('2d');
+        var popByAgeChart = new Chart(ctxPopByAge, {
+            type: 'bar',
+            data: {
+                labels: [{% for key, data in popByAge.tabData %}"{{ key }}"{% if loop.last == false %},{% endif %}{% endfor %}],
+                datasets: [{
+                    label: '{{popByAge.indicator.title}}',
+                    data: [{% for data in popByAge.tabData %}{{data|replace({ ',':'.' })}}{% if loop.last == false %},{% endif %}{% endfor %}],
+                    borderWidth: 1,
+                    backgroundColor: "#4e73df",
+                    hoverBackgroundColor: "#2e59d9",
+                    borderColor: "#4e73df",
+                }]
+            },
+            options: {
+            }
+        });
+        
+        var ctxPopType = document.getElementById('popType').getContext('2d');
+        var popTypeChart = new Chart(ctxPopType, {
+            type: 'bar',
+            data: {
+                labels: [{% for key, data in popType.tabData %} '{{ key }}'{% if loop.last == false %},{% endif %}{% endfor %}],
+                datasets: [{
+                    label: '{{popType.indicator.title}}',
+                    data: [{% for data in popType.tabData %}{{data|replace({ ',':'.' })}}{% if loop.last == false %},{% endif %}{% endfor %}],
+                    borderWidth: 1,
+                    backgroundColor: "#4e73df",
+                    hoverBackgroundColor: "#2e59d9",
+                    borderColor: "#4e73df",
+                }]
+            },
+            options: {
+            }
+        });
     </script>
 {% endblock %}

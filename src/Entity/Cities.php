@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -83,6 +85,17 @@ class Cities
      * @ORM\OneToOne(targetEntity="Population", mappedBy="city")
      */
     private $population;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\IndicatorValue", mappedBy="city")
+     */
+    private $indicatorValues;
+
+    public function __construct()
+    {
+        $this->indicators = new ArrayCollection();
+        $this->indicatorValues = new ArrayCollection();
+    }
     
 
     public function getId(): ?int
@@ -210,5 +223,35 @@ class Cities
         return $this;
     }
 
+    /**
+     * @return Collection|IndicatorValue[]
+     */
+    public function getIndicatorValues(): Collection
+    {
+        return $this->indicatorValues;
+    }
+
+    public function addIndicatorValue(IndicatorValue $indicatorValue): self
+    {
+        if (!$this->indicatorValues->contains($indicatorValue)) {
+            $this->indicatorValues[] = $indicatorValue;
+            $indicatorValue->setCity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIndicatorValue(IndicatorValue $indicatorValue): self
+    {
+        if ($this->indicatorValues->contains($indicatorValue)) {
+            $this->indicatorValues->removeElement($indicatorValue);
+            // set the owning side to null (unless already changed)
+            if ($indicatorValue->getCity() === $this) {
+                $indicatorValue->setCity(null);
+            }
+        }
+
+        return $this;
+    }
 
 }
