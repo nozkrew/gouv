@@ -1,9 +1,9 @@
 <form name="app_main_favorisadd" action="{{ path('app_main_favorisadd', {'insee_code':city.inseeCode}) }}" method="POST">
     <button class="btn btn-primary" type="submit">
         {% if city in app.user.cities %}
-            <i class="far fa-star"></i>
-        {% else %}
             <i class="fas fa-star"></i>
+        {% else %}
+            <i class="far fa-star"></i>
         {% endif %}
 
     </button>
