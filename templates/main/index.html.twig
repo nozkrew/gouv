@@ -61,37 +61,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Résultats ({{ cities|length }})</h6>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped" id="table">
-                        <thead>
-                            <tr>
-                                <th>Ville</th>
-                                <th>Prix m²</th>
-                                <th>Population</th>
-                                <th>Lien Data France</th>
-                                <th>Détails</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                             {% for city in cities %}
-
-                                    <tr>
-                                        <td>{{city.name}} ({{city.zipCode}})</td>
-                                        {% if city.price is not null and city.price.priceMeter is not null %}
-                                            <td data-order="{{city.price.priceMeter}}">{{city.price.priceMeter}}</td>
-                                        {% else %}
-                                            <td data-order="0">N/A</td>
-                                        {% endif %}
-                                        {% if city.population is not null %}
-                                            <td data-order="{{city.population.total}}">{{city.population.total}}</td>
-                                        {% else %}
-                                            <td data-order="0">N/A</td>
-                                        {% endif %}
-                                        <td><a href="{{url_datafrance~(city.slug)|replace({' ':'-'})~"-"~city.zipCode}}" target="_blank">Voir</a></td>
-                                        <td><a href="{{path("app_main_detailcity", {'city_name':(city.slug)|replace({' ':'-'}), 'insee_code':city.inseeCode})}}" target="_blank">Détails</a></td>
-                                    </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    {{ include('main/components/citiesTable.html.twig', {'cities':cities}) }}
                 </div>
             </div>
         </div>
@@ -103,7 +73,7 @@
     {{parent()}}
     <script type="text/javascript">
         $(function () {
-            $('#search_dpt').selectpicker();
+            //$('#search_dpt').selectpicker();
         });
     </script>
 {% endblock %}

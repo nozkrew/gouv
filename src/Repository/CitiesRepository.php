@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Cities;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use App\Entity\User;
 
 /**
  * @method Prices|null find($id, $lockMode = null, $lockVersion = null)
@@ -52,6 +53,15 @@ class CitiesRepository extends ServiceEntityRepository
             $qb->setParameter('max', $param['population']['max']);
         }
         
+        
+        return $qb->getQuery()->getResult();
+    }
+    
+    public function findByUsers(User $user){        
+        $qb = $this->createQueryBuilder("c");
+        $qb->leftJoin('c.users', 'u');
+        $qb->where('u.id = :id');
+        $qb->setParameter('id', $user->getId());
         
         return $qb->getQuery()->getResult();
     }

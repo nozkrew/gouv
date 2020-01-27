@@ -97,7 +97,7 @@ class RecoverDataCommand extends Command
                         ->each(function (Crawler $node, $i) use (&$popValue) {
                             if($i !== 0){
                             //Ligne avec les valeur que l'on souhaite
-                                $popValue[] = $node->text();
+                                $popValue[] = $this->clean($node->text());
                             }
                         });
             } catch (\Exception $ex) {
@@ -112,7 +112,7 @@ class RecoverDataCommand extends Command
                 $crawler->filter('#produit-tableau-LOG_T3 tr')
                         ->each(function (Crawler $node, $i) use (&$piecesCombine) {
                             if($i > 1){
-                                $piecesCombine[$node->filter('th')->text()] = $node->filter('td')->eq(1)->text();
+                                $piecesCombine[$node->filter('th')->text()] = str_replace(",", ".", $node->filter('td')->eq(1)->text());
                             }
 
                         });
@@ -126,7 +126,7 @@ class RecoverDataCommand extends Command
                 $crawler->filter('#produit-tableau-EMP_G1 tr')
                         ->each(function (Crawler $node, $i) use (&$typeCombine) {
                             if($i > 0){
-                                $typeCombine[$node->filter('th')->text()] = $node->filter('td')->text();
+                                $typeCombine[$node->filter('th')->text()] = str_replace(",", ".", $node->filter('td')->text());
                             }
 
                         });
@@ -140,7 +140,7 @@ class RecoverDataCommand extends Command
                 $crawler->filter('#produit-tableau-POP_T0 tr')
                         ->each(function (Crawler $node, $i) use (&$ageCombine) {
                             if($i > 1){
-                                $ageCombine[$node->filter('th')->text()] = $node->filter('td')->eq(1)->text();
+                                $ageCombine[$node->filter('th')->text()] = str_replace(",", ".", $node->filter('td')->eq(1)->text());
                             }
                         });
             } catch (Exception $ex) {

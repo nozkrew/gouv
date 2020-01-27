@@ -18,8 +18,6 @@ require('@fortawesome/fontawesome-free/js/all.js');
 require('startbootstrap-sb-admin-2/css/sb-admin-2.min.css');
 require('startbootstrap-sb-admin-2/js/sb-admin-2.min.js');
 
-require('chart.js/dist/Chart.min.js');
-
 //var bootstrapMultiselect = require("bootstrap-multiselect");
 
 // or you can include specific pieces
@@ -27,6 +25,30 @@ require('chart.js/dist/Chart.min.js');
 // require('bootstrap/js/dist/popover');
 
 $(document).ready(function() {
-    $('#table').DataTable();
+    $('.dataTable').DataTable();
     $('[data-toggle="popover"]').popover();
+    
+    formFavorisSubmit();
+    
+    function formFavorisSubmit(){
+        $('form[name="app_main_favorisadd"]').submit(function(e){
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                success: function(response){
+                    if(!response.error){
+                        $(form).replaceWith(response.html);
+                        formFavorisSubmit();
+                    }
+                    else{
+                        //TODO
+                    }
+                },
+                error:function(error){}
+            });
+        });
+    }
 });

@@ -90,11 +90,19 @@ class Cities
      * @ORM\OneToMany(targetEntity="App\Entity\IndicatorValue", mappedBy="city")
      */
     private $indicatorValues;
+    
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="cities")
+     */
+    private $users;
 
     public function __construct()
     {
         $this->indicators = new ArrayCollection();
         $this->indicatorValues = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
     
 
@@ -249,6 +257,32 @@ class Cities
             if ($indicatorValue->getCity() === $this) {
                 $indicatorValue->setCity(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
         }
 
         return $this;

@@ -9,6 +9,7 @@ use App\Entity\Departments;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\SearchType;
 use App\Entity\IndicatorValue;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MainController extends AbstractController
 {
@@ -67,6 +68,58 @@ class MainController extends AbstractController
         ]);
     }
     
+    /**
+     * @Route("/favoris")
+     */
+    public function favorisAction(){
+        $cities = $this->getCitiesRepository()->findByUsers($this->getUser());
+        
+        return $this->render('main/favoris.html.twig', [
+            'cities' => $cities,
+        ]);
+    }
+    
+    /**
+     * @Route("/favoris/add/{insee_code}", options={"expose"=true})
+     */
+    public function favorisAddAction(Request $request, $insee_code){
+        $city = $this->getCitiesRepository()->findOneByInseeCode($insee_code);
+        
+        if($city === null){
+            //erreur
+        }
+        
+        //Si la ville est deja en favoris, on l'enlève
+        if($this->getUser()->getCities()->contains($city)){
+            $this->getUser()->removeCity($city);
+        }
+        else{
+            $this->getUser()->addCity($city);
+        }
+        
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        } catch (\Exception $ex) {
+            //erreur
+        }
+        
+        if($request->isXmlHttpRequest()){
+            $form = $this->createFormBuilder()
+                    ->setAction($this->generateUrl('app_main_favorisadd', array('insee_code'=>$insee_code)))
+                    ->setMethod('GET')
+                    ->getForm();
+            
+            return new JsonResponse(array(
+                'error' => false,
+                'html' => $this->renderView('main/components/formFavoris.html.twig', array(
+                    'city' => $city
+                ))
+            ));
+        }
+        
+        //return si ce n'est pas du xml
+    }
     
     
     private function getCitiesRepository(){
