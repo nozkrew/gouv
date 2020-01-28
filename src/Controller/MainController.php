@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\SearchType;
 use App\Entity\IndicatorValue;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Form\CalculateurType;
 
 class MainController extends AbstractController
 {
@@ -121,7 +122,21 @@ class MainController extends AbstractController
         //return si ce n'est pas du xml
     }
     
-    
+    /**
+     * @Route("/calculateur")
+     */
+    public function calculateurAction(){
+        
+        $form = $this->createForm(CalculateurType::class);
+        
+        return $this->render('main/calculateur.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+
+
+
     private function getCitiesRepository(){
         return $this->container->get('doctrine')->getRepository(Cities::class);
     }

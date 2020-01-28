@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calculateur{% endblock %}
+
+{% block title_h1 %}Calculateur{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Calculateur</h6>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                        <div class="form-group row">
+                            {{ form_label(form.prix, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8">
+                                {{ form_widget(form.prix, {'attr':{"class":'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.loyer, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8">
+                                {{ form_widget(form.loyer, {'attr':{"class":'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.metreCarre, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-4">
+                                {{ form_widget(form.metreCarre, {'attr':{"class":'form-control'}}) }}
+                            </div>
+                            <div class="col-sm-4">
+                                {{ form_widget(form.priceMetreCarre, {'attr':{"class":'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.apport, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8">
+                                {{ form_widget(form.apport, {'attr':{"class":'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.fraisNotaire, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8">
+                                {{ form_widget(form.fraisNotaire, {'attr':{"class":'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.garantie, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8">
+                                {{ form_widget(form.garantie, {'attr':{"class":'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.travaux, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-4">
+                                {{ form_widget(form.travaux, {'attr':{"class":'form-control'}}) }}
+                            </div>
+                            <div class="col-sm-4">
+                                {{ form_widget(form.travauxAide, {'attr':{"class":'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-primary float-right">Calculer</button>
+                            </div>
+                        </div>
+                    {{ form_rest(form) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Résultats</h6>
+                </div>
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+        $(function () {
+            
+        });
+    </script>
+{% endblock %}
