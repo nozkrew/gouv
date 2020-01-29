@@ -45,8 +45,10 @@
                     <h6 class="m-0 font-weight-bold text-primary">Liens utiles</h6>
                 </div>
                 <div class="card-body">
-                    <a href="https://fr.wikipedia.org/wiki/{{ city.name|replace({ ' ': '_' }) }}"  class="mr-2" target="_blank">Wikipédia</a>
-                    <a href="https://www.ville-ideale.fr/{{ city.slug|replace({ ' ': '-' }) }}_{{ city.inseeCode }}" class="mr-2" target="_blank">Ville idéale</a>
+                    <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Wikipédia vous donnera des informations utiles sur la ville. Regardez les axes routiers, les transports, la localisation, les emplois, l'économie, ..."></i> <a href="https://fr.wikipedia.org/wiki/{{ city.name|replace({ ' ': '_' }) }}"  class="mr-2" target="_blank">Wikipédia</a>
+                    <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Ville-ideale.fr regroupe des avis sur la ville. Faites vous une idée sur la qualité de vie, les quartiers, la sécurité, ... "></i> <a href="https://www.ville-ideale.fr/{{ city.slug|replace({ ' ': '-' }) }}_{{ city.inseeCode }}" class="mr-2" target="_blank">Ville-idéale</a>
+                    <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Faites vous une idée sur les type de biens qui sont mis en location, leur prix et leur état"></i> <a href="https://www.leboncoin.fr/recherche/?category=10&locations={{ city.name }}_{{ city.zipCode }}&real_estate_type=1,2,4,5" class="mr-2" target="_blank">Leboncoin (location)</a>
+                    <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Commencer par regarder les annonces à la vente pour avoir une idée du marché"></i> <a href="https://www.leboncoin.fr/recherche/?category=9&locations={{ city.name }}_{{ city.zipCode }}&real_estate_type=1,2,4,5" class="mr-2" target="_blank">Leboncoin (achat)</a>
                 </div>
             </div>
         </div>

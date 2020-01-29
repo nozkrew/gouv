@@ -18,6 +18,9 @@ require('@fortawesome/fontawesome-free/js/all.js');
 require('startbootstrap-sb-admin-2/css/sb-admin-2.min.css');
 require('startbootstrap-sb-admin-2/js/sb-admin-2.min.js');
 
+//import { bootstrapMultiselect } from 'bootstrap-multiselect/dist/js/bootstrap-multiselect';
+//require('bootstrap-multiselect/dist/js/bootstrap-multiselect');
+
 //var bootstrapMultiselect = require("bootstrap-multiselect");
 
 // or you can include specific pieces
@@ -25,6 +28,7 @@ require('startbootstrap-sb-admin-2/js/sb-admin-2.min.js');
 // require('bootstrap/js/dist/popover');
 
 $(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
     $('.dataTable').DataTable();
     $('[data-toggle="popover"]').popover();
     

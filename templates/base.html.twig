@@ -134,7 +134,7 @@
 
             </nav>
             <div class="container-fluid">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <div class="d-sm-flex align-items-center justify-content-between mb-2">
                     <h1 class="h3 mb-4 text-gray-800">{% block title_h1 %}{% endblock %}</h1>
                     {% block h1_complement %}{% endblock %}
                 </div>
@@ -171,15 +171,15 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Prêt à partir ?</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-body">Cliquer sur "Déconnexion" si vous êtes sûr de vouloir partir.</div>
             <div class="modal-footer">
-              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-              <a class="btn btn-primary" href="login.html">Logout</a>
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+              <a class="btn btn-primary" href="login.html">Déconnexion</a>
             </div>
           </div>
         </div>
@@ -187,10 +187,6 @@
 
       {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
-
-            <!-- Renders app.js & a webpack runtime.js file 
-                <script src="/build/runtime.js"></script>
-                <script src="/build/app.js"></script> -->
         {% endblock %}
     </body>
 
