@@ -27,11 +27,8 @@
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.metreCarre, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-4">
+                            <div class="col-sm-8">
                                 {{ form_widget(form.metreCarre, {'attr':{"class":'form-control'}}) }}
-                            </div>
-                            <div class="col-sm-4">
-                                {{ form_widget(form.priceMetreCarre, {'attr':{"class":'form-control'}}) }}
                             </div>
                         </div>
                         <div class="form-group row">
@@ -42,14 +39,11 @@
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.fraisNotaire, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-8">
+                            <div class="col-sm-4">
                                 {{ form_widget(form.fraisNotaire, {'attr':{"class":'form-control'}}) }}
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            {{ form_label(form.garantie, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-8">
-                                {{ form_widget(form.garantie, {'attr':{"class":'form-control'}}) }}
+                            <div class="col-sm-4">
+                                {{ form_widget(form.fraisNotaireEstime, {'attr':{"class":'form-control-plaintext'}}) }}
                             </div>
                         </div>
                         <div class="form-group row">
@@ -62,8 +56,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-12">
-                                <button type="submit" class="btn btn-primary float-right">Calculer</button>
+                            {{ form_label(form.garantie, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-4">
+                                {{ form_widget(form.garantie, {'attr':{"class":'form-control'}}) }}
+                            </div>
+                            <div class="col-sm-4">
+                                {{ form_widget(form.garantieEstimation, {'attr':{"class":'form-control-plaintext'}}) }}
                             </div>
                         </div>
                     {{ form_rest(form) }}
@@ -77,6 +75,18 @@
                     <h6 class="m-0 font-weight-bold text-primary">Résultats</h6>
                 </div>
                 <div class="card-body">
+                    
+                    <dl class="row">
+                        <dt class="col-sm-6">Prix au m²</dt>
+                        <dd class="col-sm-6" id="priceMeterCarre">N/A</dd>
+                        
+                        <dt class="col-sm-6">Rentabilité brute</dt>
+                        <dd class="col-sm-6" id="rentaBrute">N/A</dd>
+                        
+                        <dt class="col-sm-6">Coût du projet</dt>
+                        <dd class="col-sm-6" id="totalProjet">N/A</dd>
+                    </dl>
+                    
                 </div>
             </div>
         </div>
@@ -88,6 +98,133 @@
     {{parent()}}
     <script type="text/javascript">
         $(function () {
+            
+            calculatePriceMeterCarre();
+            calculateRentaBrute();
+            calculateFraisNotaire();
+            calculateGarantie(),
+            calculateTravaux();
+            calculateTotal();
+            
+            $('#calculateur_prix, #calculateur_metreCarre').on('change', function(){
+                calculatePriceMeterCarre();
+            });
+            
+            $('#calculateur_prix, #calculateur_loyer').on('change', function(){
+                calculateRentaBrute();
+            });
+            
+            $('#calculateur_prix').on('change', function(){
+                calculateFraisNotaire();
+                calculateGarantie();
+            });
+            
+            $('#calculateur_metreCarre, #calculateur_travauxAide').on('change', function(){
+                calculateTravaux();
+            });
+            
+            $('#calculateur_prix, #calculateur_apport, #calculateur_fraisNotaire, #calculateur_fraisNotaireEstime, #calculateur_travaux, #calculateur_garantie, #calculateur_garantieEstimation, #calculateur_metreCarre, #calculateur_travauxAide').on('change', function(){
+                calculateTotal();
+            });
+           
+        
+            function calculatePriceMeterCarre(){
+                var price = $('#calculateur_prix').val();
+                var meterCarre = $('#calculateur_metreCarre').val();
+                var priceMeter = price / meterCarre;
+                
+                if(isFinite(priceMeter) && !isNaN(priceMeter) && priceMeter !== 0){
+                    $('#priceMeterCarre').text(Math.round(priceMeter)+" €");
+                }
+                else{
+                    $('#priceMeterCarre').text("N/A");
+                }
+            }
+            
+            function calculateRentaBrute(){
+                var price = $('#calculateur_prix').val();
+                var loyer = $('#calculateur_loyer').val();
+                
+                var renta = loyer * 12 / price * 100;
+                
+                if(isFinite(renta) && !isNaN(renta) && renta !== 0){
+                    $('#rentaBrute').text(Math.round(renta)+" %");
+                }
+                else{
+                    $('#rentaBrute').text("N/A");
+                }
+            }
+            
+            function calculateFraisNotaire(){
+                var price = $('#calculateur_prix').val();
+                
+                var notaire = price * 0.0822;
+                if(notaire !== 0){
+                    $('#calculateur_fraisNotaireEstime').val(Math.round(notaire));
+                }
+                else{
+                    $('#calculateur_fraisNotaireEstime').val('');
+                }
+            }
+            
+            function calculateTravaux(){
+                var metreCarre = $('#calculateur_metreCarre').val();
+                var typeTravaux = $('#calculateur_travauxAide').val();
+
+                var prixTravaux = metreCarre * typeTravaux;
+                $('#calculateur_travaux').val(prixTravaux);
+            }
+            
+            function calculateGarantie(){
+                var price = $('#calculateur_prix').val();
+                var garantie = price * 0.02715;
+                if(garantie !== 0){
+                    $('#calculateur_garantieEstimation').val(Math.round(garantie));
+                }
+                else{
+                    $('#calculateur_garantieEstimation').val('');
+                }
+            }
+            
+            function calculateTotal(){
+                var price = parseInt($('#calculateur_prix').val());
+                var apport = parseInt($('#calculateur_apport').val());
+                var fraisNotaire = parseInt($('#calculateur_fraisNotaire').val());
+                var travaux = parseInt($('#calculateur_travaux').val());
+                var garantie = parseInt($('#calculateur_garantie').val());
+                
+                if(fraisNotaire == 0 || isNaN(fraisNotaire)){
+                    fraisNotaire = parseInt($('#calculateur_fraisNotaireEstime').val());
+                }
+                
+                if(garantie == 0 || isNaN(garantie)){
+                    garantie = parseInt($('#calculateur_garantieEstimation').val());
+                }
+                
+                if(!isNaN(price)){
+                    var total = price;
+                    if(!isNaN(apport)){
+                        total = total - apport;
+                    }
+                    if(!isNaN(travaux)){
+                        total = total + travaux;
+                    }
+                    if(!isNaN(fraisNotaire)){
+                        total = total + fraisNotaire;
+                    }
+                    if(!isNaN(garantie)){
+                        total = total + garantie;
+                    }
+                    
+                    $('#totalProjet').text(total+" €");
+                }
+                else{
+                    $('#totalProjet').text("N/A");
+                }
+                
+                
+                
+            }
             
         });
     </script>
