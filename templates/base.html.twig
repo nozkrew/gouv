@@ -123,7 +123,7 @@
                       Activité
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}" data-toggle="modal" data-target="#logoutModal">
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                       <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                       Déconnexion
                     </a>
@@ -179,7 +179,7 @@
             <div class="modal-body">Cliquer sur "Déconnexion" si vous êtes sûr de vouloir partir.</div>
             <div class="modal-footer">
               <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-              <a class="btn btn-primary" href="login.html">Déconnexion</a>
+              <a class="btn btn-primary" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
             </div>
           </div>
         </div>

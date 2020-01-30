@@ -50,7 +50,7 @@ class MainController extends AbstractController
     }
     
     /**
-     * @Route("/{city_name}/{insee_code}")
+     * @Route("/{city_name}/{insee_code}", requirements={"insee_code"="\d+"})
      */
     public function detailCityAction($city_name, $insee_code){
         $city = $this->getCitiesRepository()->findOneByInseeCode($insee_code);
@@ -70,7 +70,7 @@ class MainController extends AbstractController
     }
     
     /**
-     * @Route("/favoris")
+     * @Route("/favoris", methods={"POST"})
      */
     public function favorisAction(){
         $cities = $this->getCitiesRepository()->findByUsers($this->getUser());
