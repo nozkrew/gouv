@@ -70,7 +70,7 @@ class MainController extends AbstractController
     }
     
     /**
-     * @Route("/favoris", methods={"POST"})
+     * @Route("/favoris")
      */
     public function favorisAction(){
         $cities = $this->getCitiesRepository()->findByUsers($this->getUser());
@@ -81,7 +81,7 @@ class MainController extends AbstractController
     }
     
     /**
-     * @Route("/favoris/add/{insee_code}", options={"expose"=true})
+     * @Route("/favoris/add/{insee_code}", options={"expose"=true}, methods={"POST"})
      */
     public function favorisAddAction(Request $request, $insee_code){
         $city = $this->getCitiesRepository()->findOneByInseeCode($insee_code);
