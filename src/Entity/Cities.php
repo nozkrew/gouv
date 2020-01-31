@@ -97,12 +97,20 @@ class Cities
      * @ORM\ManyToMany(targetEntity="User", mappedBy="cities")
      */
     private $users;
+    
+    /**
+     * @var \Search
+     *
+     * @ORM\ManyToMany(targetEntity="Search", mappedBy="cities")
+     */
+    private $searches;
 
     public function __construct()
     {
         $this->indicators = new ArrayCollection();
         $this->indicatorValues = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->searches = new ArrayCollection();
     }
     
 
@@ -283,6 +291,32 @@ class Cities
     {
         if ($this->users->contains($user)) {
             $this->users->removeElement($user);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Search[]
+     */
+    public function getSearches(): Collection
+    {
+        return $this->searches;
+    }
+
+    public function addSearch(Search $search): self
+    {
+        if (!$this->searches->contains($search)) {
+            $this->searches[] = $search;
+        }
+
+        return $this;
+    }
+
+    public function removeSearch(Search $search): self
+    {
+        if ($this->searches->contains($search)) {
+            $this->searches->removeElement($search);
         }
 
         return $this;

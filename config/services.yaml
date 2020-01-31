@@ -31,3 +31,6 @@ services:
     recover.command:
         class: App\Command\RecoverDataCommand
         arguments: ['@service_container']
+    search.type:
+        class: App\Form\SearchType
+        arguments: ['@doctrine.orm.entity_manager']

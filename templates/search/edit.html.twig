@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% if search.id is null %}Ajouter une recherche{% else %}Modifier {{search.name}}{% endif %}{% endblock %}
+
+{% block title_h1 %}{% if search.id is null %}Ajouter une recherche{% else %}Modifier {{search.name}}{% endif %}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Recherche</h6>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    {{ form_rest(form) }}
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+        var $department = $('#search_department');
+        $department.change(function(){
+            var $form = $(this).closest('form');
+            var data = {};
+            data[$department.attr('name')] = $department.val();
+            $.ajax({
+                url : $form.attr('action'),
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+                  // Replace current position field ...
+                  $('#search_cities').replaceWith(
+                        $(html).find('#search_cities')
+                  );
+                }
+            });
+        });
+        
+    </script>
+{% endblock %}

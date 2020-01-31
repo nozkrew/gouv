@@ -49,14 +49,7 @@ class Departments
      *
      * @ORM\Column(name="region_code", type="string", length=3)
      */
-    private $regionCode;
-    
-
-    public function __construct()
-    {
-        $this->cities = new ArrayCollection();
-    }
-    
+    private $regionCode;    
 
     public function getId(): ?int
     {

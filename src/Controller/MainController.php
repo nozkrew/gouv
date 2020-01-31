@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Cities;
 use App\Entity\Departments;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\SearchType;
+use App\Form\SearchCitiesType;
 use App\Entity\IndicatorValue;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Form\CalculateurType;
@@ -22,7 +22,7 @@ class MainController extends AbstractController
         
        $cities = array();
         
-        $form = $this->createForm(SearchType::class, null, array(
+        $form = $this->createForm(SearchCitiesType::class, null, array(
             'method' => 'GET'
         ));
         
@@ -52,7 +52,7 @@ class MainController extends AbstractController
     /**
      * @Route("/{city_name}/{insee_code}", requirements={"insee_code"="\d+"})
      */
-    public function detailCityAction($city_name, $insee_code){
+    public function detailCity($city_name, $insee_code){
         $city = $this->getCitiesRepository()->findOneByInseeCode($insee_code);
         
         $popByAge = $this->getIndicatorValueRepository()->findByCityAndIndicator($city, 'POP_T0');
@@ -72,7 +72,7 @@ class MainController extends AbstractController
     /**
      * @Route("/favoris")
      */
-    public function favorisAction(){
+    public function favoris(){
         $cities = $this->getCitiesRepository()->findByUsers($this->getUser());
         
         return $this->render('main/favoris.html.twig', [
@@ -83,7 +83,7 @@ class MainController extends AbstractController
     /**
      * @Route("/favoris/add/{insee_code}", options={"expose"=true}, methods={"POST"})
      */
-    public function favorisAddAction(Request $request, $insee_code){
+    public function favorisAdd(Request $request, $insee_code){
         $city = $this->getCitiesRepository()->findOneByInseeCode($insee_code);
         
         if($city === null){
@@ -125,7 +125,7 @@ class MainController extends AbstractController
     /**
      * @Route("/calculateur")
      */
-    public function calculateurAction(){
+    public function calculateur(){
         
         $form = $this->createForm(CalculateurType::class);
         

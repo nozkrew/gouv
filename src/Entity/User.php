@@ -27,9 +27,15 @@ class User extends BaseUser
      */
     private $cities;
     
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Search", mappedBy="user")
+     */
+    private $searches;
+    
     public function __construct() {
         parent::__construct();
         $this->cities = new ArrayCollection();
+        $this->searches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,6 +64,37 @@ class User extends BaseUser
     {
         if ($this->cities->contains($city)) {
             $this->cities->removeElement($city);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Search[]
+     */
+    public function getSearches(): Collection
+    {
+        return $this->searches;
+    }
+
+    public function addSearch(Search $search): self
+    {
+        if (!$this->searches->contains($search)) {
+            $this->searches[] = $search;
+            $search->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSearch(Search $search): self
+    {
+        if ($this->searches->contains($search)) {
+            $this->searches->removeElement($search);
+            // set the owning side to null (unless already changed)
+            if ($search->getUser() === $this) {
+                $search->setUser(null);
+            }
         }
 
         return $this;

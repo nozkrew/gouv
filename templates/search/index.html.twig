@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block title_h1 %}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Recherche</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped dataTable">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prix max.</th>
+                                <th>SurfaceMin</th>
+                                <th>Villes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             {% for search in searches %}
+                                    <tr>
+                                        <td>{{ search.name }}</td>
+                                        <td>{{ search.priceMax }}</td>
+                                        <td>{{ search.surfaceMin }}</td>
+                                        <td>{{ search.cities|length }}</td>
+                                    </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+       
+        
+    </script>
+{% endblock %}

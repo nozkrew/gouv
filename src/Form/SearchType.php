@@ -2,69 +2,74 @@
 
 namespace App\Form;
 
+use App\Entity\Search;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Departments;
-use App\Repository\DepartmentsRepository;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use App\Entity\Cities;
+use Symfony\Component\Form\FormInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class SearchType extends AbstractType
 {
+    
+    private $manager;
+    
+    public function __construct(EntityManagerInterface $manager) {
+        $this->manager = $manager;
+    }
+
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('dpt', EntityType::class, array(
-            'class' => Departments::class,
-            'choice_label' => function ($department) {
-                return $department->getCode()." - ".$department->getName();
-            },
-            'choice_value' => function ($department = null) {
-                return $department ? $department->getCode() : '';
-            },
-            'query_builder' => function (DepartmentsRepository $er) {
-                return $er->createQueryBuilder('u')
-                    ->orderBy('u.code', 'ASC');
-            },
-            'placeholder' => "SELECTIONNER",
-            'label' => "Département",
-            'multiple' => true
-        ))
-        ->add('populationMin', IntegerType::class, array(
-            'required'=>false,
-            'label' => "Population min.",
-            'attr' => array(
-                'placeholder' => "Ex: 500"
-            )
-        ))
-        ->add('populationMax', IntegerType::class, array(
-            'required'=>false,
-            'label' => "Population max.",
-            'attr' => array(
-                'placeholder' => "Ex: 20000"
-            )
-        ))
-        ->add('priceMeterMin', IntegerType::class, array(
-            'required'=>false,
-            'label' => "Prix au m² min.",
-            'attr' => array(
-                'placeholder' => "Ex: 800"
-            )
-        ))
-        ->add('priceMeterMax', IntegerType::class, array(
-            'required'=>false,
-            'label' => "Prix au m² max.",
-            'attr' => array(
-                'placeholder' => "Ex: 3000"
-            )
-        ))
+        $builder
+            ->add('priceMax', IntegerType::class)
+            ->add('surfaceMin', IntegerType::class)
+            ->add('name', null)
+            ->add('department', EntityType::class, array(
+                'mapped' => false,
+                'class' => Departments::class,
+                'choice_label' => 'name'
+            ))
         ;
+        
+        $formModifier = function (FormInterface $form, Departments $department = null) {            
+            $cities = null === $department ? [] : $this->getCitiesRepository()->findByDepartmentCode($department->getCode());
+            
+            $form->add('cities', EntityType::class, array(
+                'class' => Cities::class,
+                'choice_label' => 'name',
+                'choices' => $cities,
+                'multiple' => true
+            ));
+        };
+        
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($formModifier) {
+                $department = $event->getForm()->get('department')->getData();
+                $formModifier($event->getForm(), $department);
+            }
+        );
+        
+        $builder->get('department')->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($formModifier) {
+                $department = $event->getForm()->getData();
+                $formModifier($event->getForm()->getParent(), $department);
+            }
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'data_class' => Search::class,
         ]);
+    }
+    
+    private function getCitiesRepository(){
+        return $this->manager->getRepository(Cities::class);
     }
 }
