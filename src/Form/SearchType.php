@@ -41,7 +41,7 @@ class SearchType extends AbstractType
                 'label' => "Surface min."
             ))
             ->add('name', null, array(
-                'label' => 'Nom de la recherche'
+                'label' => 'Titre de la recherche'
             ))
             ->add('search', TextType::class, array(
                 'mapped' => false,
@@ -52,7 +52,8 @@ class SearchType extends AbstractType
                 'entry_type' => CitiesSearchPartType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'prototype' => true
+                'prototype' => true,
+                'label' => "Vos villes"
             ))
         ;
         

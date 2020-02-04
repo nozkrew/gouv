@@ -23,7 +23,8 @@ class CitiesSearchPartType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control-plaintext',
                     'readonly' => 'readonly'
-                )
+                ),
+                'label' => null
             ))
         ;
         

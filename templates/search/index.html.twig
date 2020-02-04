@@ -1,8 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Mes recherches{% endblock %}
 
-{% block title_h1 %}{% endblock %}
+{% block title_h1 %}Mes recherches{% endblock %}
+
+{% block h1_complement %}
+    <a href="{{path('app_search_edit')}}" class="btn btn-primary"><i class="far fa-plus-square"></i> Ajouter une recherche</a>
+{% endblock %}
 
 {% block body %}
     <div class="row">
@@ -20,6 +24,7 @@
                                 <th>SurfaceMin</th>
                                 <th>Villes</th>
                                 <th>Editer</th>
+                                <th>LeBonCoin</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,6 +35,7 @@
                                         <td>{{ search.surfaceMin }}</td>
                                         <td>{{ search.cities|length }}</td>
                                         <td><a href="{{ path('app_search_edit_1', {'id':search.id}) }}" class="btn btn-primary"><i class="far fa-edit"></i></a></td>
+                                        <td><a href="https://www.leboncoin.fr/recherche/?category=9&locations={% for city in search.cities %}{{ city.name }}_{{ city.zipCode }}{% if loop.last == false %},{% endif %}{% endfor %}&real_estate_type=1,2,4,5&price=min-{{search.priceMax}}&square={{search.surfaceMin}}-max" target="_blank">Voir</a></td>
                                     </tr>
                             {% endfor %}
                         </tbody>
