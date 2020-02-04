@@ -34,15 +34,19 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {        
         $builder
-            ->add('priceMax', IntegerType::class)
-            ->add('surfaceMin', IntegerType::class)
-            ->add('name', null)
+            ->add('priceMax', IntegerType::class, array(
+                'label' => "Prix max."
+            ))
+            ->add('surfaceMin', IntegerType::class, array(
+                'label' => "Surface min."
+            ))
+            ->add('name', null, array(
+                'label' => 'Nom de la recherche'
+            ))
             ->add('search', TextType::class, array(
-                'attr' => array(
-                    'class' => "autocompleteSearchForm"
-                ),
                 'mapped' => false,
-                'required' => false
+                'required' => false,
+                'label' => 'Ajouter une ville'
             ))
             ->add('cities', CollectionType::class, array(
                 'entry_type' => CitiesSearchPartType::class,

@@ -15,15 +15,41 @@
                 </div>
                 <div class="card-body">
                     {{ form_start(form) }}
-                        <ul id="cities-list"
-                            data-prototype="{{ form_widget(form.cities.vars.prototype)|e }}"
-                            data-widget-tags="{{ '<li></li>'|e }}"
-                            data-widget-counter="{{ form.cities|length }}">
-                        {% for city in form.cities %}
-                            <li>{{ form_widget(city) }}</li>
-                        {% endfor %}
-                        </ul>
-                        {{ form_widget(form.cities) }}                        
+                        <div class="form-group row">
+                            {{ form_label(form.name, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
+                            <div class="col-sm-10">
+                                {{ form_widget(form.name, {'attr':{'class':"form-control"}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.priceMax, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
+                            <div class="col-sm-4">
+                                {{ form_widget(form.priceMax, {'attr':{'class':"form-control"}}) }}
+                            </div>
+                            {{ form_label(form.surfaceMin, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
+                            <div class="col-sm-4">
+                                {{ form_widget(form.surfaceMin, {'attr':{'class':"form-control"}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.search, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
+                            <div class="col-sm-10">
+                                {{ form_widget(form.search, {'attr':{'class':"form-control autocompleteSearchForm"}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-10">
+                            <ul id="cities-list"
+                                data-prototype="{{ form_widget(form.cities.vars.prototype)|e }}"
+                                data-widget-tags="{{ '<li></li>'|e }}"
+                                data-widget-counter="{{ form.cities|length }}">
+                            {% for city in form.cities %}
+                                <li>{{ form_widget(city) }}</li>
+                            {% endfor %}
+                            </ul>
+                            </div>
+                                              
+                        </div>
                         {{ form_rest(form) }}
                         <button type="submit" class="btn btn-primary">Enregistrer</button>
                     {{ form_end(form) }}
@@ -56,7 +82,7 @@
             newWidget = newWidget.replace(/__name__/g, counter);
             
             var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
-            newElem.appendTo(list);
+            newElem.prependTo(list);
             addCityFormDeleteLink(newElem);
             
             $('#search_cities_'+counter+'_inseeCode').val(inseeCode);
