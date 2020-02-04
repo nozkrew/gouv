@@ -14,6 +14,12 @@ use Symfony\Component\Form\FormInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use App\Form\Part\CitiesSearchPartType;
+use Symfony\Component\Form\CallbackTransformer;
+use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\CitiesRepository;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class SearchType extends AbstractType
 {
@@ -26,40 +32,51 @@ class SearchType extends AbstractType
 
 
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    {        
         $builder
             ->add('priceMax', IntegerType::class)
             ->add('surfaceMin', IntegerType::class)
             ->add('name', null)
-            ->add('department', EntityType::class, array(
+            ->add('search', TextType::class, array(
+                'attr' => array(
+                    'class' => "autocomplete"
+                ),
                 'mapped' => false,
-                'class' => Departments::class,
-                'choice_label' => 'name'
+                'required' => false
+            ))
+            ->add('cities', CollectionType::class, array(
+                'entry_type' => CitiesSearchPartType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype' => true
             ))
         ;
         
-        $formModifier = function (FormInterface $form, Departments $department = null) {            
-            $cities = null === $department ? [] : $this->getCitiesRepository()->findByDepartmentCode($department->getCode());
-            
-            $form->add('cities', EntityType::class, array(
-                'class' => Cities::class,
-                'choice_label' => 'name',
-                'choices' => $cities,
-                'multiple' => true
-            ));
-        };
+        $builder->get('cities')->addModelTransformer(new CallbackTransformer(
+                function ($collection) {
+                    $array = [];
+                    foreach($collection as $city){
+                        $tmp = array(
+                            'zipCode' => $city->getZipCode(),
+                            'name' => $city->getName()
+                        );
+                        $array[] = $tmp;
+                    }
+                    return $array;
+                },
+                function ($array) {
+                    $collection = new ArrayCollection();
+                    foreach($array as $c){
+                        $city = $this->getCitiesRepository()->findOneByZipCode($c['zipCode']);
+                        if($city !== null){
+                            $collection->add($city);
+                        }
+                    }
+                    return $collection;
+                }
+            ))
+        ;
         
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($formModifier) {
-                $department = $event->getForm()->get('department')->getData();
-                $formModifier($event->getForm(), $department);
-            }
-        );
-        
-        $builder->get('department')->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($formModifier) {
-                $department = $event->getForm()->getData();
-                $formModifier($event->getForm()->getParent(), $department);
-            }
-        );
     }
 
     public function configureOptions(OptionsResolver $resolver)

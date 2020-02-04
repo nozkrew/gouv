@@ -124,7 +124,7 @@ class Cities
         return $this->inseeCode;
     }
 
-    public function setInseeCode(?string $inseeCode): self
+    public function setInseeCode(?string $inseeCode = null): self
     {
         $this->inseeCode = $inseeCode;
 
@@ -148,7 +148,7 @@ class Cities
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name = null): self
     {
         $this->name = $name;
 

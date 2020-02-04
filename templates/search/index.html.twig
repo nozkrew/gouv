@@ -19,6 +19,7 @@
                                 <th>Prix max.</th>
                                 <th>SurfaceMin</th>
                                 <th>Villes</th>
+                                <th>Editer</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,6 +29,7 @@
                                         <td>{{ search.priceMax }}</td>
                                         <td>{{ search.surfaceMin }}</td>
                                         <td>{{ search.cities|length }}</td>
+                                        <td><a href="{{ path('app_search_edit_1', {'id':search.id}) }}" class="btn btn-primary"><i class="far fa-edit"></i></a></td>
                                     </tr>
                             {% endfor %}
                         </tbody>

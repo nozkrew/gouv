@@ -10,7 +10,9 @@
     "bootstrap-multiselect": "^0.9.15",
     "datatables.net-bs4": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
+    "jquery-ui": "^1.12.1",
     "knockout": "^3.5.1",
-    "startbootstrap-sb-admin-2": "^4.0.7"
+    "startbootstrap-sb-admin-2": "^4.0.7",
+    "symfony-collection": "ninsuo/symfony-collection"
   }
 }

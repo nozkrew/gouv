@@ -62,7 +62,7 @@ class Search
         return $this->priceMax;
     }
 
-    public function setPriceMax(int $priceMax): self
+    public function setPriceMax(int $priceMax = null): self
     {
         $this->priceMax = $priceMax;
 
@@ -74,7 +74,7 @@ class Search
         return $this->surfaceMin;
     }
 
-    public function setSurfaceMin(int $surfaceMin): self
+    public function setSurfaceMin(int $surfaceMin = null): self
     {
         $this->surfaceMin = $surfaceMin;
 
@@ -86,7 +86,7 @@ class Search
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name = null): self
     {
         $this->name = $name;
 

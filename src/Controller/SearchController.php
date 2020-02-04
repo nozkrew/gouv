@@ -52,10 +52,17 @@ class SearchController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             
             try {
+                
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($search);
+                if($search->getId() === null){
+                    $em->persist($search);
+                }
                 $em->flush();
                 $this->addFlash("success", "Recherche enregistrée");
+                if($search->getId() !== null){
+                    return $this->redirect($this->generateUrl('app_search_edit_1', array('id'=>$search->getId())));
+                }
+                
                 return $this->redirect($this->generateUrl('app_search_edit'));
                 
             } catch (\Exception $ex) {

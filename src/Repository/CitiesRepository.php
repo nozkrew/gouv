@@ -57,6 +57,17 @@ class CitiesRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
     
+    public function findByQuery($query){
+        $qb = $this->createQueryBuilder("c");
+        $qb->select('c.zipCode, c.name');
+        $qb->where('LOWER(c.name) LIKE LOWER(:query)');
+        $qb->setParameter('query', '%'.$query.'%');
+        $qb->orderBy('c.name', 'ASC');
+        
+        return $qb->getQuery()->getArrayResult();
+    }
+
+
     public function findByUsers(User $user){        
         $qb = $this->createQueryBuilder("c");
         $qb->leftJoin('c.users', 'u');
