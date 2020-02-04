@@ -39,7 +39,7 @@ class SearchType extends AbstractType
             ->add('name', null)
             ->add('search', TextType::class, array(
                 'attr' => array(
-                    'class' => "autocomplete"
+                    'class' => "autocompleteSearchForm"
                 ),
                 'mapped' => false,
                 'required' => false
@@ -58,7 +58,8 @@ class SearchType extends AbstractType
                     foreach($collection as $city){
                         $tmp = array(
                             'zipCode' => $city->getZipCode(),
-                            'name' => $city->getName()
+                            'name' => $city->getName(),
+                            'inseeCode' => $city->getInseeCode()
                         );
                         $array[] = $tmp;
                     }
@@ -67,7 +68,7 @@ class SearchType extends AbstractType
                 function ($array) {
                     $collection = new ArrayCollection();
                     foreach($array as $c){
-                        $city = $this->getCitiesRepository()->findOneByZipCode($c['zipCode']);
+                        $city = $this->getCitiesRepository()->findOneByInseeCode($c['inseeCode']);
                         if($city !== null){
                             $collection->add($city);
                         }

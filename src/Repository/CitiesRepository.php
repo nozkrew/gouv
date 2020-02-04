@@ -59,7 +59,7 @@ class CitiesRepository extends ServiceEntityRepository
     
     public function findByQuery($query){
         $qb = $this->createQueryBuilder("c");
-        $qb->select('c.zipCode, c.name');
+        $qb->select('c.inseeCode, c.name, c.slug, c.zipCode');
         $qb->where('LOWER(c.name) LIKE LOWER(:query)');
         $qb->setParameter('query', '%'.$query.'%');
         $qb->orderBy('c.name', 'ASC');

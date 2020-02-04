@@ -48,7 +48,7 @@
             });
         });
         
-        function addCityForm(zipCode, name){
+        function addCityForm(inseeCode, zipCode, name){
             var list = $('#cities-list');
             var counter = list.data('widget-counter') || list.children().length;
 
@@ -59,7 +59,7 @@
             newElem.appendTo(list);
             addCityFormDeleteLink(newElem);
             
-            $('#search_cities_'+counter+'_zipCode').val(zipCode);
+            $('#search_cities_'+counter+'_inseeCode').val(inseeCode);
             $('#search_cities_'+counter+'_name').val(name + " ("+zipCode+")");
             
             counter++;
@@ -78,7 +78,7 @@
         }
         
         function initAutocomplete(){
-            $( ".autocomplete" ).autocomplete({
+            $( ".autocompleteSearchForm" ).autocomplete({
                     source: function(query, response){
                         $.ajax({
                             url: '{{ path('app_utility_cities') }}?query='+query.term,
@@ -87,8 +87,9 @@
                                 response($.map(data, function (item) {
                                     return {
                                         label: item.name+" ("+item.zipCode+")",
-                                        value: item.zipCode,
-                                        name: item.name
+                                        value: item.inseeCode,
+                                        name: item.name,
+                                        zipCode: item.zipCode,
                                     };
                                 }));
                             }
@@ -97,9 +98,9 @@
                     minLength: 2
               });
               
-              $( ".autocomplete").on( "autocompleteselect", function( event, ui ) {
+              $( ".autocompleteSearchForm").on( "autocompleteselect", function( event, ui ) {
                     event.preventDefault();
-                    addCityForm(ui.item.value, ui.item.name);
+                    addCityForm(ui.item.value, ui.item.zipCode, ui.item.name);
                     $(this).val('');
               } );
         }

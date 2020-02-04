@@ -18,6 +18,8 @@ require('@fortawesome/fontawesome-free/js/all.js');
 require('startbootstrap-sb-admin-2/css/sb-admin-2.min.css');
 require('startbootstrap-sb-admin-2/js/sb-admin-2.min.js');
 
+require('jquery-ui/ui/widgets/autocomplete');
+
 require('../css/app.css');
 
 //import { bootstrapMultiselect } from 'bootstrap-multiselect/dist/js/bootstrap-multiselect';

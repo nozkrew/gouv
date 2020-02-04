@@ -18,7 +18,7 @@ class CitiesSearchPartType extends AbstractType
     {
         
         $builder
-            ->add('zipCode', HiddenType::class)
+            ->add('inseeCode', HiddenType::class)
             ->add('name', TextType::class, array(
                 'attr' => array(
                     'class' => 'form-control-plaintext',
@@ -36,8 +36,8 @@ class CitiesSearchPartType extends AbstractType
                 
                 //TODO : a ameliorer pour reprendre la configuration du champs
                 
-                $form->add('zipCode', HiddenType::class, array(
-                    'data' => $city['zipCode']
+                $form->add('inseeCode', HiddenType::class, array(
+                    'data' => $city['inseeCode']
                 ));
                 $form->add('name', TextType::class, array(
                     'data' => $city['name']." (".$city['zipCode'].")",

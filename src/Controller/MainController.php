@@ -50,7 +50,7 @@ class MainController extends AbstractController
     }
     
     /**
-     * @Route("/{city_name}/{insee_code}", requirements={"insee_code"="\d+"})
+     * @Route("/ville/{city_name}/{insee_code}")
      */
     public function detailCity($city_name, $insee_code){
         $city = $this->getCitiesRepository()->findOneByInseeCode($insee_code);

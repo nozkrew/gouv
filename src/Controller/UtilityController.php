@@ -17,7 +17,19 @@ class UtilityController extends AbstractController{
     public function cities(Request $request){
         $query = $request->query->get('query');
         if($query !== null && $query !== ""){
-            $cities = $this->getCitiesRepository()->findByQuery($query);
+            $cities = array();
+            $results = $this->getCitiesRepository()->findByQuery($query);
+            foreach($results as $city){
+                $cities[] = array(
+                    'inseeCode' => $city['inseeCode'],
+                    'zipCode' => $city['zipCode'],
+                    'name' => $city['name'],
+                    'url' => $this->generateUrl('app_main_detailcity', array(
+                        'city_name' => str_replace(" ", "-", $city['slug']),
+                        'insee_code' => $city['inseeCode']
+                    ))
+                );
+            }
             
             return $this->json($cities);
         }
