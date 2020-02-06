@@ -10,39 +10,52 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-xl-12 col-lg-12">
+        <div class="col-lg-4">
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Recherche</h6>
+                <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Créez vos recherches</h6>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped dataTable">
-                        <thead>
-                            <tr>
-                                <th>Nom</th>
-                                <th>Prix max.</th>
-                                <th>SurfaceMin</th>
-                                <th>Villes</th>
-                                <th>Editer</th>
-                                <th>LeBonCoin</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                             {% for search in searches %}
-                                    <tr>
-                                        <td>{{ search.name }}</td>
-                                        <td>{{ search.priceMax }}</td>
-                                        <td>{{ search.surfaceMin }}</td>
-                                        <td>{{ search.cities|length }}</td>
-                                        <td><a href="{{ path('app_search_edit_1', {'id':search.id}) }}" class="btn btn-primary"><i class="far fa-edit"></i></a></td>
-                                        <td><a href="https://www.leboncoin.fr/recherche/?category=9&locations={% for city in search.cities %}{{ city.name }}_{{ city.zipCode }}{% if loop.last == false %},{% endif %}{% endfor %}&real_estate_type=1,2,4,5&price=min-{{search.priceMax}}&square={{search.surfaceMin}}-max" target="_blank">Voir</a></td>
-                                    </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    <div class="text-center">
+                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 18rem;" src="{{ asset('/build/undraw_house_searching_n8mp.svg') }}" alt="">
+                    </div>
+                    Proin ac ullamcorper sem, in mollis lorem. Quisque ullamcorper augue ac pretium semper. Morbi eu placerat orci. Curabitur a augue quis metus sollicitudin tincidunt id vitae odio. Ut et ligula vestibulum, vestibulum augue in, cursus urna. Curabitur vehicula finibus lacus, at maximus ipsum sodales non. Donec eget ante posuere nulla sodales ornare in ut mauris. Ut molestie neque nec orci iaculis, eget eleifend risus rutrum.
                 </div>
             </div>
-        </div>
+
+      </div>
+        {% for search in searches %}
+            <div class="col-lg-4">
+                    <!-- Basic Card Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">{{ search.name }}</h6>
+                            <a href="{{ path('app_search_edit_1', {'id':search.id}) }}" class="btn btn-primary float-right"><i class="far fa-edit"></i></a>
+                        </div>
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-3">Prix max</dt>
+                                <dd class="col-sm-9">{{ search.priceMax }} €</dd>
+                                
+                                <dt class="col-sm-3">Surface min.</dt>
+                                <dd class="col-sm-9">{{ search.surfaceMin }} m²</dd>
+                                
+                                <dt class="col-sm-3">Villes</dt>
+                                <dd class="col-sm-9">
+                                    {% for city in search.cities %}
+                                        {{ city.name }}<br>
+                                    {% endfor%}
+                                </dd>
+                            </dl>
+                            <hr>
+                            <a class="btn" style="background-color: #f56b2a; color: white" href="https://www.leboncoin.fr/recherche/?category=9&locations={% for city in search.cities %}{{ city.name }}_{{ city.zipCode }}{% if loop.last == false %},{% endif %}{% endfor %}&real_estate_type=1,2,4,5&price=min-{{search.priceMax}}&square={{search.surfaceMin}}-max" target="_blank">LeBonCoin</a>
+                            <a class="btn" style="background-color: #e00034; color: white" href="https://www.seloger.com/list.htm?projects=2&types=1,2,3,9,13,12,11,10&natures=1,2,4&places=[{% for city in search.cities %}{{ "{ci:"~city.inseeCode|slice(0,2) }}0{{ city.inseeCode|slice(-3)~"}" }}{% if loop.last == false %}|{% endif %}{% endfor %}]&price=NaN/{{ search.priceMax }}&surface={{ search.surfaceMin }}/NaN&sort=d_dt_crea&enterprise=0&qsVersion=1.0" target="_blank">SeLoger</a>
+                            <a class="btn" style="background-color: #000; color: white" href="https://www.paruvendu.fr/immobilier/annonceimmofo/liste/listeAnnonces?nbp=0&tt=1&tbApp=1&tbDup=1&tbChb=1&tbLof=1&tbAtl=1&tbPla=1&tbMai=1&tbVil=1&tbCha=1&tbPro=1&tbHot=1&tbMou=1&tbFer=1&tbImm=1&tbPar=1&at=1&nbp0=99&sur0={{ search.surfaceMin }}&px1={{ search.priceMax }}&pa=FR&ddlFiltres=nofilter&codeINSEE={% for city in search.cities %}{{ city.inseeCode }}{% if loop.last == false %},{% endif %}{% endfor %}" target="_blank">ParuVendu</a>
+                        </div>
+                    </div>
+
+              </div>
+        {% endfor %}
     </div>
 
 {% endblock %}

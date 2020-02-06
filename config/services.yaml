@@ -34,3 +34,9 @@ services:
     search.type:
         class: App\Form\SearchType
         arguments: ['@doctrine.orm.entity_manager']
+    population.command:
+        class: App\Command\RecoverPopulationCommand
+        arguments: ['@service_container']
+    pricemeter.command:
+        class: App\Command\RecoverPriceMeterCommand
+        arguments: ['@service_container']

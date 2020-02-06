@@ -63,16 +63,6 @@ class RecoverDataCommand extends Command
         $client = new Client();
         
         foreach($cities as $city){
-    
-            //Gestion du prix au m²
-            $priceMeter = null;
-            $crawler = $client->request('GET', 'https://www.rendementlocatif.com/investissement/villes/'.$city->getName().'/'.$city->getZipCode());
-            $crawler->filter('.report_sub_block .value')->each(function ($node) use (&$priceMeter) {
-                if(strpos($node->text(), "/m2") !== false){
-                    $priceMeter = str_replace("€ /m2", "", $node->text());
-                    $priceMeter = str_replace(" ", "", $priceMeter);
-                }
-            });
             
             //Gestion des indicateur INSEE
             $crawler = $client->request('GET', 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-'.$city->getInseeCode());
@@ -116,7 +106,7 @@ class RecoverDataCommand extends Command
                             }
 
                         });
-            } catch (Exception $ex) {
+            } catch (\Exception $ex) {
 
             }
                     
@@ -130,7 +120,7 @@ class RecoverDataCommand extends Command
                             }
 
                         });
-            } catch (Exception $ex) {
+            } catch (\Exception $ex) {
 
             }
                     
@@ -143,7 +133,7 @@ class RecoverDataCommand extends Command
                                 $ageCombine[$node->filter('th')->text()] = str_replace(",", ".", $node->filter('td')->eq(1)->text());
                             }
                         });
-            } catch (Exception $ex) {
+            } catch (\Exception $ex) {
 
             }
                     
@@ -168,39 +158,6 @@ class RecoverDataCommand extends Command
                 $indic->setTabData($indicatorsRef[$indicator->getCode()]);
             }
             
-            if($city->getPrice() == null){
-                $price = new Prices();
-                $price->setCity($city);
-            }
-            else{
-                $price = $city->getPrice();
-            }
-            
-            $price->setPriceMeter($priceMeter);
-            
-            if($price->getId() == null){
-                $em->persist($price);
-            }
-            
-            //recupérer la popoulation avec l'url suivante:
-            //https://geo.api.gouv.fr/communes/33063?fields=nom,code,codesPostaux,codeDepartement,codeRegion,population&format=geojson&geometry=centre
-            $urlGeoGouv = $this->container->getParameter("url_api_geo_gouv").$city->getInseeCode().$this->container->getParameter("url_api_geo_gouv_second");
-            
-            $data = $this->curl($urlGeoGouv);
-            if(isset($data['properties']['population'])){
-                //si la ville n'a pas de population en bdd
-                if($city->getPopulation() == null){
-                    $population = new Population();
-                    $population->setCity($city);
-                    $em->persist($population);
-                }
-                else{
-                    $population = $city->getPopulation();
-                }
-                $population->setTotal($data['properties']['population']);
-                
-            }
-            
             $progressBar->advance();
         }
         
@@ -212,19 +169,6 @@ class RecoverDataCommand extends Command
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
         }        
-    }
-    
-    private function curl($url){
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url); 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch);
-
-        $data = json_decode($result,true);
-        
-        return $data;
     }
     
     private function clean($string) {

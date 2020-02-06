@@ -8,6 +8,7 @@ use App\Entity\Cities;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\SearchType;
 use App\Entity\Search;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
 * @Route("/recherche")
@@ -76,6 +77,29 @@ class SearchController extends AbstractController
         ]);
     }
     
+    /**
+     * @Route("/{id}/supprimer", requirements={"id"="\d+"})
+     * @Method({"POST"})
+     */
+    public function delete(Request $request, $id){
+        $search = $this->getSearchRepository()->findOneById($id);
+        if($search === null || $search->getUser() !== $this->getUser()){
+            $this->addFlash("error", "Recherche introuvable");
+            return $this->redirect($this->generateUrl('app_search_index'));
+        }
+        
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($search);
+            $em->flush();
+            $this->addFlash("success", "Recherche supprimée");
+            return $this->redirect($this->generateUrl('app_search_index'));
+        } catch (\Exception $ex) {
+            $this->addFlash("error", "Recherche introuvable");
+        }
+    }
+
+
 
 
     private function getSearchRepository(){
