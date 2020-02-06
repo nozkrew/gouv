@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% form_theme form 'bundles/jquery.collection.html.twig' %}
-
 {% block title %}{% if search.id is null %}Ajouter une recherche{% else %}Modifier {{search.name}}{% endif %}{% endblock %}
 
 {% block title_h1 %}{% if search.id is null %}Ajouter une recherche{% else %}Modifier {{search.name}}{% endif %}{% endblock %}

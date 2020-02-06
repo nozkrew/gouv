@@ -19,7 +19,7 @@ class User extends BaseUser
      * @ORM\Column(type="integer")
      */
     protected $id;
-    
+        
     /**
      * @var \Cities
      *
@@ -34,6 +34,7 @@ class User extends BaseUser
     
     public function __construct() {
         parent::__construct();
+        $this->groups = new ArrayCollection();
         $this->cities = new ArrayCollection();
         $this->searches = new ArrayCollection();
     }
