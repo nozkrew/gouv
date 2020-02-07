@@ -1,0 +1,15 @@
+{% block LinkType_row %}
+<div class="form-group row">
+  {{ form_errors(form) }}
+  {{ form_widget(form) }}
+</div>
+{% endblock %}
+
+{% block LinkType_widget %}
+    <div class="col-sm-10">
+        {{ form_widget(form, {'attr':{'class':"form-control", 'placeholder':"https://www.avendrealouer.fr/recherche.html?pageIndex=1&sortPropertyName=Price&sortDirection=Descending&searchTypeID=1&typeGroupCategoryID=1&localityIds=101-18798&typeGroupIds=10,105,11,12,1,2,4,5,7,98&maximumPrice=200000&minimumSurface=90"}}) }}
+    </div>
+    <div class="col-sm-2">
+        <a href="#" class="collection-remove btn btn-danger btn-sm"><i class="far fa-times-circle"></i></a>
+    </div>
+{% endblock %}

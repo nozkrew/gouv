@@ -7,7 +7,7 @@
     "webpack-notifier": "1.6.0"
   },
   "dependencies": {
-    "bootstrap-multiselect": "^0.9.15",
+    "bootstrap-select": "^1.13.12",
     "datatables.net-bs4": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "jquery-ui": "^1.12.1",

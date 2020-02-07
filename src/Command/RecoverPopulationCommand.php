@@ -11,6 +11,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use App\Entity\Cities;
 use Symfony\Component\Console\Helper\ProgressBar;
+use App\Entity\Population;
 
 class RecoverPopulationCommand extends Command
 {

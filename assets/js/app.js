@@ -20,6 +20,9 @@ require('startbootstrap-sb-admin-2/js/sb-admin-2.min.js');
 
 require('jquery-ui/ui/widgets/autocomplete');
 
+var bootstrapSelect = require("bootstrap-select");
+require("bootstrap-select/dist/css/bootstrap-select.min.css");
+
 require('../css/app.css');
 
 //import { bootstrapMultiselect } from 'bootstrap-multiselect/dist/js/bootstrap-multiselect';

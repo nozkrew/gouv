@@ -1,0 +1,1 @@
+require('symfony-collection/jquery.collection.js');

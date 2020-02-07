@@ -51,7 +51,9 @@ class CitiesSearchPartType extends AbstractType
         });
     }
     
-    
+    public function getBlockPrefix(){
+        return 'CitiesSearchPartType';
+    }
 
     public function configureOptions(OptionsResolver $resolver)
     {

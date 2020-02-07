@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme form 'form/links-theme.html.twig' 'form/cities-search-theme.html.twig' 'bundles/jquery.collection.html.twig' %}
+
 {% block title %}{% if search.id is null %}Ajouter une recherche{% else %}Modifier {{search.name}}{% endif %}{% endblock %}
 
 {% block title_h1 %}{% if search.id is null %}Ajouter une recherche{% else %}Modifier {{search.name}}{% endif %}{% endblock %}
@@ -35,7 +37,7 @@
                                 {{ form_widget(form.search, {'attr':{'class':"form-control autocompleteSearchForm", 'placeholder':'Ex: Dax, Bordeaux, ...'}}) }}
                             </div>
                         </div>
-                        <div class="form-group row">
+{#                        <div class="form-group row">
                             {{ form_label(form.cities, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
                             <div class="col-sm-10">
                                 <ul id="cities-list"
@@ -46,8 +48,21 @@
                                     <li>{{ form_widget(city) }}</li>
                                 {% endfor %}
                                 </ul>
+                            </div>              
+                        </div>#}
+                        <div class="form-group row">
+                            {{ form_label(form.cities, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
+                            <div class="col-sm-10" id="cities-list" data-prototype="{{ form_row(form.cities.vars.prototype)|e }}" data-widget-counter="{{ form.cities|length }}">
+                                {{ form_widget(form.cities) }}
                             </div>
-                                              
+                        </div>
+                        <hr>
+                        <h4 class="mb-4">Ajoutez vos URL de recherches</h4>
+                        <div class="form-group row">
+                            {{ form_label(form.links, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
+                            <div class="col-sm-10" id="">
+                                {{ form_widget(form.links) }}
+                            </div>
                         </div>
                         {{ form_rest(form) }}
                         <div class="form-group row">
@@ -105,12 +120,17 @@
     <script type="text/javascript">
         
         $(function(){
+            
+            $('.links-collection').collection({
+                allow_up: false,
+                allow_down: false,
+                add_at_the_end: true,
+                add: '<a href="#" class="btn btn-sm btn-primary"><i class="far fa-plus-square"></i> Ajouter une URL</a>',
+            });
+            
             initAutocomplete();
             
-            $collectionHolder = $('ul#cities-list');
-            $collectionHolder.find('li').each(function() {
-                addCityFormDeleteLink($(this));
-            });
+            clickRemove();
         });
         
         function addCityForm(inseeCode, zipCode, name){
@@ -120,54 +140,51 @@
             var newWidget = list.attr('data-prototype');
             newWidget = newWidget.replace(/__name__/g, counter);
             
-            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+            var newElem = list.append(newWidget);
             newElem.prependTo(list);
-            addCityFormDeleteLink(newElem);
+            clickRemove();
             
             $('#search_cities_'+counter+'_inseeCode').val(inseeCode);
             $('#search_cities_'+counter+'_name').val(name + " ("+zipCode+")");
             
             counter++;
             list.data('widget-counter', counter);
-
-            
         }
         
-        function addCityFormDeleteLink($cityFormLi) {
-                var $removeFormButton = $('<button class="btn btn-danger btn-sm" type="button"><i class="far fa-times-circle"></i></button>');
-                $cityFormLi.append($removeFormButton);
-
-                $removeFormButton.on('click', function(e) {
-                    $cityFormLi.remove();
+        function clickRemove() {
+                $('.collection-remove-cities').on('click', function(e) {
+                    e.preventDefault();
+                    console.log('sss');
+                    $(this).closest('.form-group.row').remove();
                 });
         }
         
         function initAutocomplete(){
             $( ".autocompleteSearchForm" ).autocomplete({
-                    source: function(query, response){
-                        $.ajax({
-                            url: '{{ path('app_utility_cities') }}?query='+query.term,
-                            dataType: 'json',
-                            success: function (data) {
-                                response($.map(data, function (item) {
-                                    return {
-                                        label: item.name+" ("+item.zipCode+")",
-                                        value: item.inseeCode,
-                                        name: item.name,
-                                        zipCode: item.zipCode,
-                                    };
-                                }));
-                            }
-                        })
-                    },
-                    minLength: 2
-              });
+                source: function(query, response){
+                    $.ajax({
+                        url: '{{ path('app_utility_cities') }}?query='+query.term,
+                        dataType: 'json',
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.name+" ("+item.zipCode+")",
+                                    value: item.inseeCode,
+                                    name: item.name,
+                                    zipCode: item.zipCode,
+                                };
+                            }));
+                        }
+                    })
+                },
+                minLength: 2
+            });
               
-              $( ".autocompleteSearchForm").on( "autocompleteselect", function( event, ui ) {
-                    event.preventDefault();
-                    addCityForm(ui.item.value, ui.item.zipCode, ui.item.name);
-                    $(this).val('');
-              } );
+            $( ".autocompleteSearchForm").on( "autocompleteselect", function( event, ui ) {
+                event.preventDefault();
+                addCityForm(ui.item.value, ui.item.zipCode, ui.item.name);
+                $(this).val('');
+            } );
         }
         
     </script>

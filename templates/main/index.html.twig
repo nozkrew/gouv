@@ -6,7 +6,7 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">Recherche</h6>
@@ -17,7 +17,7 @@
                     <div class="form-group row">
                         {{ form_label(form.dpt, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
                         <div class="col-sm-10">
-                            {{ form_widget(form.dpt, {'attr':{'class':"form-control"}}) }}
+                            {{ form_widget(form.dpt, {'attr':{'class':"form-control", "data-live-search":"true", "title":"Choisissez un département...", "data-actions-box":"true", "data-style":"btn-default"}}) }}
                         </div>
                     </div>
 
@@ -55,6 +55,19 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Comment rechercher une ville ?</h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 18rem;" src="{{ asset('/build/undraw_house_searching_n8mp.svg') }}" alt="">
+                    </div>
+                    Proin ac ullamcorper sem, in mollis lorem. Quisque ullamcorper augue ac pretium semper. Morbi eu placerat orci. Curabitur a augue quis metus sollicitudin tincidunt id vitae odio.
+                </div>
+            </div>
+        </div>
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -73,7 +86,7 @@
     {{parent()}}
     <script type="text/javascript">
         $(document).ready(function() {
-            //$('#search_dpt').selectpicker();
+            $('#search_cities_dpt').selectpicker();
         });
     </script>
 {% endblock %}

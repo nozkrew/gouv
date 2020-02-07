@@ -46,6 +46,11 @@ class Search
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="")
      */
     private $user;
+    
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $links = [];
 
     public function __construct()
     {
@@ -127,6 +132,18 @@ class Search
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getLinks(): ?array
+    {
+        return $this->links;
+    }
+
+    public function setLinks(array $links): self
+    {
+        $this->links = $links;
 
         return $this;
     }

@@ -28,3 +28,7 @@ li.ui-menu-item:hover{
     color: white;
     cursor: default;
 }
+
+.bootstrap-select > .dropdown-toggle.btn-default{
+    border: 1px solid #d1d3e2;
+}

@@ -20,6 +20,7 @@ use Symfony\Component\Form\CallbackTransformer;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Repository\CitiesRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Form\LinkType;
 
 class SearchType extends AbstractType
 {
@@ -54,6 +55,16 @@ class SearchType extends AbstractType
                 'allow_delete' => true,
                 'prototype' => true,
                 'label' => "Vos villes"
+            ))
+            ->add('links', CollectionType::class, array(
+                'entry_type' => LinkType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype' => true,
+                'label' => "Vos URL",
+                'attr' => array(
+                    'class' => 'links-collection'
+                )
             ))
         ;
         
