@@ -37,6 +37,12 @@ class CalculateurType extends AbstractType
                         'placeholder' => "Ex: 10000"
                     )
                 ))
+                ->add('ameublement', IntegerType::class, array(
+                    'label' => "Ameublement",
+                    'attr' => array(
+                        'placeholder' => "Ameublement"
+                    )
+                ))
                 ->add('fraisNotaire', IntegerType::class, array(
                     'label' => "Frais de notaire",
                     'attr' => array(

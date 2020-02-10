@@ -20,21 +20,27 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{ form_label(form.loyer, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-8">
-                                {{ form_widget(form.loyer, {'attr':{"class":'form-control'}}) }}
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             {{ form_label(form.metreCarre, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8">
                                 {{ form_widget(form.metreCarre, {'attr':{"class":'form-control'}}) }}
                             </div>
                         </div>
                         <div class="form-group row">
+                            {{ form_label(form.loyer, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8">
+                                {{ form_widget(form.loyer, {'attr':{"class":'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             {{ form_label(form.apport, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8">
                                 {{ form_widget(form.apport, {'attr':{"class":'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.ameublement, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8">
+                                {{ form_widget(form.ameublement, {'attr':{"class":'form-control'}}) }}
                             </div>
                         </div>
                         <div class="form-group row">
@@ -123,7 +129,7 @@
                 calculateTravaux();
             });
             
-            $('#calculateur_prix, #calculateur_apport, #calculateur_fraisNotaire, #calculateur_fraisNotaireEstime, #calculateur_travaux, #calculateur_garantie, #calculateur_garantieEstimation, #calculateur_metreCarre, #calculateur_travauxAide').on('change', function(){
+            $('#calculateur_prix, #calculateur_apport, #calculateur_fraisNotaire, #calculateur_fraisNotaireEstime, #calculateur_travaux, #calculateur_garantie, #calculateur_garantieEstimation, #calculateur_metreCarre, #calculateur_travauxAide, #calculateur_ameublement').on('change', function(){
                 calculateTotal();
             });
            
@@ -192,6 +198,7 @@
                 var fraisNotaire = parseInt($('#calculateur_fraisNotaire').val());
                 var travaux = parseInt($('#calculateur_travaux').val());
                 var garantie = parseInt($('#calculateur_garantie').val());
+                var ameublement = parseInt($('#calculateur_ameublement').val());
                 
                 if(fraisNotaire == 0 || isNaN(fraisNotaire)){
                     fraisNotaire = parseInt($('#calculateur_fraisNotaireEstime').val());
@@ -214,6 +221,9 @@
                     }
                     if(!isNaN(garantie)){
                         total = total + garantie;
+                    }
+                    if(!isNaN(ameublement)){
+                        total = total + ameublement;
                     }
                     
                     $('#totalProjet').text(total+" €");
