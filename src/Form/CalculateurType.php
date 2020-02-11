@@ -82,6 +82,62 @@ class CalculateurType extends AbstractType
                     ),
                     'placeholder' => 'SELECTIONNER'
                 ))
+                ->add('dureePret', IntegerType::class, array(
+                    'label' => "Durée du prêt",
+                    'attr' => array(
+                        'placeholder' => "Ex: 20",
+                        'max' => 35
+                    )
+                ))
+                ->add('tauxPret', IntegerType::class, array(
+                    'label' => "Taux bancaire",
+                    'attr' => array(
+                        'placeholder' => "Ex: 1.5",
+                        'step'=> '0.01',
+                        'min' => 0,
+                        'max' => 100
+                    )
+                ))
+                ->add('taxeFonciere', IntegerType::class, array(
+                    'label' => "Taxe foncière",
+                    'attr' => array(
+                        'placeholder' => "Ex: 1300"
+                    )
+                ))
+                ->add('chargesCopro', IntegerType::class, array(
+                    'label' => "Charges copropriété",
+                    'attr' => array(
+                        'placeholder' => "Ex: 1300"
+                    )
+                ))
+                ->add('chargesBien', IntegerType::class, array(
+                    'label' => "Charges du bien",
+                    'attr' => array(
+                        'placeholder' => "Ex: 5",
+                        'min' => 0,
+                        'max' => 100
+                    )
+                ))
+                ->add('gerance', IntegerType::class, array(
+                    'label' => "Frais de gérance",
+                    'attr' => array(
+                        'placeholder' => "Ex: 8",
+                        'min' => 0,
+                        'max' => 100
+                    )
+                ))
+                ->add('assurancePno', IntegerType::class, array(
+                    'label' => "Assurance PNO",
+                    'attr' => array(
+                        'placeholder' => "Ex: 200"
+                    )
+                ))
+                ->add('comptabilite', IntegerType::class, array(
+                    'label' => "Comptabilité",
+                    'attr' => array(
+                        'placeholder' => "Ex: 700"
+                    )
+                ))
         ;
     }
 

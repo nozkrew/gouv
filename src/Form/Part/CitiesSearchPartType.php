@@ -34,19 +34,23 @@ class CitiesSearchPartType extends AbstractType
             $city = $event->getData();
             
             if($city !== null){
+                //modification des options du champs inseeCode
+                $inseeCodeField = $form->get('inseeCode');
+                $inseeCodeOptions = $inseeCodeField->getConfig()->getOptions();
+                $inseeCodeType = $inseeCodeField->getConfig()->getType()->getInnerType();
+                $inseeCodeOptions['data'] = $city['inseeCode'];
+                $form->add('inseeCode', get_class($inseeCodeType), $inseeCodeOptions);
                 
-                //TODO : a ameliorer pour reprendre la configuration du champs
-                
-                $form->add('inseeCode', HiddenType::class, array(
-                    'data' => $city['inseeCode']
-                ));
-                $form->add('name', TextType::class, array(
-                    'data' => $city['name']." (".$city['zipCode'].")",
-                    'attr' => array(
-                        'class' => 'form-control-plaintext',
-                        'readonly' => 'readonly'
-                    )
-                ));
+                //modification des options du champs name
+                $nameField = $form->get('name');
+                $nameOptions = $nameField->getConfig()->getOptions();
+                $nameType = $nameField->getConfig()->getType()->getInnerType();
+                $nameOptions['data'] = $city['name']." (".$city['zipCode'].")";
+                $nameOptions['attr'] = array(
+                                            'class' => 'form-control-plaintext',
+                                            'readonly' => 'readonly'
+                                        );
+                $form->add('name', get_class($nameType), $nameOptions);
             }
         });
     }

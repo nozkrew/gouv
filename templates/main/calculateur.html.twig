@@ -13,40 +13,61 @@
                 </div>
                 <div class="card-body">
                     {{ form_start(form) }}
+                        <h4>Revenus locatifs</h4>
+                        <div class="form-group row">
+                            {{ form_label(form.loyer, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8 input-group">
+                                {{ form_widget(form.loyer, {'attr':{"class":'form-control updateCharge'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4>Frais d'achat</h4>
                         <div class="form-group row">
                             {{ form_label(form.prix, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-8">
+                            <div class="col-sm-8 input-group">
                                 {{ form_widget(form.prix, {'attr':{"class":'form-control'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.metreCarre, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-8">
+                            <div class="col-sm-8 input-group">
                                 {{ form_widget(form.metreCarre, {'attr':{"class":'form-control'}}) }}
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            {{ form_label(form.loyer, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-8">
-                                {{ form_widget(form.loyer, {'attr':{"class":'form-control'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">m²</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.apport, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-8">
+                            <div class="col-sm-8 input-group">
                                 {{ form_widget(form.apport, {'attr':{"class":'form-control'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.ameublement, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-8">
+                            <div class="col-sm-8 input-group">
                                 {{ form_widget(form.ameublement, {'attr':{"class":'form-control'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.fraisNotaire, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 input-group">
                                 {{ form_widget(form.fraisNotaire, {'attr':{"class":'form-control'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
                             </div>
                             <div class="col-sm-4">
                                 {{ form_widget(form.fraisNotaireEstime, {'attr':{"class":'form-control-plaintext'}}) }}
@@ -54,8 +75,11 @@
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.travaux, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 input-group">
                                 {{ form_widget(form.travaux, {'attr':{"class":'form-control'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
                             </div>
                             <div class="col-sm-4">
                                 {{ form_widget(form.travauxAide, {'attr':{"class":'form-control'}}) }}
@@ -63,11 +87,88 @@
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.garantie, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 input-group">
                                 {{ form_widget(form.garantie, {'attr':{"class":'form-control'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
                             </div>
                             <div class="col-sm-4">
                                 {{ form_widget(form.garantieEstimation, {'attr':{"class":'form-control-plaintext'}}) }}
+                            </div>
+                        </div>
+                        <hr>
+                        <h4>Prêt</h4>
+                        <div class="form-group row">
+                            {{ form_label(form.dureePret, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
+                            <div class="col-sm-4 input-group">
+                                {{ form_widget(form.dureePret, {'attr':{"class":'form-control updateCharge'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">ans</span>
+                                </div>
+                            </div>
+                            {{ form_label(form.tauxPret, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
+                            <div class="col-sm-4 input-group">
+                                {{ form_widget(form.tauxPret, {'attr':{"class":'form-control updateCharge'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4>Charges annuelles</h4>
+                        <div class="form-group row">
+                            {{ form_label(form.taxeFonciere, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8 input-group">
+                                {{ form_widget(form.taxeFonciere, {'attr':{"class":'form-control updateCharge'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.chargesCopro, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8 input-group">
+                                {{ form_widget(form.chargesCopro, {'attr':{"class":'form-control updateCharge'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.chargesBien, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8 input-group">
+                                {{ form_widget(form.chargesBien, {'attr':{"class":'form-control updateCharge'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.gerance, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8 input-group">
+                                {{ form_widget(form.gerance, {'attr':{"class":'form-control updateCharge'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.assurancePno, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8 input-group">
+                                {{ form_widget(form.assurancePno, {'attr':{"class":'form-control updateCharge'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.comptabilite, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            <div class="col-sm-8 input-group">
+                                {{ form_widget(form.comptabilite, {'attr':{"class":'form-control updateCharge'}}) }}
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€</span>
+                                </div>
                             </div>
                         </div>
                     {{ form_rest(form) }}
@@ -81,7 +182,6 @@
                     <h6 class="m-0 font-weight-bold text-primary">Résultats</h6>
                 </div>
                 <div class="card-body">
-                    
                     <dl class="row">
                         <dt class="col-sm-6">Prix au m²</dt>
                         <dd class="col-sm-6" id="priceMeterCarre">N/A</dd>
@@ -91,6 +191,32 @@
                         
                         <dt class="col-sm-6">Coût du projet</dt>
                         <dd class="col-sm-6" id="totalProjet">N/A</dd>
+                    </dl>
+                    <hr>
+                    <dl class="row">
+                        <dt class="col-sm-6">Annuités prêt</dt>
+                        <dd class="col-sm-6" id="annuitePret">N/A</dd>
+                        
+                        <dt class="col-sm-6">Mensualité prêt</dt>
+                        <dd class="col-sm-6" id="mensualitePret">N/A</dd>
+                    </dl>
+                    <hr>
+                    <dl class="row">
+                        
+                        <dt class="col-sm-6">Recette annuelle</dt>
+                        <dd class="col-sm-6" id="recetteAnnuelle">N/A</dd>
+                        
+                        <dt class="col-sm-6">Frais annuels</dt>
+                        <dd class="col-sm-6" id="fraisAnnuels">N/A</dd>
+                        
+                        <dt class="col-sm-6">Frais annuels avec emprunt</dt>
+                        <dd class="col-sm-6" id="fraisAnnuelsPlusEmprunt">N/A</dd>
+                        
+                        <dt class="col-sm-6">Cashflow annuel</dt>
+                        <dd class="col-sm-6" id="cashflowAnnuel">N/A</dd>
+                        
+                        <dt class="col-sm-6">Cashflow mensuel</dt>
+                        <dd class="col-sm-6" id="cashflowMensuel">N/A</dd>
                     </dl>
                     
                 </div>
@@ -105,12 +231,18 @@
     <script type="text/javascript">
         $(function () {
             
+            var total = 0;
+            var recetteAnnuelle = 0;
+            var pretAnnuel = 0;
+            
             calculatePriceMeterCarre();
             calculateRentaBrute();
             calculateFraisNotaire();
             calculateGarantie(),
             calculateTravaux();
             calculateTotal();
+            calculateEmprunt();
+            calculateCharge();
             
             $('#calculateur_prix, #calculateur_metreCarre').on('change', function(){
                 calculatePriceMeterCarre();
@@ -132,6 +264,103 @@
             $('#calculateur_prix, #calculateur_apport, #calculateur_fraisNotaire, #calculateur_fraisNotaireEstime, #calculateur_travaux, #calculateur_garantie, #calculateur_garantieEstimation, #calculateur_metreCarre, #calculateur_travauxAide, #calculateur_ameublement').on('change', function(){
                 calculateTotal();
             });
+            
+            $('#calculateur_tauxPret, #calculateur_dureePret').on('change', function(){
+                calculateEmprunt();
+            });
+            
+            $('.updateCharge').on('change', function(){
+                calculateCharge();
+            });
+            
+            function calculateCharge(){
+                var taxeFonciere = parseInt($('#calculateur_taxeFonciere').val());
+                var chargeCopro = parseInt($('#calculateur_chargesCopro').val());
+                var entretien = parseInt($('#calculateur_loyer').val()) * 12 * (parseInt($('#calculateur_chargesBien').val()) / 100) ;
+                var gerance = parseInt($('#calculateur_loyer').val()) * 12 * (parseInt($('#calculateur_gerance').val()) / 100) ;
+                var pno = parseInt($('#calculateur_assurancePno').val());
+                var comptabilite = parseInt($('#calculateur_comptabilite').val());
+                
+                var totalCharges = 0;
+                if(!isNaN(taxeFonciere)){
+                    totalCharges = totalCharges + taxeFonciere;
+                }
+                if(!isNaN(chargeCopro)){
+                    totalCharges = totalCharges + chargeCopro;
+                }
+                if(!isNaN(chargeCopro)){
+                    totalCharges = totalCharges + chargeCopro;
+                }
+                if(!isNaN(entretien)){
+                    totalCharges = totalCharges + entretien;
+                }
+                if(!isNaN(gerance)){
+                    totalCharges = totalCharges + gerance;
+                }
+                if(!isNaN(pno)){
+                    totalCharges = totalCharges + pno;
+                }
+                if(!isNaN(comptabilite)){
+                    totalCharges = totalCharges + comptabilite;
+                }
+                
+                if(totalCharges > 0){
+                    $('#fraisAnnuels').text(totalCharges+" €");
+                }
+                else{
+                    $('#fraisAnnuels').text("N/A");
+                }
+                
+                var cashflow = 0;
+                if(pretAnnuel > 0){
+                    //on rajoute le pret
+                    totalCharges = totalCharges + pretAnnuel;
+                    
+                    cashflow = recetteAnnuelle - totalCharges;
+                }
+                
+                if(totalCharges > 0){
+                    $('#fraisAnnuelsPlusEmprunt').text(totalCharges+" €");
+                }
+                else{
+                    $('#fraisAnnuelsPlusEmprunt').text("N/A");
+                }
+                
+                
+                if(cashflow !== 0){
+                    $('#cashflowAnnuel').text(cashflow + " €");
+                    $('#cashflowMensuel').text(Math.round(cashflow / 12) + " €");
+                }
+                else{
+                    $('#cashflowAnnuel').text("N/A");
+                    $('#cashflowMensuel').text("N/A");
+                }
+                
+            }
+            
+            function calculateEmprunt(){
+                
+                var emprunt = total;
+                var taux = parseFloat($('#calculateur_tauxPret').val())/100;
+                var duree = parseInt($('#calculateur_dureePret').val());
+                
+                var annuel = 0;
+                
+                if(emprunt !== 0 && isFinite(taux) && !isNaN(taux) && taux !== 0 && isFinite(duree) && !isNaN(duree) && duree !== 0){
+                    annuel = (( emprunt *( taux /12))/( 1- Math.pow((1+( taux /12)), (-duree * 12)) ))*12;
+                }
+                
+                if(annuel !== 0 && !isNaN(annuel)){
+                    pretAnnuel = Math.round(annuel);
+                    $('#annuitePret').text(Math.round(annuel)+" €");
+                    $('#mensualitePret').text(Math.round(annuel / 12)+" €");
+                }
+                else{
+                    pretAnnuel = 0;
+                    $('#annuitePret').text("N/A");
+                    $('#mensualitePret').text("N/A");
+                }
+            }
            
         
             function calculatePriceMeterCarre(){
@@ -148,6 +377,7 @@
             }
             
             function calculateRentaBrute(){
+                
                 var price = $('#calculateur_prix').val();
                 var loyer = $('#calculateur_loyer').val();
                 
@@ -158,6 +388,16 @@
                 }
                 else{
                     $('#rentaBrute').text("N/A");
+                }
+                
+                var recette = parseInt($('#calculateur_loyer').val()) * 12;
+                if(!isNaN(recette)){
+                    recetteAnnuelle = recette;
+                    $('#recetteAnnuelle').text(recette+" €");
+                }
+                else{
+                    recetteAnnuelle = 0;
+                    $('#recetteAnnuelle').text("N/A");
                 }
             }
             
@@ -208,8 +448,8 @@
                     garantie = parseInt($('#calculateur_garantieEstimation').val());
                 }
                 
-                if(!isNaN(price)){
-                    var total = price;
+                if(!isNaN(price)){                    
+                    total = price;
                     if(!isNaN(apport)){
                         total = total - apport;
                     }
@@ -226,14 +466,13 @@
                         total = total + ameublement;
                     }
                     
-                    $('#totalProjet').text(total+" €");
+                    calculateEmprunt();
+                    
+                    $('#totalProjet').text(Math.round(total)+" €");
                 }
                 else{
                     $('#totalProjet').text("N/A");
-                }
-                
-                
-                
+                }                
             }
             
         });
