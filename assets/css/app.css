@@ -32,3 +32,7 @@ li.ui-menu-item:hover{
 .bootstrap-select > .dropdown-toggle.btn-default{
     border: 1px solid #d1d3e2;
 }
+
+.badge.bg-danger, .badge.bg-success, .badge.bg-warning{
+    color: white;
+}

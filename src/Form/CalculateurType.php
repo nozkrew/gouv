@@ -40,7 +40,7 @@ class CalculateurType extends AbstractType
                 ->add('ameublement', IntegerType::class, array(
                     'label' => "Ameublement",
                     'attr' => array(
-                        'placeholder' => "Ameublement"
+                        'placeholder' => "Ex: 6000"
                     )
                 ))
                 ->add('fraisNotaire', IntegerType::class, array(
@@ -76,9 +76,9 @@ class CalculateurType extends AbstractType
                 ->add('travauxAide', ChoiceType::class, array(
                     'label' => null,
                     'choices' => array(
-                        "Création" => 800,
+                        "Rénovation gros oeuvre" => 800,
                         "Rénovation" => 630,
-                        "Rafraichissement" => 260,
+                        "Rafraîchissement" => 260,
                     ),
                     'placeholder' => 'SELECTIONNER'
                 ))
@@ -105,17 +105,23 @@ class CalculateurType extends AbstractType
                     )
                 ))
                 ->add('chargesCopro', IntegerType::class, array(
-                    'label' => "Charges copropriété",
+                    'label' => "Charges de copropriété",
                     'attr' => array(
                         'placeholder' => "Ex: 1300"
                     )
                 ))
                 ->add('chargesBien', IntegerType::class, array(
-                    'label' => "Charges du bien",
+                    'label' => "Entretien du bien",
                     'attr' => array(
                         'placeholder' => "Ex: 5",
                         'min' => 0,
                         'max' => 100
+                    )
+                ))
+                ->add('chargesBienTotal', TextType::class, array(
+                    'label' => null,
+                    'attr' => array(
+                        'readonly' => 'readonly'
                     )
                 ))
                 ->add('gerance', IntegerType::class, array(
@@ -124,6 +130,12 @@ class CalculateurType extends AbstractType
                         'placeholder' => "Ex: 8",
                         'min' => 0,
                         'max' => 100
+                    )
+                ))
+                ->add('geranceTotal', TextType::class, array(
+                    'label' => null,
+                    'attr' => array(
+                        'readonly' => 'readonly'
                     )
                 ))
                 ->add('assurancePno', IntegerType::class, array(

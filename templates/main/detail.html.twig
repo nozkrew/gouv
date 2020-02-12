@@ -8,7 +8,7 @@
     <div class="row">
         <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card border-left-primary shadow h-90 py-2">
             <div class="card-body">
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
@@ -24,7 +24,7 @@
         </div>
                 
         <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-success shadow h-100 py-2">
+          <div class="card border-left-success shadow h-90 py-2">
             <div class="card-body">
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
@@ -40,7 +40,7 @@
         </div>
                 
         <div class="col-xl-6 col-md-6 mb-4">
-          <div class="card shadow h-100 mb-4">
+          <div class="card shadow h-90 mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Liens utiles</h6>
                 </div>
@@ -93,7 +93,7 @@
                         <canvas id="type"></canvas>
                     </div>
                     <hr>
-                    Vérifiez que le type de bien <b>corresponde à la demande</b>.
+                    Assurez-vous le que type de bien que vous souhaitez mettre à la location <b>corresponde à la demande</b>.
                 </div>
             </div>
         </div>
@@ -107,7 +107,7 @@
                         <canvas id="popByAge"></canvas>
                     </div>
                     <hr>
-                    En fonction de votre <b>mode d'exploitation</b> et du <b>type de bien</b> que vous souhaitez acheter, vérifier les tranches d'ages intéréssés.
+                    En fonction du <b>mode d'exploitation</b> (nu, meublé, colocation, ...) choisi et du <b>type de bien</b> (T1, T2, T3, ...) que vous souhaitez mettre en location, vérifier les tranches d'ages intéréssés.
                 </div>
             </div>
         </div>
@@ -133,11 +133,11 @@
     {{ encore_entry_script_tags('detail') }}
     <script type="text/javascript">
         
-        barChart("evoPop", [{{ evoPop.tabData|keys|join(',') }}], '{{evoPop.indicator.title}}', [{% for data in evoPop.tabData %}{{data}}{% if loop.last == false %},{% endif %}{% endfor %}]);
+        barChart("evoPop", [{{ evoPop.tabData|keys|join(',') }}], '{{evoPop.indicator.title}}', [{% for data in evoPop.tabData %}{{data}}{% if loop.last == false %},{% endif %}{% endfor %}], "{{ evoPop.indicator.unity }}");
         
-        doughnutChart('type', [{% for key, data in type.tabData %}"{{ key }}"{% if loop.last == false %},{% endif %}{% endfor %}], '{{type.indicator.title}}', [{% for data in type.tabData %}{{data}}{% if loop.last == false %},{% endif %}{% endfor %}]);
+        doughnutChart('type', [{% for key, data in type.tabData %}"{{ key }}"{% if loop.last == false %},{% endif %}{% endfor %}], '{{type.indicator.title}}', [{% for data in type.tabData %}{{data}}{% if loop.last == false %},{% endif %}{% endfor %}], "{{ type.indicator.unity }}");
         
-        barChart('popByAge', [{% for key, data in popByAge.tabData %}"{{ key }}"{% if loop.last == false %},{% endif %}{% endfor %}], '{{popByAge.indicator.title}}', [{% for data in popByAge.tabData %}{{data}}{% if loop.last == false %},{% endif %}{% endfor %}]);
-        barChart('popType', [{% for key, data in popType.tabData %} '{{ key }}'{% if loop.last == false %},{% endif %}{% endfor %}], '{{popType.indicator.title}}', [{% for data in popType.tabData %}{{data}}{% if loop.last == false %},{% endif %}{% endfor %}]);
+        barChart('popByAge', [{% for key, data in popByAge.tabData %}"{{ key }}"{% if loop.last == false %},{% endif %}{% endfor %}], '{{popByAge.indicator.title}}', [{% for data in popByAge.tabData %}{{data}}{% if loop.last == false %},{% endif %}{% endfor %}], "{{ popByAge.indicator.unity }}");
+        barChart('popType', [{% for key, data in popType.tabData %} '{{ key }}'{% if loop.last == false %},{% endif %}{% endfor %}], '{{popType.indicator.title}}', [{% for data in popType.tabData %}{{data}}{% if loop.last == false %},{% endif %}{% endfor %}], "{{ popType.indicator.unity }}");
     </script>
 {% endblock %}

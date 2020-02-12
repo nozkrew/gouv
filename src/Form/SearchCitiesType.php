@@ -27,7 +27,7 @@ class SearchCitiesType extends AbstractType
                     ->orderBy('u.code', 'ASC');
             },
             'placeholder' => "SELECTIONNER",
-            'label' => "Département",
+            'label' => "Département(s)",
             'multiple' => true
         ))
         ->add('populationMin', IntegerType::class, array(

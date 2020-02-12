@@ -6,11 +6,23 @@
 
 {% block body %}
     <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-body row">
+                    <div class="col-2">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 14rem;" src="{{ asset('/build/undraw_Calculator_0evy.svg') }}" alt="">
+                        </div>
+                    </div>
+                    <div class="col-10 align-self-center">
+                        Un bien vous semble intéréssant ? C'est le moment de faire parler les chiffres ! Le calculateur vous permet d'avoir tous les chiffres nécéssaires pour décider de faire une <b>offre d'achat</b> ou pas.<br>
+                        Remplissez tous les champs et voyez d'un coup d'oeil si c'est une bonne affaire. Nous vous conseillons de chercher une rentabilité <b>supérieure à 10%</b> et un <b>cashflow positif</b>.
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-xl-8 col-lg-7">
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Calculateur</h6>
-                </div>
                 <div class="card-body">
                     {{ form_start(form) }}
                         <h4>Revenus locatifs</h4>
@@ -137,20 +149,26 @@
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.chargesBien, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-8 input-group">
+                            <div class="col-sm-4 input-group">
                                 {{ form_widget(form.chargesBien, {'attr':{"class":'form-control updateCharge'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">%</span>
                                 </div>
                             </div>
+                            <div class="col-sm-4">
+                                {{ form_widget(form.chargesBienTotal, {'attr':{"class":'form-control-plaintext'}}) }}
+                            </div>
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.gerance, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
-                            <div class="col-sm-8 input-group">
+                            <div class="col-sm-4 input-group">
                                 {{ form_widget(form.gerance, {'attr':{"class":'form-control updateCharge'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">%</span>
                                 </div>
+                            </div>
+                            <div class="col-sm-4">
+                                {{ form_widget(form.geranceTotal, {'attr':{"class":'form-control-plaintext'}}) }}
                             </div>
                         </div>
                         <div class="form-group row">
@@ -211,6 +229,9 @@
                         
                         <dt class="col-sm-6">Frais annuels avec emprunt</dt>
                         <dd class="col-sm-6" id="fraisAnnuelsPlusEmprunt">N/A</dd>
+                    </dl>
+                    <hr>
+                    <dl class="row">
                         
                         <dt class="col-sm-6">Cashflow annuel</dt>
                         <dd class="col-sm-6" id="cashflowAnnuel">N/A</dd>
@@ -218,7 +239,6 @@
                         <dt class="col-sm-6">Cashflow mensuel</dt>
                         <dd class="col-sm-6" id="cashflowMensuel">N/A</dd>
                     </dl>
-                    
                 </div>
             </div>
         </div>
@@ -288,14 +308,19 @@
                 if(!isNaN(chargeCopro)){
                     totalCharges = totalCharges + chargeCopro;
                 }
-                if(!isNaN(chargeCopro)){
-                    totalCharges = totalCharges + chargeCopro;
-                }
                 if(!isNaN(entretien)){
+                    $('#calculateur_chargesBienTotal').val(Math.round(entretien));
                     totalCharges = totalCharges + entretien;
                 }
+                else{
+                    $('#calculateur_chargesBienTotal').val('');
+                }
                 if(!isNaN(gerance)){
+                    $('#calculateur_geranceTotal').val(Math.round(gerance));
                     totalCharges = totalCharges + gerance;
+                }
+                else{
+                    $('#calculateur_geranceTotal').val("");
                 }
                 if(!isNaN(pno)){
                     totalCharges = totalCharges + pno;
@@ -312,12 +337,12 @@
                 }
                 
                 var cashflow = 0;
-                if(pretAnnuel > 0){
-                    //on rajoute le pret
-                    totalCharges = totalCharges + pretAnnuel;
-                    
-                    cashflow = recetteAnnuelle - totalCharges;
-                }
+
+                //on rajoute le pret
+                totalCharges = totalCharges + pretAnnuel;
+                //calcul cashflow
+                cashflow = recetteAnnuelle - totalCharges;
+               
                 
                 if(totalCharges > 0){
                     $('#fraisAnnuelsPlusEmprunt').text(totalCharges+" €");
@@ -325,16 +350,20 @@
                 else{
                     $('#fraisAnnuelsPlusEmprunt').text("N/A");
                 }
-                
-                
-                if(cashflow !== 0){
-                    $('#cashflowAnnuel').text(cashflow + " €");
-                    $('#cashflowMensuel').text(Math.round(cashflow / 12) + " €");
+
+                if(cashflow < 0){
+                    var text = "<span class='badge bg-danger'>"+cashflow+" €</span>";
                 }
-                else{
-                    $('#cashflowAnnuel').text("N/A");
-                    $('#cashflowMensuel').text("N/A");
+                else if (cashflow == 0) {
+                    var text = "<span class='badge bg-warning'>"+cashflow+" €</span>";
                 }
+                else if (cashflow > 0) {
+                    var text = "<span class='badge bg-success'>"+cashflow+" €</span>";
+                }
+
+                $('#cashflowAnnuel').html(text);
+                $('#cashflowMensuel').text(Math.round(cashflow / 12) + " €");
+     
                 
             }
             
@@ -384,7 +413,22 @@
                 var renta = loyer * 12 / price * 100;
                 
                 if(isFinite(renta) && !isNaN(renta) && renta !== 0){
-                    $('#rentaBrute').text(Math.round(renta)+" %");
+                    
+                    var round = renta.toFixed(2);
+                    
+                    if(round > 10){
+                        var text = "<span class='badge bg-success'>"+round+" %</span>";
+                    }
+                    else if (round == 10) {
+                        var text = "<span class='badge bg-warning'>"+round+" %</span>";
+                    }
+                    else if (round < 10) {
+                        var text = "<span class='badge bg-danger'>"+round+" %</span>";
+                    }
+
+
+                    
+                    $('#rentaBrute').html(text);
                 }
                 else{
                     $('#rentaBrute').text("N/A");
