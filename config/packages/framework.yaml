@@ -17,9 +17,4 @@ framework:
     #fragments: true
     php_errors:
         log: true
-        
-parameters:
-    url_base: https://datafrance.info/
-    url_second: /immobilier/prix.json?city_code=
-    url_api_geo_gouv: https://geo.api.gouv.fr/communes/
-    url_api_geo_gouv_second: ?fields=nom,code,codesPostaux,codeDepartement,codeRegion,population&format=geojson&geometry=centre
+

@@ -5,7 +5,12 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'fr'
-    mailer_user: mail@mail.com
+    mailer_user: application@linvestissement.net
+    mailer_name: 'Application Linvestissement.net'
+    url_base: https://datafrance.info/
+    url_second: /immobilier/prix.json?city_code=
+    url_api_geo_gouv: https://geo.api.gouv.fr/communes/
+    url_api_geo_gouv_second: ?fields=nom,code,codesPostaux,codeDepartement,codeRegion,population&format=geojson&geometry=centre
 
 services:
     # default configuration for services in *this* file
