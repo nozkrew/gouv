@@ -29,14 +29,17 @@ class RecoverPriceMeterCommand extends Command
     {
         $this
             ->setDescription("Commande de récupération les données sur la population")
+            ->addOption('no-update', null, InputOption::VALUE_NONE, "true pour mettre à jour le prix de la ville, false pour passer si la ville a déja un prix")
             ->addArgument('depCode', InputArgument::OPTIONAL, 'Code du département')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        
         $io = new SymfonyStyle($input, $output);
         $depCode = $input->getArgument('depCode');
+        $noUpdate = $input->getOption('no-update');
         
         if($depCode){
             $cities = $this->getCitiesRepository()->findBy(array(
@@ -54,41 +57,53 @@ class RecoverPriceMeterCommand extends Command
         
         $em = $this->container->get('doctrine')->getManager();
         
-        foreach($cities as $city){
+        foreach($cities as $key => $city){
+            
             $progressBar->advance();
             
-            //Gestion du prix au m²
-            $priceMeter = null;
-            $crawler = $client->request('GET', 'https://www.rendementlocatif.com/investissement/villes/'.$city->getName().'/'.$city->getZipCode());
-            $crawler->filter('.report_sub_block .value')->each(function ($node) use (&$priceMeter) {
-                if(strpos($node->text(), "/m2") !== false){
-                    $priceMeter = str_replace("€ /m2", "", $node->text());
-                    $priceMeter = str_replace(" ", "", $priceMeter);
+            //si la ville n'a pas de prix ou quelle a un prix mais qu'on veux l'updater
+            if($city->getPrice() == null || ($city->getPrice() !== null && !$noUpdate) ){
+            
+                //Gestion du prix au m²
+                $priceMeter = null;
+                $crawler = $client->request('GET', 'https://www.rendementlocatif.com/investissement/villes/'.$city->getName().'/'.$city->getZipCode());
+                $crawler->filter('.report_sub_block .value')->each(function ($node) use (&$priceMeter) {
+                    if(strpos($node->text(), "/m2") !== false){
+                        $priceMeter = str_replace("€ /m2", "", $node->text());
+                        $priceMeter = str_replace(" ", "", $priceMeter);
+                    }
+                });
+
+                if($city->getPrice() == null){
+                    $price = new Prices();
+                    $price->setCity($city);
                 }
-            });
+                else{
+                    $price = $city->getPrice();
+                }
+
+                $price->setPriceMeter($priceMeter);
+
+                if($price->getId() == null){
+                    $em->persist($price);
+                }
             
-            if($city->getPrice() == null){
-                $price = new Prices();
-                $price->setCity($city);
             }
-            else{
-                $price = $city->getPrice();
-            }
             
-            $price->setPriceMeter($priceMeter);
-            
-            if($price->getId() == null){
-                $em->persist($price);
+            //Toutes les 10 villes ou si c'est la dernière ville, on flush 
+            if($key % 10 == 0 || $key == count($cities) -1){
+                try{
+                    $em->flush();
+                } catch (\Exception $ex) {
+                    continue;
+                }
             }
         }
         $progressBar->finish();
         
-        try{
-            $em->flush();
-            $io->success('Fin de la commande');
-        } catch (\Exception $ex) {
-            $io->error($ex->getMessage());
-        } 
+     
+        $io->success('Fin de la commande');
+
         
         return 0;
     }
