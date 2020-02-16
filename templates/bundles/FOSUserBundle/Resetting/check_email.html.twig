@@ -1,9 +1,28 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
-{% trans_default_domain 'FOSUserBundle' %}
+{% block title %}Vérifier votre boite de messagerie{% endblock %}
 
 {% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
-</p>
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-10 col-lg-12 col-md-9">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <p>{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>                          
 {% endblock %}
