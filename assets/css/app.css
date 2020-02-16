@@ -36,3 +36,7 @@ li.ui-menu-item:hover{
 .badge.bg-danger, .badge.bg-success, .badge.bg-warning{
     color: white;
 }
+
+.alert{
+    z-index: 99;
+}
