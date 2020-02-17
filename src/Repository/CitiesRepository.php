@@ -77,6 +77,30 @@ class CitiesRepository extends ServiceEntityRepository
         
         return $qb->getQuery()->getResult();
     }
+    
+    public function findByNoIndicator($departement = null){
+        $qb = $this->createQueryBuilder("c");
+        $qb->leftJoin('c.indicatorValues', 'iv');
+        $qb->where('iv.city IS NULL');
+        if($departement !== null){
+            $qb->andWhere('c.departmentCode = :department');
+            $qb->setParameter("department", $departement);
+        }
+        
+        return $qb->getQuery()->getResult();
+    }
+    
+    public function findByNoPrices($departement = null){
+        $qb = $this->createQueryBuilder("c");
+        $qb->leftJoin('c.price', 'p');
+        $qb->where('p.city IS NULL');
+        if($departement !== null){
+            $qb->andWhere('c.departmentCode = :department');
+            $qb->setParameter("department", $departement);
+        }
+        
+        return $qb->getQuery()->getResult();
+    }
 
     
 }

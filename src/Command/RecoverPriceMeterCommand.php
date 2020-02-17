@@ -42,12 +42,23 @@ class RecoverPriceMeterCommand extends Command
         $noUpdate = $input->getOption('no-update');
         
         if($depCode){
-            $cities = $this->getCitiesRepository()->findBy(array(
-                "departmentCode" => $depCode
-            ));
+            if($noUpdate){
+                $cities = $this->getCitiesRepository()->findByNoPrices($depCode);
+            }
+            else{
+                $cities = $this->getCitiesRepository()->findBy(array(
+                    "departmentCode" => $depCode
+                ));
+            }
+            
         }
         else{
-            $cities = $this->getCitiesRepository()->findAll();
+            if($noUpdate){
+                $cities = $this->getCitiesRepository()->findByNoPrices();
+            }
+            else{
+                $cities = $this->getCitiesRepository()->findAll();
+            }
         }
         
         $progressBar = new ProgressBar($output, count($cities));
@@ -61,33 +72,28 @@ class RecoverPriceMeterCommand extends Command
             
             $progressBar->advance();
             
-            //si la ville n'a pas de prix ou quelle a un prix mais qu'on veux l'updater
-            if($city->getPrice() == null || ($city->getPrice() !== null && !$noUpdate) ){
-            
-                //Gestion du prix au m²
-                $priceMeter = null;
-                $crawler = $client->request('GET', 'https://www.rendementlocatif.com/investissement/villes/'.$city->getName().'/'.$city->getZipCode());
-                $crawler->filter('.report_sub_block .value')->each(function ($node) use (&$priceMeter) {
-                    if(strpos($node->text(), "/m2") !== false){
-                        $priceMeter = str_replace("€ /m2", "", $node->text());
-                        $priceMeter = str_replace(" ", "", $priceMeter);
-                    }
-                });
-
-                if($city->getPrice() == null){
-                    $price = new Prices();
-                    $price->setCity($city);
+            //Gestion du prix au m²
+            $priceMeter = null;
+            $crawler = $client->request('GET', 'https://www.rendementlocatif.com/investissement/villes/'.$city->getName().'/'.$city->getZipCode());
+            $crawler->filter('.report_sub_block .value')->each(function ($node) use (&$priceMeter) {
+                if(strpos($node->text(), "/m2") !== false){
+                    $priceMeter = str_replace("€ /m2", "", $node->text());
+                    $priceMeter = str_replace(" ", "", $priceMeter);
                 }
-                else{
-                    $price = $city->getPrice();
-                }
+            });
 
-                $price->setPriceMeter($priceMeter);
+            if($city->getPrice() == null){
+                $price = new Prices();
+                $price->setCity($city);
+            }
+            else{
+                $price = $city->getPrice();
+            }
 
-                if($price->getId() == null){
-                    $em->persist($price);
-                }
-            
+            $price->setPriceMeter($priceMeter);
+
+            if($price->getId() == null){
+                $em->persist($price);
             }
             
             //Toutes les 10 villes ou si c'est la dernière ville, on flush 

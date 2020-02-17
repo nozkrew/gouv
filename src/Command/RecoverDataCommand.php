@@ -32,6 +32,7 @@ class RecoverDataCommand extends Command
     {
         $this
             ->setDescription("Commande de récupération des données")
+            ->addOption('no-update', null, InputOption::VALUE_NONE, "true pour mettre à jour les données, false pour passer si la ville a déja des données")
             ->addArgument('depCode', InputArgument::OPTIONAL, 'Code du département')
         ;
     }
@@ -40,14 +41,29 @@ class RecoverDataCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $depCode = $input->getArgument('depCode');
+        $noUpdate = $input->getOption('no-update');
         
         if($depCode){
-            $cities = $this->getCitiesRepository()->findBy(array(
-                "departmentCode" => $depCode
-            ));
+            if($noUpdate){
+                //Recupérer toutes les villes par département qui n'ont pas d'indicateurs
+                $cities = $this->getCitiesRepository()->findByNoIndicator($depCode);
+            }
+            else{
+                $cities = $this->getCitiesRepository()->findBy(array(
+                    "departmentCode" => $depCode
+                ));
+            }
+            
         }
         else{
-            $cities = $this->getCitiesRepository()->findAll();
+            if($noUpdate){
+                //Recupérer les villes qui n'ont pas d'indicateurs
+                $cities = $this->getCitiesRepository()->findByNoIndicator();
+            }
+            else{
+                $cities = $this->getCitiesRepository()->findAll();
+            }
+            
         }
         
         $indicators = $this->getIndicatorRepository()->findAll();
@@ -62,7 +78,7 @@ class RecoverDataCommand extends Command
         
         $client = new Client();
         
-        foreach($cities as $city){
+        foreach($cities as $key => $city){
             
             //Gestion des indicateur INSEE
             $crawler = $client->request('GET', 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-'.$city->getInseeCode());
@@ -156,6 +172,15 @@ class RecoverDataCommand extends Command
                     $em->persist($indic);
                 }
                 $indic->setTabData($indicatorsRef[$indicator->getCode()]);
+            }
+            
+            //Toutes les 10 villes ou si c'est la dernière ville, on flush 
+            if($key % 10 == 0 || $key == count($cities) -1){
+                try{
+                    $em->flush();
+                } catch (\Exception $ex) {
+                    continue;
+                }
             }
             
             $progressBar->advance();

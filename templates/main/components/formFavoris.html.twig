@@ -1,3 +1,4 @@
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 <form name="app_main_favorisadd" action="{{ path('app_main_favorisadd', {'insee_code':city.inseeCode}) }}" method="POST">
     {% if city in app.user.cities %}
         <button class="btn btn-sm btn-primary" type="submit" data-toggle="tooltip" data-placement="top" title="Retirer des favoris">
@@ -9,3 +10,4 @@
         </button>
     {% endif %}
 </form>
+{% endif %}
