@@ -12,6 +12,19 @@
             <!-- Renders a link tag (if your module requires any CSS)
                  <link rel="stylesheet" href="/build/app.css"> -->
         {% endblock %}
+        
+        {% if app.environment != 'dev' %}
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158618403-1"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'UA-158618403-1');
+            </script>
+        {% endif %}
+
     </head>
 
     <body id="page-top">
@@ -51,7 +64,7 @@
               <span>Dashboard</span></a>
           </li>#}
           
-          <hr class="sidebar-divider">
+{#          <hr class="sidebar-divider">
 
           <div class="sidebar-heading">
             Stratégie
@@ -62,7 +75,7 @@
               <i class="fas fa-chess-pawn"></i>
               <span>Ma stratégie</span>
             </a>
-          </li>
+          </li>#}
 
           <!-- Divider -->
           <hr class="sidebar-divider">
