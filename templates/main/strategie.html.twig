@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma stratégie{% endblock %}
+
+{% block title_h1 %}Ma stratégie{% endblock %}
+
+{% block body %}
+    <div class="row">
+        
+        {% if text is not null %}
+        <div class="col-lg-12">
+            <div class="card shadow mb-4 border-left-primary">
+                <div class="card-body">
+                    <blockquote class="blockquote text-center">
+                        <p class="mb-0">{{ text|raw }}</p>
+                        <footer class="blockquote-footer"><cite title="Moi-même">Moi-même</cite></footer>
+                    </blockquote>
+                    <hr>
+                    <p>Vous allez maintenant choisir dans quelle ville vous allez investir grâce à <a href="{{ path("main") }}">la recherche de ville</a></p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="col-lg-12">
+            <div class="card shadow mb-4">
+                <a href="#collapseStrategie" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseStrategie">
+                  <h6 class="m-0 font-weight-bold text-primary">{% if text is not null %}Modifier{% else %}Créer{% endif %} votre stratégie</h6>
+                </a>
+                <div class="collapse {% if text is not null %}hide{% else %}show{% endif %}" id="collapseStrategie">
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">Général</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="exploitation-tab" data-toggle="tab" href="#exploitation" role="tab" aria-controls="exploitation" aria-selected="true">Type d'exploitation</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="bien-tab" data-toggle="tab" href="#bien" role="tab" aria-controls="bien" aria-selected="true">Type de bien</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="travaux-tab" data-toggle="tab" href="#travaux" role="tab" aria-controls="travaux" aria-selected="true">Type de travaux</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="montant-tab" data-toggle="tab" href="#montant" role="tab" aria-controls="montant" aria-selected="true">Montant</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="cashflow-tab" data-toggle="tab" href="#cashflow" role="tab" aria-controls="cashflow" aria-selected="true">Cashflow</a>
+                            </li>
+                        </ul>
+                        {{ form_start(form) }}
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                                    <div class="mt-3">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor leo metus, eget placerat purus sollicitudin in. Donec tincidunt justo nisi. Phasellus eget consectetur dolor, nec pharetra velit. Aenean eget lorem vitae diam pellentesque ornare. Nullam egestas est ut metus vestibulum maximus. Fusce tempor semper tempus. Suspendisse dignissim volutpat elementum. Duis eleifend sodales leo, a sodales ante placerat vitae. Ut non ligula sit amet libero eleifend porttitor sit amet id mi. Mauris in lobortis nisl. Maecenas fringilla venenatis mattis. Sed ullamcorper nunc id ante vulputate, interdum dignissim metus porttitor. Sed porttitor malesuada nunc et interdum.</p>
+                                        <p>Nam fermentum nunc sem, et viverra dolor gravida non. Curabitur interdum porta dolor et dictum. Quisque tincidunt id felis eu condimentum. Mauris magna nulla, gravida vel erat eu, convallis ultrices lorem. Mauris nec nisi commodo, dignissim mi sed, vestibulum metus. Mauris placerat dui eget egestas molestie. Praesent nunc arcu, ultrices at posuere eu, ultrices nec sem.</p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="exploitation" role="tabpanel" aria-labelledby="exploitation-tab">
+                                    <div class="form-group row mt-3">
+                                        <p>Vivamus iaculis vel massa non consequat. Nullam consectetur magna sit amet purus commodo ultrices. Nunc hendrerit leo at magna ornare porttitor. Fusce vel neque ac mi fermentum imperdiet. Nulla fermentum mattis leo ut aliquam. Praesent elementum commodo venenatis. Nam in libero aliquet, sollicitudin orci quis, fermentum risus. Proin ex felis, consectetur sit amet massa eu, finibus ultrices dolor.</p>
+                                        <p>Maecenas rhoncus purus ac ligula efficitur sagittis. Aliquam ac purus eu dui faucibus egestas. Aliquam imperdiet ullamcorper ultricies. Donec eu posuere nisi, quis venenatis neque. In tempor tempus efficitur. Ut molestie urna at luctus mollis. Pellentesque sit amet gravida dolor. Donec ut aliquam dui, non sagittis leo. Sed purus nulla, lacinia at tincidunt sed, auctor egestas libero. Proin maximus tincidunt risus ut dictum. Donec turpis turpis, volutpat in sollicitudin vitae, dignissim sed lacus.</p>
+                                        {{ form_label(form.exploitation, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
+                                        <div class="col-sm-10">
+                                            {{ form_widget(form.exploitation, {'attr':{'class':'form-control', "data-live-search":"true", "title":"Choisissez un type d'exploitation ...", "data-actions-box":"true", "data-style":"btn-default"}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="bien" role="tabpanel" aria-labelledby="bien-tab">
+                                    <div class="form-group row mt-3">
+                                        <p>Vivamus iaculis vel massa non consequat. Nullam consectetur magna sit amet purus commodo ultrices. Nunc hendrerit leo at magna ornare porttitor. Fusce vel neque ac mi fermentum imperdiet. Nulla fermentum mattis leo ut aliquam. Praesent elementum commodo venenatis. Nam in libero aliquet, sollicitudin orci quis, fermentum risus. Proin ex felis, consectetur sit amet massa eu, finibus ultrices dolor.</p>
+                                        <p>Maecenas rhoncus purus ac ligula efficitur sagittis. Aliquam ac purus eu dui faucibus egestas. Aliquam imperdiet ullamcorper ultricies. Donec eu posuere nisi, quis venenatis neque. In tempor tempus efficitur. Ut molestie urna at luctus mollis. Pellentesque sit amet gravida dolor. Donec ut aliquam dui, non sagittis leo. Sed purus nulla, lacinia at tincidunt sed, auctor egestas libero. Proin maximus tincidunt risus ut dictum. Donec turpis turpis, volutpat in sollicitudin vitae, dignissim sed lacus.</p>
+                                        {{ form_label(form.type, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
+                                        <div class="col-sm-10">
+                                            {{ form_widget(form.type, {'attr':{'class':'form-control', "data-live-search":"true", "title":"Choisissez un type de bien ...", "data-actions-box":"true", "data-style":"btn-default"}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="travaux" role="tabpanel" aria-labelledby="travaux-tab">
+                                    <div class="form-group row mt-3">
+                                        <p>Vivamus iaculis vel massa non consequat. Nullam consectetur magna sit amet purus commodo ultrices. Nunc hendrerit leo at magna ornare porttitor. Fusce vel neque ac mi fermentum imperdiet. Nulla fermentum mattis leo ut aliquam. Praesent elementum commodo venenatis. Nam in libero aliquet, sollicitudin orci quis, fermentum risus. Proin ex felis, consectetur sit amet massa eu, finibus ultrices dolor.</p>
+                                        <p>Maecenas rhoncus purus ac ligula efficitur sagittis. Aliquam ac purus eu dui faucibus egestas. Aliquam imperdiet ullamcorper ultricies. Donec eu posuere nisi, quis venenatis neque. In tempor tempus efficitur. Ut molestie urna at luctus mollis. Pellentesque sit amet gravida dolor. Donec ut aliquam dui, non sagittis leo. Sed purus nulla, lacinia at tincidunt sed, auctor egestas libero. Proin maximus tincidunt risus ut dictum. Donec turpis turpis, volutpat in sollicitudin vitae, dignissim sed lacus.</p>
+                                        {{ form_label(form.travaux, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
+                                        <div class="col-sm-10">
+                                            {{ form_widget(form.travaux, {'attr':{'class':'form-control'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="montant" role="tabpanel" aria-labelledby="montant-tab">
+                                    <div class="form-group row mt-3">
+                                        <p>Vivamus iaculis vel massa non consequat. Nullam consectetur magna sit amet purus commodo ultrices. Nunc hendrerit leo at magna ornare porttitor. Fusce vel neque ac mi fermentum imperdiet. Nulla fermentum mattis leo ut aliquam. Praesent elementum commodo venenatis. Nam in libero aliquet, sollicitudin orci quis, fermentum risus. Proin ex felis, consectetur sit amet massa eu, finibus ultrices dolor.</p>
+                                        <p>Maecenas rhoncus purus ac ligula efficitur sagittis. Aliquam ac purus eu dui faucibus egestas. Aliquam imperdiet ullamcorper ultricies. Donec eu posuere nisi, quis venenatis neque. In tempor tempus efficitur. Ut molestie urna at luctus mollis. Pellentesque sit amet gravida dolor. Donec ut aliquam dui, non sagittis leo. Sed purus nulla, lacinia at tincidunt sed, auctor egestas libero. Proin maximus tincidunt risus ut dictum. Donec turpis turpis, volutpat in sollicitudin vitae, dignissim sed lacus.</p>
+                                        {{ form_label(form.montant, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
+                                        <div class="col-sm-10">
+                                            {{ form_widget(form.montant, {'attr':{'class':'form-control', 'placeholder':'Ex: 220000'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="cashflow" role="tabpanel" aria-labelledby="cashflow-tab">
+                                    <div class="form-group row mt-3">
+                                        <p>Vivamus iaculis vel massa non consequat. Nullam consectetur magna sit amet purus commodo ultrices. Nunc hendrerit leo at magna ornare porttitor. Fusce vel neque ac mi fermentum imperdiet. Nulla fermentum mattis leo ut aliquam. Praesent elementum commodo venenatis. Nam in libero aliquet, sollicitudin orci quis, fermentum risus. Proin ex felis, consectetur sit amet massa eu, finibus ultrices dolor.</p>
+                                        <p>Maecenas rhoncus purus ac ligula efficitur sagittis. Aliquam ac purus eu dui faucibus egestas. Aliquam imperdiet ullamcorper ultricies. Donec eu posuere nisi, quis venenatis neque. In tempor tempus efficitur. Ut molestie urna at luctus mollis. Pellentesque sit amet gravida dolor. Donec ut aliquam dui, non sagittis leo. Sed purus nulla, lacinia at tincidunt sed, auctor egestas libero. Proin maximus tincidunt risus ut dictum. Donec turpis turpis, volutpat in sollicitudin vitae, dignissim sed lacus.</p>
+                                        {{ form_label(form.cashflow, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
+                                        <div class="col-sm-10">
+                                            {{ form_widget(form.cashflow, {'attr':{'class':'form-control', 'placeholder':'Ex: 300'}}) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12 text-right">
+                                          <button type="submit" class="btn btn-primary">Valider ma stratégie</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{ form_rest(form) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+        
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            console.log(e.target);
+            e.target // newly activated tab
+            e.relatedTarget // previous active tab
+        });
+        
+        $(document).ready(function() {
+            $('#strategie_exploitation, #strategie_type').selectpicker();
+        });
+    </script>
+{% endblock %}

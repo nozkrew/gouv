@@ -11,6 +11,7 @@ use App\Form\SearchCitiesType;
 use App\Entity\IndicatorValue;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Form\CalculateurType;
+use App\Form\StrategieType;
 
 class MainController extends AbstractController
 {
@@ -46,6 +47,39 @@ class MainController extends AbstractController
         return $this->render('main/index.html.twig', [
             'cities' => $cities,
             'form' => $form->createView()
+        ]);
+    }
+    
+    /**
+     * @Route("/strategie")
+     */
+    public function strategie(Request $request)
+    {  
+        $form = $this->createForm(StrategieType::class, null, array(
+            'method' => 'GET'
+        ));
+        
+        $text = null;
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $text = "Ma stratégie est de louer en ";
+            
+            //exploitation
+            $text .= "<b>".implode(" et/ou ", $form->get('exploitation')->getData())."</b>. ";
+            
+            $text .= "Le type de bien sera un <b>".implode(" ou un ", $form->get('type')->getData())."</b>. ";
+            
+            $text .= "Les travaux seront <b>".$form->get("travaux")->getData()."</b>. ";
+            
+            $text .= "Le montant total de mon projet sera de <b>".$form->get('montant')->getData()."</b>€. ";
+            
+            $text .= "Avec cet investissement je souhaite dégager <b>".$form->get('cashflow')->getData()."€</b> de cashflow mensuel";
+
+        }
+        
+        return $this->render('main/strategie.html.twig', [
+            'form' => $form->createView(),
+            'text' => $text
         ]);
     }
     
