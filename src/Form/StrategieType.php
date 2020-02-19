@@ -16,9 +16,9 @@ class StrategieType extends AbstractType
             ->add('exploitation', ChoiceType::class, array(
                 'choices' => array(
                     'Nu' => "nu",
-                    'Saisonnier' => "saisonnier",
                     'Meublé' => "meublé",
-                    'Colocation' => "colocation"
+                    'Colocation' => "colocation",
+                    'Saisonnier' => "saisonnier",
                 ),
                 'multiple' => true,
                 'label' => "Mode d'exploitation"
@@ -38,7 +38,8 @@ class StrategieType extends AbstractType
                 'choices' => array(
                     'Aucun travaux' => "aucun travaux",
                     'Rafraichissement' => "rafraichissement",
-                    'Gros travaux' => "gros travaux"
+                    'Petite rénovation' => "petite rénovation",
+                    'Grosse rénovation' => "grosse rénovation"
                 ),
                 'label' => "Travaux à effectuer",
                 'placeholder' => "Choisissez un type de travaux"

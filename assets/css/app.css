@@ -40,3 +40,7 @@ li.ui-menu-item:hover{
 .alert{
     z-index: 99;
 }
+
+.sidebar-brand-text{
+    font-size: 0.7rem;
+}

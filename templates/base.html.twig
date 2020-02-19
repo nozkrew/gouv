@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% block title %}App{% endblock %}</title>
+        <title>{% block title %}Linvestissement.net{% endblock %}</title>
         {% block stylesheets %}
             {# 'app' must match the first argument to addEntry() in webpack.config.js #}
             {{ encore_entry_link_tags('app') }}
@@ -59,7 +59,7 @@
             <div class="sidebar-brand-icon">
               <i class="far fa-building"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">App</div>
+            <div class="sidebar-brand-text mx-3">Linvestissement.net</div>
           </a>
 
           <!-- Divider -->
@@ -245,7 +245,7 @@
           <footer class="sticky-footer bg-white">
             <div class="container my-auto">
               <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Your Website 2019</span>
+                  <span>Copyright &copy; <a href="https://linvestissement.net" target="_blank">Linvestissement.net</a> {{ date('now')|date('Y') }}</span>
               </div>
             </div>
           </footer>

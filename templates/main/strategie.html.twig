@@ -16,7 +16,7 @@
                         <footer class="blockquote-footer"><cite title="Moi-même">Moi-même</cite></footer>
                     </blockquote>
                     <hr>
-                    <p>Vous allez maintenant choisir dans quelle ville vous allez investir grâce à <a href="{{ path("main") }}">la recherche de ville</a></p>
+                    <p>Vous allez maintenant choisir dans quelle ville vous allez investir grâce à <a href="{{ path("main") }}">notre outil de recherche de ville</a></p>
                 </div>
             </div>
         </div>
@@ -34,6 +34,9 @@
                                 <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">Général</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" id="montant-tab" data-toggle="tab" href="#montant" role="tab" aria-controls="montant" aria-selected="true">Montant</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" id="exploitation-tab" data-toggle="tab" href="#exploitation" role="tab" aria-controls="exploitation" aria-selected="true">Type d'exploitation</a>
                             </li>
                             <li class="nav-item">
@@ -43,64 +46,286 @@
                                 <a class="nav-link" id="travaux-tab" data-toggle="tab" href="#travaux" role="tab" aria-controls="travaux" aria-selected="true">Type de travaux</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="montant-tab" data-toggle="tab" href="#montant" role="tab" aria-controls="montant" aria-selected="true">Montant</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" id="cashflow-tab" data-toggle="tab" href="#cashflow" role="tab" aria-controls="cashflow" aria-selected="true">Cashflow</a>
                             </li>
                         </ul>
                         {{ form_start(form) }}
-                            <div class="tab-content">
+                            <div class="tab-content p-4">
                                 <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
                                     <div class="mt-3">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor leo metus, eget placerat purus sollicitudin in. Donec tincidunt justo nisi. Phasellus eget consectetur dolor, nec pharetra velit. Aenean eget lorem vitae diam pellentesque ornare. Nullam egestas est ut metus vestibulum maximus. Fusce tempor semper tempus. Suspendisse dignissim volutpat elementum. Duis eleifend sodales leo, a sodales ante placerat vitae. Ut non ligula sit amet libero eleifend porttitor sit amet id mi. Mauris in lobortis nisl. Maecenas fringilla venenatis mattis. Sed ullamcorper nunc id ante vulputate, interdum dignissim metus porttitor. Sed porttitor malesuada nunc et interdum.</p>
-                                        <p>Nam fermentum nunc sem, et viverra dolor gravida non. Curabitur interdum porta dolor et dictum. Quisque tincidunt id felis eu condimentum. Mauris magna nulla, gravida vel erat eu, convallis ultrices lorem. Mauris nec nisi commodo, dignissim mi sed, vestibulum metus. Mauris placerat dui eget egestas molestie. Praesent nunc arcu, ultrices at posuere eu, ultrices nec sem.</p>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="exploitation" role="tabpanel" aria-labelledby="exploitation-tab">
-                                    <div class="form-group row mt-3">
-                                        <p>Vivamus iaculis vel massa non consequat. Nullam consectetur magna sit amet purus commodo ultrices. Nunc hendrerit leo at magna ornare porttitor. Fusce vel neque ac mi fermentum imperdiet. Nulla fermentum mattis leo ut aliquam. Praesent elementum commodo venenatis. Nam in libero aliquet, sollicitudin orci quis, fermentum risus. Proin ex felis, consectetur sit amet massa eu, finibus ultrices dolor.</p>
-                                        <p>Maecenas rhoncus purus ac ligula efficitur sagittis. Aliquam ac purus eu dui faucibus egestas. Aliquam imperdiet ullamcorper ultricies. Donec eu posuere nisi, quis venenatis neque. In tempor tempus efficitur. Ut molestie urna at luctus mollis. Pellentesque sit amet gravida dolor. Donec ut aliquam dui, non sagittis leo. Sed purus nulla, lacinia at tincidunt sed, auctor egestas libero. Proin maximus tincidunt risus ut dictum. Donec turpis turpis, volutpat in sollicitudin vitae, dignissim sed lacus.</p>
-                                        {{ form_label(form.exploitation, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
-                                        <div class="col-sm-10">
-                                            {{ form_widget(form.exploitation, {'attr':{'class':'form-control', "data-live-search":"true", "title":"Choisissez un type d'exploitation ...", "data-actions-box":"true", "data-style":"btn-default"}}) }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="bien" role="tabpanel" aria-labelledby="bien-tab">
-                                    <div class="form-group row mt-3">
-                                        <p>Vivamus iaculis vel massa non consequat. Nullam consectetur magna sit amet purus commodo ultrices. Nunc hendrerit leo at magna ornare porttitor. Fusce vel neque ac mi fermentum imperdiet. Nulla fermentum mattis leo ut aliquam. Praesent elementum commodo venenatis. Nam in libero aliquet, sollicitudin orci quis, fermentum risus. Proin ex felis, consectetur sit amet massa eu, finibus ultrices dolor.</p>
-                                        <p>Maecenas rhoncus purus ac ligula efficitur sagittis. Aliquam ac purus eu dui faucibus egestas. Aliquam imperdiet ullamcorper ultricies. Donec eu posuere nisi, quis venenatis neque. In tempor tempus efficitur. Ut molestie urna at luctus mollis. Pellentesque sit amet gravida dolor. Donec ut aliquam dui, non sagittis leo. Sed purus nulla, lacinia at tincidunt sed, auctor egestas libero. Proin maximus tincidunt risus ut dictum. Donec turpis turpis, volutpat in sollicitudin vitae, dignissim sed lacus.</p>
-                                        {{ form_label(form.type, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
-                                        <div class="col-sm-10">
-                                            {{ form_widget(form.type, {'attr':{'class':'form-control', "data-live-search":"true", "title":"Choisissez un type de bien ...", "data-actions-box":"true", "data-style":"btn-default"}}) }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="travaux" role="tabpanel" aria-labelledby="travaux-tab">
-                                    <div class="form-group row mt-3">
-                                        <p>Vivamus iaculis vel massa non consequat. Nullam consectetur magna sit amet purus commodo ultrices. Nunc hendrerit leo at magna ornare porttitor. Fusce vel neque ac mi fermentum imperdiet. Nulla fermentum mattis leo ut aliquam. Praesent elementum commodo venenatis. Nam in libero aliquet, sollicitudin orci quis, fermentum risus. Proin ex felis, consectetur sit amet massa eu, finibus ultrices dolor.</p>
-                                        <p>Maecenas rhoncus purus ac ligula efficitur sagittis. Aliquam ac purus eu dui faucibus egestas. Aliquam imperdiet ullamcorper ultricies. Donec eu posuere nisi, quis venenatis neque. In tempor tempus efficitur. Ut molestie urna at luctus mollis. Pellentesque sit amet gravida dolor. Donec ut aliquam dui, non sagittis leo. Sed purus nulla, lacinia at tincidunt sed, auctor egestas libero. Proin maximus tincidunt risus ut dictum. Donec turpis turpis, volutpat in sollicitudin vitae, dignissim sed lacus.</p>
-                                        {{ form_label(form.travaux, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
-                                        <div class="col-sm-10">
-                                            {{ form_widget(form.travaux, {'attr':{'class':'form-control'}}) }}
+                                        <p>Vous allez vous lancer dans votre <b>1er investissement</b> ou dans un <b>nouvel investissement</b>. Un investissement immobilier prend du temps (recherche, visites, travaux, …). Pour réussir il faut avoir une <b>stratégie claire</b> afin de savoir vers où chercher et comment chercher. Une stratégie claire est <b>efficiente</b> et permet de gagner le plus de temps possible sans s’éparpiller.</p>
+                                        <p>Pour cette raison, vous devez dans un premier temps définir une stratégie, la plus claire possible et <b>vous y tenir</b>. Vous pourrez ainsi vous focaliser sur votre recherche, <b>maximiser vos efforts et parfaire votre discours</b>.</p>
+                                        <p>A travers ce formulaire vous allez inscrire vos différents critères de recherches celons votre projet et vous vous y tiendrez. </p>
+                                        <p>Une fois rempli, je vous conseille de focaliser vos recherches sur <b>3 villes maximum</b> afin que vous puissiez connaitre au mieux les marchés que vous étudiez.</p>
+                                        <p>Votre stratégie de recherche du bien parfait va dépendre de :</p>
+                                        <ul>
+                                            <li>Votre <b>budget</b></li>
+                                            <li>Du <b>type d’exploitation</b> (Nu, meublé, saisonnier, colocation…)</li>
+                                            <li>Du t<b>ype de bien</b> (Appartement, Maison, Immeuble…)</li>
+                                            <li>Des <b>travaux</b> que vous êtes prêt à réaliser</li>
+                                            <li>Du <b>cashflow</b> que vous souhaitez en tirer (sommes d’argent disponible une fois toutes les charges payées)</li>
+                                        </ul>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12 text-right">
+                                                <button class="btn btn-primary" data-toggle="tab" href="#montant" role="tab" aria-controls="montant" aria-selected="true">Je créé ma stratégie</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="montant" role="tabpanel" aria-labelledby="montant-tab">
+                                    <p>La première étape de votre stratégie est de <b>définir le montant maximum</b> que vous souhaitez mettre dans votre projet. Pour cela il est conseillé d’utiliser au maximum <b>l’effet de levier</b>. C’est-à-dire utiliser l’argent de la banque pour financer votre projet. Il est conseillé de mettre un <b>minimum d’apport</b> possible afin que l’effet de levier soit maximum.</p>
+                                    <p>Dans un premier temps, allez donc voir votre banque pour savoir <b>quel montant vous pouvez emprunter</b> pour votre projet locatif. Ce sera le point de départ qui conditionnera votre recherche. Vous ne ferez pas la même recherche si votre budget est de 50 000€ ou de 400 000€.</p>
+                                    <p>Indiquez ici le montant total de votre projet (Achat + frais de notaire + garantie bancaire + travaux + apport).</p>
+                                    <hr>
                                     <div class="form-group row mt-3">
-                                        <p>Vivamus iaculis vel massa non consequat. Nullam consectetur magna sit amet purus commodo ultrices. Nunc hendrerit leo at magna ornare porttitor. Fusce vel neque ac mi fermentum imperdiet. Nulla fermentum mattis leo ut aliquam. Praesent elementum commodo venenatis. Nam in libero aliquet, sollicitudin orci quis, fermentum risus. Proin ex felis, consectetur sit amet massa eu, finibus ultrices dolor.</p>
-                                        <p>Maecenas rhoncus purus ac ligula efficitur sagittis. Aliquam ac purus eu dui faucibus egestas. Aliquam imperdiet ullamcorper ultricies. Donec eu posuere nisi, quis venenatis neque. In tempor tempus efficitur. Ut molestie urna at luctus mollis. Pellentesque sit amet gravida dolor. Donec ut aliquam dui, non sagittis leo. Sed purus nulla, lacinia at tincidunt sed, auctor egestas libero. Proin maximus tincidunt risus ut dictum. Donec turpis turpis, volutpat in sollicitudin vitae, dignissim sed lacus.</p>
                                         {{ form_label(form.montant, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
                                         <div class="col-sm-10">
                                             {{ form_widget(form.montant, {'attr':{'class':'form-control', 'placeholder':'Ex: 220000'}}) }}
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12 text-right">
+                                            <button class="btn btn-primary" data-toggle="tab" href="#exploitation" role="tab" aria-controls="exploitation" aria-selected="true">Suivant</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="exploitation" role="tabpanel" aria-labelledby="exploitation-tab">
+                                    <p>Maintenant que vous connaissez votre budget, vous allez définir quel <b>type d’exploitation</b> vous allez faire. Il en existe plusieurs avec leurs avantages et leurs inconvénients. Le mode d’exploitation va dépendre de <b>votre objectif</b> : retirer un gros cashflow ou vous constituer un patrimoine.</p>
+                                    <p>Dans l’immobilier il faut distinguer l’investissement qui permet de faire <b>beaucoup de cashflow</b> de <b>l’investissement patrimonial</b>. Une exploitation en colocation ou en saisonnier sont de bons moyens d’avoir un rendement élevé alors qu’une exploitation en nu ou meublé est une bonne stratégie pour faire du patrimonial (moins de cashflow, mais un capital grandissant sur le long terme).</p>
+
+                                    <p><i class="fas fa-exclamation-triangle"></i> Ce n’est pas parce que vous investissez dans du nu ou du meublé que vous ne pouvez pas faire de cashflow.</p>
+                                    <p>Voici un tableau comparatif des différents types d’exploitation :</p>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col">Nu</th>
+                                                <th scope="col">Meublé</th>
+                                                <th scope="col">Colocation</th>
+                                                <th scope="col">Saisonnier</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Avantages</th>
+                                                <td>
+                                                    <ul>
+                                                        <li>Coût du projet moins élevé.</li>
+                                                        <li>Permet de tester l’immobilier</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>Fiscalité en LMNP (Loueur meublé non professionnel) très attrayante</li>
+                                                        <li>Permet de ne pas payer d’impôts sur plusieurs années</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>Facile à mettre en œuvre (dans un appartement ou maison)</li>
+                                                        <li>Permet d’en retirer un gros cashflow</li>
+                                                        <li>Bon compromis risque / temps / résultat</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>Permet de retirer un gros cashflow</li>
+                                                        <li>Simple à mettre en place</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Inconvénients</th>
+                                                <td>
+                                                    <ul>
+                                                        <li>Faible cashflow</li>
+                                                        <li>Fiscalité pas très favorable</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>Couts des meubles à prendre en compte</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>Plusieurs locataires</li>
+                                                        <li>Bien rarement entièrement libre</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>Réglementation compliquée. Gestion plus importante</li>
+                                                        <li>Plus risqué</li>
+                                                        <li>Nouveaux locataire régulier</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Risque</th>
+                                                <td><i class="fas fa-plus-circle"></i></td>
+                                                <td><i class="fas fa-plus-circle"></i> <i class="fas fa-plus-circle"></i></td>
+                                                <td><i class="fas fa-plus-circle"></i> <i class="fas fa-plus-circle"></i></td>
+                                                <td><i class="fas fa-plus-circle"></i> <i class="fas fa-plus-circle"></i> <i class="fas fa-plus-circle"></i></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p>Choisissez sur quel type d’exploitation vous souhaitez partir. Vous pouvez <b>mixer les types d’exploitation</b>. Ex : colocation meublée, nu + meublé (dans le cas d’un immeuble de rapport)</p>
+                                    <hr>
+                                    <div class="form-group row mt-3">
+                                        {{ form_label(form.exploitation, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
+                                        <div class="col-sm-10">
+                                            {{ form_widget(form.exploitation, {'attr':{'class':'form-control', "data-live-search":"true", "title":"Choisissez un type d'exploitation ...", "data-actions-box":"true", "data-style":"btn-default"}}) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12 text-right">
+                                            <button class="btn btn-primary" data-toggle="tab" href="#bien" role="tab" aria-controls="bien" aria-selected="true">Suivant</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="bien" role="tabpanel" aria-labelledby="bien-tab">
+                                    <p>Une fois que vous avez choisi votre mode d’exploitation, vous devez choisir dans quel <b>type de bien</b> vous allez investir. Il en existe plusieurs : </p>
+                                    <ul>
+                                        <li>Maison</li>
+                                        <li>Appartement</li>
+                                        <li>Immeuble</li>
+                                        <li>Parking</li>
+                                        <li>Autre (terrain, cave, …)</li>
+                                    </ul>
+                                    <p>Selon le mode d’exploitation que vous aurez choisi, vous commencez déjà à dessiner une stratégie en <b>limitant vos choix</b>. En effet si vous souhaitez faire de la colocation, vous vous orienterez vers des appartements ou des maisons. Si vous souhaitez faire du saisonnier et du meublé, les immeubles correspondront parfaitement à votre stratégie.</p>
+                                    <p>Réfléchissez à <b>tout ce qu’il est possible de faire</b>. Par exemple : 2 colocations dans un immeuble avec 2 appartements de 70 m². Ou 4 appartements dans une maison qui sera divisée. Il existe pleins de possibilités. Tout dépendra de votre temps, votre aversion au risque et de votre budget.</p>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col">Appartement</th>
+                                                <th scope="col">Maison</th>
+                                                <th scope="col">Immeuble</th>
+                                                <th scope="col">Parking</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Avantages</th>
+                                                <td>
+                                                    <ul>
+                                                        <li>Petit budget</li>
+                                                        <li>Bien pour commencer dans l’immobilier</li>
+                                                        <li>Beaucoup d’offre</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>Bien pour les grandes colocations</li>
+                                                        <li>Pas de frais de copropriété</li>
+                                                        <li>Peut-être divisée</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>Achat de plusieurs lots en une seule fois</li>
+                                                        <li>Diversification des types d’exploitation possible (saisonnier, meublée, colocation)</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>Petit budget</li>
+                                                        <li>Entretien facile</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Inconvénients</th>
+                                                <td>
+                                                    <ul>
+                                                        <li>Copropriété</li>
+                                                        <li>Voisinage peut être contraignant</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>Tous les frais à votre charge</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>Tous les frais à votre charge</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>Il faut en avoir beaucoup pour gagner de l’argent</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p><b>Prenez le temps</b> nécessaire à bien définir votre projet, c’est un des points les plus importants, qui vous fera <b>gagner du temps</b> par la suite dans votre recherche.</p>
+                                    <p>Choisissez <b>1 ou 2 types de bien</b>. Vous vous focaliserez uniquement sur ceux-là lors de vos recherches.</p>
+                                    <hr>
+                                    <div class="form-group row mt-3">
+                                        {{ form_label(form.type, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
+                                        <div class="col-sm-10">
+                                            {{ form_widget(form.type, {'attr':{'class':'form-control', "data-live-search":"true", "title":"Choisissez un type de bien ...", "data-actions-box":"true", "data-style":"btn-default"}}) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12 text-right">
+                                            <button class="btn btn-primary" data-toggle="tab" href="#travaux" role="tab" aria-controls="travaux" aria-selected="true">Suivant</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="travaux" role="tabpanel" aria-labelledby="travaux-tab">
+                                    <p>Les travaux font <b>partie intégrante de votre stratégie</b>. Grace aux travaux vous allez pouvoir <b>améliorer votre bien</b> afin de pouvoir le louer plus cher. Si vous êtes prêt à vous lancer dans les travaux, une bonne stratégie consiste à acheter un bien à rénover avec un <b>prix en dessous du marché</b>. L’avantage est triple : </p>
+                                    <ul>
+                                        <li>Achat moins cher</li>
+                                        <li>Transformer comme vous le souhaitez (cloison, arrivée d’eau, …)</li>
+                                        <li>Améliorer le bien pour louer plus cher</li>
+                                    </ul>
+                                    <p>Cependant, les travaux prennent du temps à gérer et sont couteux. Il faut donc savoir si vous êtes prêt à vous lancer dedans.</p>
+                                    <p>Choisissez entre les différents types de travaux :</p>
+                                    <ul>
+                                        <li>Aucun travaux : vous achetez le bien dans un bon état et vous pouvez le louer directement</li>
+                                        <li>Rafraichissement : peinture des murs, remplacement des sols</li>
+                                        <li>Petite rénovation : Pose de cloisons, un peu d’électricité et de plomberie. Rénovation de salle de bain</li>
+                                        <li>Grosse rénovation : Modification de la structure du bien, remplacement des menuiseries, réaménagement des pièces, division, révision des réseaux au complet (électricité, plomberie)</li>
+                                    </ul>    
+                                    <p>Sachez qu’il existe différents intervenants pour les travaux : </p>
+                                    <ul>
+                                        <li>Entreprise générale</li>
+                                        <li>Maitre d’œuvre</li>
+                                        <li>Courtier en travaux</li>
+                                        <li>Artisans</li>
+                                    </ul>
+                                    <p>Vous choisirez par la suite, vos intervenants en fonction de votre projet, de vos besoins, de votre temps disponible et de vos connaissances.</p>
+                                    <hr>
+                                    <div class="form-group row mt-3">
+                                        {{ form_label(form.travaux, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
+                                        <div class="col-sm-10">
+                                            {{ form_widget(form.travaux, {'attr':{'class':'form-control'}}) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12 text-right">
+                                            <button class="btn btn-primary" data-toggle="tab" href="#cashflow" role="tab" aria-controls="cashflow" aria-selected="true">Suivant</button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="cashflow" role="tabpanel" aria-labelledby="cashflow-tab">
+                                    <p>Le résultat de votre opération ! Quelle <b>somme souhaitée vous souhaitez retirer de votre investissement</b> tous les mois, une fois que toutes les charges sont payées (crédit, taxe foncière, frais de corpro, …) ?</p>
+                                    <p>Il faut savoir qu’une <b>opération blanche</b> (cashflow égal à 0) est déjà mieux que la plupart des opérations faite par des investisseurs. Beaucoup ne prennent en compte que le montant du crédit et non <b>l’ensemble des charges annexes</b>. Lors de vos recherches il faudra que vous preniez en compte tout ça.</p>
+                                    <p>A titre indicatif, lors de vos calculs, <b>enlevez 30%</b> (de charges annexes) de vos loyers estimés et déduisait ensuite votre <b>mensualité de crédit</b>. Voici un exemple :</p>
+                                    <ul>
+                                        <li>Loyers estimés : 800€</li>
+                                        <li>Loyers estimés – 30% = 560€</li>
+                                        <li>Loyers estimés – 30% - 500€ (mensualités de crédit) = <b>60€</b></li>
+                                    </ul>
+                                    <p>Pour un loyer de 800€ et un crédit de 500€ par mois, vous pouvez estimés en tirer <b>60€ par mois</b> de cashflow. </p>
+                                    <p>Ce calcul n’est pas précis mais vous donne une <b>idée rapidement</b> de ce que vous devez viser comme loyer et ce que vous pourrez en tirer comme cashflow</p>
+                                    <p>Indiquez le cashflow mensuel que vous souhaitez retirer de votre investissement. <b>Soyez réaliste</b> par rapport à votre stratégie. Vous ne sortirez pas 400€ de cashflow en louant un studio ou un T2 en nu, mais avec une colocation de 4 personnes vous pouvez sortir 300 € de cashflow mensuel.</p>
+                                    <hr>
                                     <div class="form-group row mt-3">
-                                        <p>Vivamus iaculis vel massa non consequat. Nullam consectetur magna sit amet purus commodo ultrices. Nunc hendrerit leo at magna ornare porttitor. Fusce vel neque ac mi fermentum imperdiet. Nulla fermentum mattis leo ut aliquam. Praesent elementum commodo venenatis. Nam in libero aliquet, sollicitudin orci quis, fermentum risus. Proin ex felis, consectetur sit amet massa eu, finibus ultrices dolor.</p>
-                                        <p>Maecenas rhoncus purus ac ligula efficitur sagittis. Aliquam ac purus eu dui faucibus egestas. Aliquam imperdiet ullamcorper ultricies. Donec eu posuere nisi, quis venenatis neque. In tempor tempus efficitur. Ut molestie urna at luctus mollis. Pellentesque sit amet gravida dolor. Donec ut aliquam dui, non sagittis leo. Sed purus nulla, lacinia at tincidunt sed, auctor egestas libero. Proin maximus tincidunt risus ut dictum. Donec turpis turpis, volutpat in sollicitudin vitae, dignissim sed lacus.</p>
                                         {{ form_label(form.cashflow, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
                                         <div class="col-sm-10">
                                             {{ form_widget(form.cashflow, {'attr':{'class':'form-control', 'placeholder':'Ex: 300'}}) }}
@@ -127,10 +352,10 @@
     {{parent()}}
     <script type="text/javascript">
         
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            console.log(e.target);
-            e.target // newly activated tab
-            e.relatedTarget // previous active tab
+        
+        $('button[data-toggle="tab"]').on('click', function(e){
+            e.preventDefault();
+            $('.nav-tabs').find('a[href="' + $(this).attr('href') + '"]').click();
         });
         
         $(document).ready(function() {
