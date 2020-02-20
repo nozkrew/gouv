@@ -21,7 +21,29 @@ class SearchController extends AbstractController
     public function index(Request $request)
     {
         
-        $searches = $this->getSearchRepository()->findByUser($this->getUser());
+        $security = $this->container->get('security.authorization_checker');
+        if($security->isGranted('IS_AUTHENTICATED_FULLY')){
+            $searches = $this->getSearchRepository()->findByUser($this->getUser());
+        }
+        else{
+            
+            $dax = $this->getCitiesRepository()->findOneBySlug('dax');
+            
+            $search = new Search();
+            $search->setName('[Exemple] Colocation à Dax');
+            $search->setPriceMax(200000);
+            $search->setSurfaceMin(80);
+            $search->addCity($dax);
+            $search->setLinks(array(
+                "https://www.avendrealouer.fr/recherche.html?pageIndex=1&pageSize=25&sortPropertyName=ReleaseDate&sortDirection=Descending&searchTypeID=1&typeGroupCategoryID=1&localityIds=101-18798&typeGroupIds=1,2,10,11,12&maximumPrice=200000&minimumSurface=80&hashSearch=null_null_null_null_200000_null_null_null_80_False__null_1_1_False_False______101-18798_____1,2,10,11,12_&UserSorted=true",
+                "https://www.century21.fr/annonces/achat/cpv-40100_dax/s-80-/st-0-/b-0-200000/page-1/"
+            ));
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->detach($search);
+            
+            $searches = array($search);
+        }
         
         return $this->render('search/index.html.twig', [
             'searches' => $searches
@@ -100,7 +122,9 @@ class SearchController extends AbstractController
     }
 
 
-
+    private function getCitiesRepository(){
+        return $this->container->get('doctrine')->getRepository(Cities::class);
+    }
 
     private function getSearchRepository(){
         return $this->container->get('doctrine')->getRepository(Search::class);

@@ -5,7 +5,7 @@
 {% block title_h1 %}Mes recherches{% endblock %}
 
 {% block h1_complement %}
-    <a href="{{path('app_search_edit')}}" class="btn btn-sm btn-primary"><i class="far fa-plus-square"></i> Ajouter une recherche</a>
+    <a {% if is_granted('IS_AUTHENTICATED_FULLY') %}href="{{path('app_search_edit')}}"{% else %}href="#" data-toggle="modal" data-target="#requireLoginModal"{% endif %} class="btn btn-sm btn-primary"><i class="far fa-plus-square"></i> Ajouter une recherche</a>
 {% endblock %}
 
 {% block body %}
@@ -19,58 +19,15 @@
                     <div class="text-center">
                         <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 18rem;" src="{{ asset('/build/undraw_house_searching_n8mp.svg') }}" alt="">
                     </div>
-                    Maintenant que vous avez choisi une ou plusieurs villes, vous pouvez <b>créer vos recherches ici</b>. Indiquez une <b>surface minimum</b> et un <b>prix maximum</b> pour votre recherche ainsi que <b>la ou les villes</b> dans lesquelles vous effecutez votre recherche. Nous générons <b>automatiquement</b> les liens de vos recherche sur LeBonCoin, SeLoger et ParuVendu.<br>
+                    Maintenant que vous avez choisi une ou plusieurs villes, vous pouvez <b>créer vos recherches ici</b>. Indiquez une <b>surface minimum</b> et un <b>prix maximum</b> pour votre recherche ainsi que <b>la ou les villes</b> dans lesquelles vous effectuez votre recherche. Nous générons <b>automatiquement</b> les liens de vos recherches sur LeBonCoin, SeLoger et ParuVendu.<br>
                     Vous avez la possibilité d'<b>ajouter vos liens</b> afin de tout avoir dans <b>un seul et même endroit</b>.<br>
-                    Pratique non ?
+                    Une annonce vous interesse ? <a href="{{ path('app_main_calculateur')}}">Utiliser le calculateur</a> pour être sûr de faire le bon choix.
                 </div>
             </div>
         </div>
         {% for search in searches %}
             <div class="col-lg-4">
-                    <!-- Basic Card Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">{{ search.name }}</h6>
-                            <a href="{{ path('app_search_edit_1', {'id':search.id}) }}" class="btn btn-sm btn-primary float-right"><i class="far fa-edit"></i></a>
-                        </div>
-                        <div class="card-body">
-                            <dl class="row">
-                                <dt class="col-sm-3">Prix max</dt>
-                                <dd class="col-sm-9">{{ search.priceMax }} €</dd>
-                                
-                                <dt class="col-sm-3">Surface min.</dt>
-                                <dd class="col-sm-9">{{ search.surfaceMin }} m²</dd>
-                                
-                                <dt class="col-sm-3">Villes</dt>
-                                <dd class="col-sm-9">
-                                    {% for city in search.cities %}
-                                        {{ city.name }}<br>
-                                    {% endfor%}
-                                </dd>
-                            </dl>
-                            <hr>
-                            <a class="btn btn-sm linkDefault mb-2" style="background-color: #f56b2a; color: white" href="https://www.leboncoin.fr/recherche/?category=9&locations={% for city in search.cities %}{{ city.name }}_{{ city.zipCode }}{% if loop.last == false %},{% endif %}{% endfor %}&real_estate_type=1,2,4,5&price=min-{{search.priceMax}}&square={{search.surfaceMin}}-max" target="_blank">LeBonCoin</a>
-                            <a class="btn btn-sm linkDefault mb-2" style="background-color: #e00034; color: white" href="https://www.seloger.com/list.htm?projects=2&types=1,2,3,9,13,12,11,10&natures=1,2,4&places=[{% for city in search.cities %}{{ "{ci:"~city.inseeCode|slice(0,2) }}0{{ city.inseeCode|slice(-3)~"}" }}{% if loop.last == false %}|{% endif %}{% endfor %}]&price=NaN/{{ search.priceMax }}&surface={{ search.surfaceMin }}/NaN&sort=d_dt_crea&enterprise=0&qsVersion=1.0" target="_blank">SeLoger</a>
-                            <a class="btn btn-sm linkDefault mb-2" style="background-color: #000; color: white" href="https://www.paruvendu.fr/immobilier/annonceimmofo/liste/listeAnnonces?nbp=0&tt=1&tbApp=1&tbDup=1&tbChb=1&tbLof=1&tbAtl=1&tbPla=1&tbMai=1&tbVil=1&tbCha=1&tbPro=1&tbHot=1&tbMou=1&tbFer=1&tbImm=1&tbPar=1&at=1&nbp0=99&sur0={{ search.surfaceMin }}&px1={{ search.priceMax }}&pa=FR&ddlFiltres=nofilter&codeINSEE={% for city in search.cities %}{{ city.inseeCode }}{% if loop.last == false %},{% endif %}{% endfor %}" target="_blank">ParuVendu</a>
-                            <a class="btn btn-sm btn-default mb-2" id="openLinkDefault" href="#">Tout ouvrir</a>
-                            {% if search.links|length > 0 %}
-                            <hr>
-                            <form>
-                                <div class="form-group">
-                                    <label>Vos liens</label>
-                                    <select class="form-control" id='selectLinkSearch'>
-                                        <option value="">SELECTIONNER</option>
-                                        <option value='all'>Tout ouvrir</option>
-                                        {% for link in search.links %}
-                                            <option value="{{ link }}">{{ link }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </form>
-                            {% endif %}
-                        </div>
-                    </div>
-
+                    {{ include('search/components/searchCard.html.twig', {'search':search}) }}
               </div>
         {% endfor %}
     </div>

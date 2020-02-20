@@ -16,7 +16,7 @@ use App\Form\StrategieType;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/", name="main")
+     * @Route("/ville", name="main")
      */
     public function index(Request $request)
     {        
@@ -51,7 +51,7 @@ class MainController extends AbstractController
     }
     
     /**
-     * @Route("/strategie")
+     * @Route("/")
      */
     public function strategie(Request $request)
     {  

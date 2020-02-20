@@ -100,11 +100,11 @@
               <span>Recherche de ville</span>
             </a>
           </li>
-          {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          
           <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ path('app_main_favoris') }}">
+            <a class="nav-link collapsed" {% if is_granted('IS_AUTHENTICATED_FULLY') %}href="{{ path('app_main_favoris') }}"{% else %}href="" data-toggle="modal" data-target="#requireLoginModal"{% endif %}>
               <i class="fas fa-star"></i>
-              <span>Favoris</span>
+              <span>Mes favoris</span>
             </a>
           </li>
           
@@ -114,7 +114,6 @@
               <span>Mes recherches</span>
             </a>
           </li>
-          {% endif %}
           
           <!-- Divider -->
           <hr class="sidebar-divider">
@@ -191,11 +190,11 @@
                       </div>
                     </li>
 
-                
+                <div class="topbar-divider d-none d-sm-block"></div>
 
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     
-                <div class="topbar-divider d-none d-sm-block"></div>
+                
                     
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
@@ -205,7 +204,7 @@
                   </a>
                   <!-- Dropdown - User Information -->
                   <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">
+                    {#<a class="dropdown-item" href="#">
                       <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                       Profil
                     </a>
@@ -217,13 +216,19 @@
                       <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                       Activité
                     </a>
-                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-divider"></div>#}
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                       <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                       Déconnexion
                     </a>
                   </div>
                 </li>
+                {% else %}
+                    <li class="nav-item dropdown no-arrow">
+                        <a href="{{path('fos_user_registration_register')}}" class="btn btn-sm btn-default">S'enregistrer</a>
+                         ou 
+                        <a href="{{path('fos_user_security_login')}}" class="btn btn-sm btn-primary">Se connecter</a>
+                    </li>
                 {% endif %}
 
               </ul>
@@ -308,6 +313,26 @@
               } );
             </script>
         {% endblock %}
+        
+        <div class="modal fade" id="requireLoginModal" tabindex="-1" role="dialog" aria-labelledby="requireLoginModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="requireLoginModalLabel">Connexion requise</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Si vous souhaitez accéder à cette fonctionnalité, merci de vous connecter ou vous créer un compte
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <a href="{{path('fos_user_registration_register')}}" class="btn btn-default">Je m'enregistre</a>
+                        <a href="{{path('fos_user_security_login')}}" class="btn btn-primary">Je me connecte</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
-
 </html>

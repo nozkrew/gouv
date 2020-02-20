@@ -4,9 +4,7 @@
             <th>Ville</th>
             <th>Prix m²</th>
             <th>Population</th>
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <th>Favoris</th>
-            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -23,11 +21,9 @@
                     {% else %}
                         <td data-order="0">N/A</td>
                     {% endif %}
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <td data-order="{% if city in app.user.cities %}1{% else %}0{% endif %}" >
+                    <td data-order="{% if is_granted('IS_AUTHENTICATED_FULLY') and city in app.user.cities %}1{% else %}0{% endif %}" >
                         {{ include('main/components/formFavoris.html.twig', {'city':city}) }}
                     </td>
-                    {% endif %}
                 </tr>
         {% endfor %}
     </tbody>
