@@ -42,8 +42,9 @@ $(document).ready(function() {
     formFavorisSubmit();
     
     function formFavorisSubmit(){
-        $('form[name="app_main_favorisadd"]').submit(function(e){
+        $('form[name="app_main_favorisadd"]').on('submit', function(e){
             e.preventDefault();
+            $('[data-toggle="tooltip"]').tooltip('dispose');
             var form = $(this);
             var url = form.attr('action');
             $.ajax({
@@ -52,6 +53,7 @@ $(document).ready(function() {
                 success: function(response){
                     if(!response.error){
                         $(form).replaceWith(response.html);
+                        $('[data-toggle="tooltip"]').tooltip('update');
                         formFavorisSubmit();
                     }
                     else{

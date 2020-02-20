@@ -1,5 +1,35 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme form _self %}
+
+{%- block form_label -%}
+    {% if label is not same as(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                    '%name%': name,
+                    '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
+            {%- if translation_domain is same as(false) -%}
+                {{- label|raw -}}
+            {%- else -%}
+                {{- label|trans(label_translation_parameters, translation_domain)|raw -}}
+            {%- endif -%}
+        </{{ element|default('label') }}>
+    {%- endif -%}
+{%- endblock form_label -%}
+
 {% block title %}Calculateur{% endblock %}
 
 {% block title_h1 %}Calculateur{% endblock %}
@@ -27,7 +57,7 @@
                     {{ form_start(form) }}
                         <h4>Revenus locatifs</h4>
                         <div class="form-group row">
-                            {{ form_label(form.loyer, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.loyer, "Loyer mensuel estimés <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='Indiquez les loyers mensuels hors charge que vous estimez'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
                                 {{ form_widget(form.loyer, {'attr':{"class":'form-control updateCharge'}}) }}
                                 <div class="input-group-append">
@@ -38,7 +68,7 @@
                         <hr>
                         <h4>Frais d'achat</h4>
                         <div class="form-group row">
-                            {{ form_label(form.prix, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.prix, 'Prix <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="Indiquez le prix frais d&#x2018;agence inclus ou le prix auquel vous estimez pouvoir avoir pour ce bien"></i>', {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
                                 {{ form_widget(form.prix, {'attr':{"class":'form-control'}}) }}
                                 <div class="input-group-append">
@@ -47,7 +77,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{ form_label(form.metreCarre, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.metreCarre, "m² <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='Indiquez le nombre de mètres carrés du bien'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
                                 {{ form_widget(form.metreCarre, {'attr':{"class":'form-control'}}) }}
                                 <div class="input-group-append">
@@ -56,7 +86,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{ form_label(form.apport, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.apport, "Apport <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='Indiquez le montant de l&#x2018;apport que vous souhaitez faire. Il est conseillé de mettre le moins d&#x2018;apport possible pour profiter de l&#x2018;effet de levier de la banque'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
                                 {{ form_widget(form.apport, {'attr':{"class":'form-control'}}) }}
                                 <div class="input-group-append">
@@ -65,7 +95,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{ form_label(form.ameublement, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.ameublement, "Ameublement <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' data-html='true' title='Indiquez le montant des meubles (si vous faites du meublé).<br>A titre indicatif :<br>T1 entre 1000€ et 1500€<br>T2 entre 2000€ et 2500€<br>T3 entre 3000€ et 3500€'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
                                 {{ form_widget(form.ameublement, {'attr':{"class":'form-control'}}) }}
                                 <div class="input-group-append">
@@ -74,7 +104,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{ form_label(form.fraisNotaire, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.fraisNotaire, "Frais de notaire <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='Les frais de notaires représentent environ 8% du prix d&#x2018;achat. Nous calculons automatiquement le montant des frais de notaire. Vous pouvez indiquer un autre montant si besoin'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
                                 {{ form_widget(form.fraisNotaire, {'attr':{"class":'form-control'}}) }}
                                 <div class="input-group-append">
@@ -86,7 +116,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{ form_label(form.travaux, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.travaux, "Travaux <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='Indiquez le montant des travaux. Nous vous proposons une estimation des travaux en fonction du type de travaux que vous avez à réaliser'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
                                 {{ form_widget(form.travaux, {'attr':{"class":'form-control'}}) }}
                                 <div class="input-group-append">
@@ -98,7 +128,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{ form_label(form.garantie, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.garantie, "Garantie banque <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='Lorsque vous contractez un prêt, la banque prend une garantie, il en existe différentes sortes. Nous calculons automatiquement une garantie par rapport au prix d&#x2018;achat. Vous pouvez iniquer un autre montant si besoin'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
                                 {{ form_widget(form.garantie, {'attr':{"class":'form-control'}}) }}
                                 <div class="input-group-append">
@@ -112,14 +142,14 @@
                         <hr>
                         <h4>Prêt</h4>
                         <div class="form-group row">
-                            {{ form_label(form.dureePret, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
+                            {{ form_label(form.dureePret, "Durée du prêt <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='Indiquez la durée du pret que vous souhaitez contracter. En général pour un investissement locatif, la banque ne dépasse pas les 20 ans'></i>", {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
                                 {{ form_widget(form.dureePret, {'attr':{"class":'form-control updateCharge'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">ans</span>
                                 </div>
                             </div>
-                            {{ form_label(form.tauxPret, null, {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
+                            {{ form_label(form.tauxPret, "Taux bancaire <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='Indiquez le taux du prêt'></i>", {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
                                 {{ form_widget(form.tauxPret, {'attr':{"class":'form-control updateCharge'}}) }}
                                 <div class="input-group-append">
@@ -130,7 +160,7 @@
                         <hr>
                         <h4>Charges annuelles</h4>
                         <div class="form-group row">
-                            {{ form_label(form.taxeFonciere, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.taxeFonciere, "Taxe foncière <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='La taxe foncière est à la charge de propriétaire. Vous devez la prendre en compte dans vos calculs. Si elle n&#x2018;est pas indiquée dans l&#x2018;annonce, demandez la auprès de l&#x2018;agence ou du vendeur'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
                                 {{ form_widget(form.taxeFonciere, {'attr':{"class":'form-control updateCharge'}}) }}
                                 <div class="input-group-append">
@@ -139,7 +169,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{ form_label(form.chargesCopro, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.chargesCopro, "Charges de copropriété <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='Si vous êtes en copropriété, indiquez le montant des charges à l&#x2018;année'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
                                 {{ form_widget(form.chargesCopro, {'attr':{"class":'form-control updateCharge'}}) }}
                                 <div class="input-group-append">
@@ -148,7 +178,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{ form_label(form.chargesBien, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.chargesBien, "Entretien du bien <i class='fas fa-info-circle' data-toggle='tooltip' data-html='true' data-placement='right' title='Indiquez un pourcentage des loyers qui seront utilisés pour l&#x2018;entretien du bien (petite réparation, peinture, ...). Je vous conseille <b>5%</b>'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
                                 {{ form_widget(form.chargesBien, {'attr':{"class":'form-control updateCharge'}}) }}
                                 <div class="input-group-append">
@@ -160,7 +190,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{ form_label(form.gerance, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.gerance, "Frais de gérance <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='Si vous comptez mettre votre bien en gérance, indiquez un pourcentage des loyers, en général entre 6% ou 8%'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
                                 {{ form_widget(form.gerance, {'attr':{"class":'form-control updateCharge'}}) }}
                                 <div class="input-group-append">
@@ -172,7 +202,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{ form_label(form.assurancePno, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.assurancePno, "Assurance PNO <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='L&#x2018;assurance propriétaire non occupant est obligatoire dans lorsque vous mettez en location un bien. C est une sorte d&#x2018;assurance habitation pour les bailleurs'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
                                 {{ form_widget(form.assurancePno, {'attr':{"class":'form-control updateCharge'}}) }}
                                 <div class="input-group-append">
@@ -181,7 +211,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{ form_label(form.comptabilite, null, {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
+                            {{ form_label(form.comptabilite, "Comptabilité <i class='fas fa-info-circle' data-toggle='tooltip' data-placement='right' title='Si vous faites du meublé ou que vous avez plusieurs investissement ou simplement que vous ne souhaitez pas vous occuper de la comptabilité, indiquez les honoraires du comptable.'></i>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
                                 {{ form_widget(form.comptabilite, {'attr':{"class":'form-control updateCharge'}}) }}
                                 <div class="input-group-append">
