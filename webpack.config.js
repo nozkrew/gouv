@@ -17,7 +17,7 @@ Encore
          //to: 'images/[path][name].[ext]',
 
          // if versioning is enabled, add the file hash too
-         //to: 'images/[path][name].[hash:8].[ext]',
+         to: 'images/[path][name].[hash:8].[ext]',
 
          // only copy files matching this pattern
          //pattern: /\.(png|jpg|jpeg)$/
@@ -35,7 +35,8 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
-    .enableVersioning(Encore.isProduction())
+    //.enableVersioning(Encore.isProduction())
+    .enableVersioning()
 
     // enables @babel/preset-env polyfills
     .configureBabel(() => {}, {

@@ -39,6 +39,7 @@ li.ui-menu-item:hover{
 
 .alert{
     z-index: 99;
+    margin-left: 35%;
 }
 
 .sidebar-brand-text{
