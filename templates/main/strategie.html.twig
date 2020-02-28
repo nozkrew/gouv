@@ -349,7 +349,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{parent()}}
+    {{parent()}}   
     <script type="text/javascript">
         
         
@@ -360,6 +360,10 @@
         
         $(document).ready(function() {
             $('#strategie_exploitation, #strategie_type').selectpicker();
+            
+            $('#strategie_montant').mask('000 000 000 000 000', {reverse: true});
+            $('#strategie_cashflow').mask('000 000 000 000 000', {reverse: true});
+            
         });
     </script>
 {% endblock %}

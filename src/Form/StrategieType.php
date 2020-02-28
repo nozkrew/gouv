@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use App\Form\Part\FormattedNumberType;
 
 class StrategieType extends AbstractType
 {
@@ -44,10 +45,10 @@ class StrategieType extends AbstractType
                 'label' => "Travaux à effectuer",
                 'placeholder' => "Choisissez un type de travaux"
             )) 
-            ->add('montant', IntegerType::class, array(
+            ->add('montant', FormattedNumberType::class, array(
                 'label' => "Montant total de l'investissement"
             ))
-            ->add('cashflow', IntegerType::class, array(
+            ->add('cashflow', FormattedNumberType::class, array(
                 'label' => "Cashflow mensuel à atteindre"
             ))
         ;

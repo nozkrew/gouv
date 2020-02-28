@@ -21,6 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use App\Repository\CitiesRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Form\LinkType;
+use App\Form\Part\FormattedNumberType;
 
 class SearchType extends AbstractType
 {
@@ -35,10 +36,10 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {        
         $builder
-            ->add('priceMax', IntegerType::class, array(
+            ->add('priceMax', FormattedNumberType::class, array(
                 'label' => "Prix max."
             ))
-            ->add('surfaceMin', IntegerType::class, array(
+            ->add('surfaceMin', FormattedNumberType::class, array(
                 'label' => "Surface min."
             ))
             ->add('name', null, array(
@@ -61,7 +62,7 @@ class SearchType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
-                'label' => "Vos URL",
+                'label' => "Vos liens",
                 'attr' => array(
                     'class' => 'links-collection'
                 )

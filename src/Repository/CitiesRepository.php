@@ -29,26 +29,24 @@ class CitiesRepository extends ServiceEntityRepository
             $qb->setParameter('dpt', $param['dpt']);
         }
         
+        $qb->leftJoin('App:Prices', 'p', 'WITH', 'p.city = c.id');
         if($param['price']['min']){
-            $qb->leftJoin('App:Prices', 'p', 'WITH', 'p.city = c.id');
             $qb->andWhere('p.priceMeter > :min');
             $qb->setParameter('min', $param['price']['min']);
         }
         
         if($param['price']['max']){
-            $qb->leftJoin('App:Prices', 'p', 'WITH', 'p.city = c.id');
             $qb->andWhere('p.priceMeter < :max');
             $qb->setParameter('max', $param['price']['max']);
         }
         
+        $qb->leftJoin('App:Population', 'pop', 'WITH', 'pop.city = c.id');
         if($param['population']['min']){
-            $qb->leftJoin('App:Population', 'pop', 'WITH', 'pop.city = c.id');
             $qb->andWhere('pop.total > :min');
             $qb->setParameter('min', $param['population']['min']);
         }
         
         if($param['population']['max']){
-            $qb->leftJoin('App:Population', 'pop', 'WITH', 'pop.city = c.id');
             $qb->andWhere('pop.total < :max');
             $qb->setParameter('max', $param['population']['max']);
         }

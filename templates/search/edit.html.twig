@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <hr>
-                        <h4 class="mb-4">Ajoutez vos URL de recherches</h4>
+                        <h4 class="mb-4">Ajoutez vos liens de recherches</h4>
                         <div class="form-group row">
                             {{ form_label(form.links, null, {'label_attr':{'class':'col-sm-2 col-form-label'}})}}
                             <div class="col-sm-10" id="">
@@ -125,8 +125,11 @@
                 allow_up: false,
                 allow_down: false,
                 add_at_the_end: true,
-                add: '<a href="#" class="btn btn-sm btn-primary"><i class="far fa-plus-square"></i> Ajouter une URL</a>',
+                add: '<a href="#" class="btn btn-sm btn-primary"><i class="far fa-plus-square"></i> Ajouter un lien</a>',
             });
+            
+            $('#search_priceMax').mask('000 000 000 000 000', {reverse: true});
+            $('#search_surfaceMin').mask('000 000 000 000 000', {reverse: true});
             
             initAutocomplete();
             

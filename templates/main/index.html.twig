@@ -87,6 +87,11 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#search_cities_dpt').selectpicker();
+            
+            $('#search_cities_populationMin').mask('000 000 000 000 000', {reverse: true});
+            $('#search_cities_populationMax').mask('000 000 000 000 000', {reverse: true});
+            $('#search_cities_priceMeterMin').mask('000 000 000 000 000', {reverse: true});
+            $('#search_cities_priceMeterMax').mask('000 000 000 000 000', {reverse: true});
         });
     </script>
 {% endblock %}

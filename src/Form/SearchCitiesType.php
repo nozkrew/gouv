@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Departments;
 use App\Repository\DepartmentsRepository;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use App\Form\Part\FormattedNumberType;
 
 class SearchCitiesType extends AbstractType
 {
@@ -30,28 +31,28 @@ class SearchCitiesType extends AbstractType
             'label' => "Département(s)",
             'multiple' => true
         ))
-        ->add('populationMin', IntegerType::class, array(
+        ->add('populationMin', FormattedNumberType::class, array(
             'required'=>false,
             'label' => "Population min.",
             'attr' => array(
                 'placeholder' => "Ex: 500"
             )
         ))
-        ->add('populationMax', IntegerType::class, array(
+        ->add('populationMax', FormattedNumberType::class, array(
             'required'=>false,
             'label' => "Population max.",
             'attr' => array(
                 'placeholder' => "Ex: 20000"
             )
         ))
-        ->add('priceMeterMin', IntegerType::class, array(
+        ->add('priceMeterMin', FormattedNumberType::class, array(
             'required'=>false,
             'label' => "Prix au m² min.",
             'attr' => array(
                 'placeholder' => "Ex: 800"
             )
         ))
-        ->add('priceMeterMax', IntegerType::class, array(
+        ->add('priceMeterMax', FormattedNumberType::class, array(
             'required'=>false,
             'label' => "Prix au m² max.",
             'attr' => array(
