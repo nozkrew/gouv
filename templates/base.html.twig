@@ -3,14 +3,13 @@
 
     <head>
         <meta charset="UTF-8">
+        <meta property="og:image" content="{{ asset('build/images/undraw_house_searching_n8mp.svg') }}">
+        <meta property="og:title" content="Application immobilière linvestissement.net">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}Linvestissement.net{% endblock %}</title>
         {% block stylesheets %}
             {# 'app' must match the first argument to addEntry() in webpack.config.js #}
             {{ encore_entry_link_tags('app') }}
-            
-            <!-- Renders a link tag (if your module requires any CSS)
-                 <link rel="stylesheet" href="/build/app.css"> -->
         {% endblock %}
         
         {% if app.environment != 'dev' %}
