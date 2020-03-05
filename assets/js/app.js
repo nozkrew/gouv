@@ -39,7 +39,7 @@ require('../css/app.css');
 $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
     $('.dataTable').DataTable();
-    $('[data-toggle="popover"]').popover();
+    //$('[data-toggle="popover"]').popover();
     
     formFavorisSubmit();
     
