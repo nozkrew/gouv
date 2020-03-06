@@ -10,6 +10,15 @@
 
 {% block body %}
     <div class="row">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.strategy is not null %}
+            <div class="col-lg-12">
+            <div class="card shadow mb-4 border-left-primary">
+                <div class="card-body">
+                        <p class="mb-0">Rappel : {{ app.user.strategy|text(false)|raw }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
         <div class="col-lg-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
