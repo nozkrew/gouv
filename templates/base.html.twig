@@ -241,10 +241,16 @@
                       </div>
                     </li>
                 {% else %}
-                    <li class="nav-item dropdown no-arrow">
-                        <a href="{{path('fos_user_registration_register')}}" class="btn btn-sm btn-default">S'enregistrer</a>
-                         ou 
-                        <a href="{{path('fos_user_security_login')}}" class="btn btn-sm btn-primary">Se connecter</a>
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            <a href="{{path('fos_user_registration_register')}}" class="btn btn-default">S'enregistrer</a>                        
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            <a href="{{path('fos_user_security_login')}}" class="btn btn-primary">Se connecter</a>
+                        </span>
+                        
                     </li>
                 {% endif %}
 
