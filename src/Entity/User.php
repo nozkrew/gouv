@@ -32,6 +32,13 @@ class User extends BaseUser
      */
     private $searches;
     
+    /**
+     * @var \Strategy
+     * 
+     * @ORM\OneToOne(targetEntity="Strategy", mappedBy="user")
+     */
+    private $strategy;
+    
     public function __construct() {
         parent::__construct();
         $this->groups = new ArrayCollection();
@@ -96,6 +103,24 @@ class User extends BaseUser
             if ($search->getUser() === $this) {
                 $search->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getStrategy(): ?Strategy
+    {
+        return $this->strategy;
+    }
+
+    public function setStrategy(?Strategy $strategy): self
+    {
+        $this->strategy = $strategy;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = null === $strategy ? null : $this;
+        if ($strategy->getUser() !== $newUser) {
+            $strategy->setUser($newUser);
         }
 
         return $this;

@@ -12,6 +12,7 @@ use App\Entity\IndicatorValue;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Form\CalculateurType;
 use App\Form\StrategieType;
+use App\Entity\Strategy;
 
 class MainController extends AbstractController
 {
@@ -55,31 +56,50 @@ class MainController extends AbstractController
      */
     public function strategie(Request $request)
     {  
-        $form = $this->createForm(StrategieType::class, null, array(
-            'method' => 'GET'
+        //Si l'utilisateur n'est pas connecté
+        if(!$this->isGranted('ROLE_USER')){
+            $strategie = new Strategy();
+        }
+        //Si l'utilisateur est connecté
+        else{
+            $strategie = $this->getStrategyRepository()->findOneBy(array(
+                'user' => $this->getUser()
+            ));
+            
+            if($strategie === null){
+                $strategie = new Strategy();
+                $strategie->setUser($this->getUser());
+            }
+        }        
+        
+        $form = $this->createForm(StrategieType::class, $strategie, array(
+            //'method' => 'GET'
         ));
         
-        $text = null;
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $text = "Ma stratégie est de louer en ";
-            
-            //exploitation
-            $text .= "<b>".implode(" et/ou ", $form->get('exploitation')->getData())."</b>. ";
-            
-            $text .= "Le type de bien sera un <b>".implode(" ou un ", $form->get('type')->getData())."</b>. ";
-            
-            $text .= "Les travaux seront <b>".$form->get("travaux")->getData()."</b>. ";
-            
-            $text .= "Le montant total de mon projet sera de <b>".$form->get('montant')->getData()."</b>€. ";
-            
-            $text .= "Avec cet investissement je souhaite dégager <b>".$form->get('cashflow')->getData()."€</b> de cashflow mensuel";
+            $em = $this->getDoctrine()->getManager();
+            //Si l'utilisateur est connecté, on enregistre sa stratégie
+            if($this->isGranted('ROLE_USER')){
+                try{
+                    
+                    if($strategie->getId() === null){
+                        $em->persist($strategie);
+                    }
+                    $em->flush();
+                } catch (\Exception $ex) {
+                    $this->addFlash("error", "Une erreur est survenue lors de l'enregistrement. Veuillez réessayer");
+                }
+            }
+            else{
+                $em->detach($strategie);
+            }
 
         }
         
         return $this->render('main/strategie.html.twig', [
             'form' => $form->createView(),
-            'text' => $text
+            'strategy' =>$strategie
         ]);
     }
     
@@ -173,6 +193,10 @@ class MainController extends AbstractController
 
     private function getCitiesRepository(){
         return $this->container->get('doctrine')->getRepository(Cities::class);
+    }
+    
+    private function getStrategyRepository(){
+        return $this->container->get('doctrine')->getRepository(Strategy::class);
     }
     
     private function getIndicatorValueRepository(){
