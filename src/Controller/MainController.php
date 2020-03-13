@@ -17,9 +17,18 @@ use App\Entity\Strategy;
 class MainController extends AbstractController
 {
     /**
+     * @Route("/")
+     */
+    public function index(){
+        //définir la page d'acceuil
+        return $this->redirect($this->generateUrl('main'));
+    }
+
+
+    /**
      * @Route("/ville", name="main")
      */
-    public function index(Request $request)
+    public function ville(Request $request)
     {        
         
        $cities = array();
@@ -52,7 +61,7 @@ class MainController extends AbstractController
     }
     
     /**
-     * @Route("/")
+     * @Route("/strategie")
      */
     public function strategie(Request $request)
     {  

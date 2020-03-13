@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\ListTravaux;
 
 class CalculateurType extends AbstractType
 {
@@ -73,13 +75,11 @@ class CalculateurType extends AbstractType
                         'placeholder' => "Ex: 50400"
                     )
                 ))
-                ->add('travauxAide', ChoiceType::class, array(
+                ->add('travauxAide', EntityType::class, array(
+                    'class' => ListTravaux::class,
                     'label' => null,
-                    'choices' => array(
-                        "Rénovation gros oeuvre" => 800,
-                        "Rénovation" => 630,
-                        "Rafraîchissement" => 260,
-                    ),
+                    'choice_label' => 'name',
+                    'choice_value' => 'priceMeter',
                     'placeholder' => 'SELECTIONNER'
                 ))
                 ->add('dureePret', IntegerType::class, array(

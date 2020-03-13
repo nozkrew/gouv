@@ -31,6 +31,13 @@ class ListTravaux
     private $strategies;
     
     /**
+     * @var integer
+     * 
+     * @ORM\Column(name="priceMeter", type="integer")
+     */
+    private $priceMeter;
+    
+    /**
      * @var string
      *
      * @ORM\Column(name="text", type="string", length=255, nullable=false)
@@ -99,6 +106,18 @@ class ListTravaux
     public function setText(string $text): self
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    public function getPriceMeter(): ?int
+    {
+        return $this->priceMeter;
+    }
+
+    public function setPriceMeter(int $priceMeter): self
+    {
+        $this->priceMeter = $priceMeter;
 
         return $this;
     }

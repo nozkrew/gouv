@@ -11,7 +11,7 @@
         <tbody>
              {% for city in cities %}
                     <tr>
-                        <td><a href="{{path("app_main_detailcity", {'city_name':(city.slug)|replace({' ':'-'}), 'insee_code':city.inseeCode})}}" target="_blank">{{city.name}} ({{city.zipCode}})</a></td>
+                        <td><a href="{{path("app_main_detailcity", {'city_name':(city.slug)|replace({' ':'-'}), 'insee_code':city.inseeCode})}}" >{{city.name}} ({{city.zipCode}})</a></td>
                         {% if city.price is not null and city.price.priceMeter is not null %}
                             <td data-order="{{city.price.priceMeter}}">{{city.price.priceMeter}}</td>
                         {% else %}
