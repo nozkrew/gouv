@@ -15,7 +15,7 @@ use App\Form\StrategieType;
 use App\Entity\Strategy;
 
 class MainController extends AbstractController
-{
+{    
     /**
      * @Route("/")
      */

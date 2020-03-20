@@ -4,9 +4,9 @@
     <head>
         <meta charset="UTF-8">
         <meta property="og:image" content="{{ absolute_url(asset('build/images/undraw_house_searching_n8mp.png')) }}">
-        <meta property="og:title" content="Application immobilière linvestissement.net">
+        <meta property="og:title" content="Trouver rapidement dans quelle ville investir">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% block title %}Linvestissement.net{% endblock %}</title>
+        <title>{% block title %}Dans quele ville investir ?{% endblock %}</title>
         {% block stylesheets %}
             {# 'app' must match the first argument to addEntry() in webpack.config.js #}
             {{ encore_entry_link_tags('app') }}
@@ -75,7 +75,7 @@
             <div class="sidebar-brand-icon">
               <i class="far fa-building"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">Linvestissement.net</div>
+            <div class="sidebar-brand-text mx-3">App</div>
           </a>
 
           <!-- Divider -->
@@ -90,7 +90,7 @@
           
           <hr class="sidebar-divider">
 
-          <div class="sidebar-heading">
+{#          <div class="sidebar-heading">
             Stratégie
           </div>
           
@@ -102,7 +102,7 @@
           </li>
 
           <!-- Divider -->
-          <hr class="sidebar-divider">
+          <hr class="sidebar-divider">#}
 
           <!-- Heading -->
           <div class="sidebar-heading">
@@ -118,18 +118,18 @@
           </li>
           
           <li class="nav-item">
-            <a class="nav-link collapsed" {% if is_granted('IS_AUTHENTICATED_FULLY') %}href="{{ path('app_main_favoris') }}"{% else %}href="" data-toggle="modal" data-target="#requireLoginModal"{% endif %}>
+            <a class="nav-link collapsed" {% if is_granted('IS_AUTHENTICATED_FULLY') %}href="{{ path('app_main_favoris') }}"{% else %}href="#" data-toggle="modal" data-target="#requireLoginModal"{% endif %}>
               <i class="fas fa-star"></i>
               <span>Mes favoris</span>
             </a>
           </li>
           
-          <li class="nav-item">
+{#          <li class="nav-item">
             <a class="nav-link collapsed" href="{{ path('app_search_index') }}">
               <i class="fas fa-list-ol"></i>
               <span>Mes recherches</span>
             </a>
-          </li>
+          </li>#}
           
           <!-- Divider -->
           <hr class="sidebar-divider">
@@ -206,9 +206,9 @@
                       </div>
                     </li>
                     
-                    <li class="nav-item dropdown no-arrow">
+                    {#<li class="nav-item dropdown no-arrow">
                         <a href="https://forms.gle/fEBYv2ZyTXstFeBX6" target="_blank" class="nav-link text-gray-600"><i class="far fa-question-circle mr-1"></i> Votre avis nous intéresse</a>
-                    </li>
+                    </li>#}
 
                 <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -270,13 +270,13 @@
           <!-- End of Main Content -->
 
           <!-- Footer -->
-          <footer class="sticky-footer bg-white">
+{#          <footer class="sticky-footer bg-white">
             <div class="container my-auto">
               <div class="copyright text-center my-auto">
                   <span>Copyright &copy; <a href="https://linvestissement.net" target="_blank">Linvestissement.net</a> {{ date('now')|date('Y') }}</span>
               </div>
             </div>
-          </footer>
+          </footer>#}
           <!-- End of Footer -->
 
         </div>
