@@ -5,6 +5,9 @@
                 <th>Ville</th>
                 <th>Prix m²</th>
                 <th>Population</th>
+                <th>Demande locative</th>
+                <th>Rentabilité moyenne</th>
+                <th>Score investisseur</th>
                 <th>Favoris</th>
             </tr>
         </thead>
@@ -13,15 +16,18 @@
                     <tr>
                         <td><a href="{{path("app_main_detailcity", {'city_name':(city.slug)|replace({' ':'-'}), 'insee_code':city.inseeCode})}}" >{{city.name}} ({{city.zipCode}})</a></td>
                         {% if city.price is not null and city.price.priceMeter is not null %}
-                            <td data-order="{{city.price.priceMeter}}">{{city.price.priceMeter}}</td>
+                            <td data-order="{{city.price.priceMeter}}">{{city.price.priceMeter}} <i class="fas fa-long-arrow-alt-down" style="color: red"></i></td>
                         {% else %}
                             <td data-order="0">N/A</td>
                         {% endif %}
                         {% if city.population is not null %}
-                            <td data-order="{{city.population.total}}">{{city.population.total}}</td>
+                            <td data-order="{{city.population.total}}">{{city.population.total}} <i class="fas fa-long-arrow-alt-up" style="color: green"></i></td>
                         {% else %}
                             <td data-order="0">N/A</td>
                         {% endif %}
+                        <td><i class="fas fa-circle"></i></td>
+                        <td>6,5%</td>
+                        <td><span class="badge badge-success"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span></td>
                         <td data-order="{% if is_granted('IS_AUTHENTICATED_FULLY') and city in app.user.cities %}1{% else %}0{% endif %}" >
                             {{ include('main/components/formFavoris.html.twig', {'city':city}) }}
                         </td>
