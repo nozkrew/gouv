@@ -18,7 +18,21 @@
                             <td data-order="0">N/A</td>
                         {% endif %}
                         {% if city.population is not null %}
-                            <td data-order="{{city.population.total}}">{{city.population.total}}</td>
+                            <td data-order="{{city.population.total}}">
+                                {{city.population.total}} 
+                                
+                                {% for indicator in city.indicatorValues if indicator.indicator.id == 1 %}
+                                    {% if indicator.tabData|length >= 2%}
+                                        {% set last =  indicator.tabData[indicator.tabData|keys[indicator.tabData|length - 1]] %}
+                                        {% set beforeLast =  indicator.tabData[indicator.tabData|keys[indicator.tabData|length - 2]] %}
+                                        {% if last - beforeLast > 0 %}
+                                            <i class="fas fa-long-arrow-alt-up text-success"></i>
+                                        {% else %}
+                                            <i class="fas fa-long-arrow-alt-down text-danger"></i>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
                         {% else %}
                             <td data-order="0">N/A</td>
                         {% endif %}
