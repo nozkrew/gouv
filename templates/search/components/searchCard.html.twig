@@ -33,7 +33,11 @@
                     <option value="">SELECTIONNER</option>
                     {#<option value='all'>Tout ouvrir</option>#}
                     {% for link in search.links %}
-                        <option value="{{ path('app_search_lien', {'id':search.id, 'index':loop.index0}) }}">{{ link }}</option>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <option value="{{ path('app_search_lien', {'id':search.id, 'index':loop.index0}) }}">{{ link }}</option>
+                        {% else %}
+                            <option value="{{ link }}">{{ link }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
