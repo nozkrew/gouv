@@ -64,7 +64,7 @@ class SearchController extends AbstractController
         else{
             $search = $this->getSearchRepository()->findOneById($id);
             if($search === null || $search->getUser() !== $this->getUser()){
-                $this->addFlash("error", "Recherche introuvable");
+                $this->addFlash("danger", "Recherche introuvable");
                 return $this->redirect($this->generateUrl('app_search_index'));
             }
         }
@@ -89,7 +89,7 @@ class SearchController extends AbstractController
                 return $this->redirect($this->generateUrl('app_search_edit'));
                 
             } catch (\Exception $ex) {
-                $this->addFlash("error", "Erreur lors de l'enregistrement. Veuillez ré-essayer");
+                $this->addFlash("danger", "Erreur lors de l'enregistrement. Veuillez ré-essayer");
             }
         }
         
@@ -106,7 +106,7 @@ class SearchController extends AbstractController
     public function delete(Request $request, $id){
         $search = $this->getSearchRepository()->findOneById($id);
         if($search === null || $search->getUser() !== $this->getUser()){
-            $this->addFlash("error", "Recherche introuvable");
+            $this->addFlash("danger", "Recherche introuvable");
             return $this->redirect($this->generateUrl('app_search_index'));
         }
         
@@ -117,8 +117,31 @@ class SearchController extends AbstractController
             $this->addFlash("success", "Recherche supprimée");
             return $this->redirect($this->generateUrl('app_search_index'));
         } catch (\Exception $ex) {
-            $this->addFlash("error", "Recherche introuvable");
+            $this->addFlash("danger", "Recherche introuvable");
         }
+    }
+    
+    /**
+     * @Route("/{id}/lien/{index}", requirements={"id"="\d+", "index"="\d+"})
+     */
+    public function lien(Request $request, $id, $index){
+        $search = $this->getSearchRepository()->findOneById($id);
+        
+        if($search === null || $search->getUser() !== $this->getUser()){
+            $this->addFlash("danger", "Recherche introuvable");
+            return $this->redirect($this->generateUrl('app_search_index'));
+        }
+        
+        if(!isset($search->getLinks()[$index])){
+            $this->addFlash("danger", "Lien introuvable");
+            return $this->redirect($this->generateUrl('app_search_index'));
+        }
+        
+        return $this->render('search/lien.html.twig', [
+            'search' => $search,
+            'url' => $search->getLinks()[$index],
+            'index' => $index
+        ]);
     }
 
 

@@ -57,7 +57,7 @@
         
         $('#selectLinkSearch').change(function(){
             var url = $(this).val();
-            if(url == 'all'){
+{#            if(url == 'all'){
                 $(this).children("option").each(function(){
                     var url = $(this).val();
                     if(url != 'all' && url != ''){
@@ -65,9 +65,9 @@
                     }
                 });
             }
-            else{
+            else{#}
                 window.open(url);
-            }
+{#            }#}
             
         });
     </script>

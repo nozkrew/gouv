@@ -31,9 +31,9 @@
                 <label>Vos liens</label>
                 <select class="form-control" id='selectLinkSearch'>
                     <option value="">SELECTIONNER</option>
-                    <option value='all'>Tout ouvrir</option>
+                    {#<option value='all'>Tout ouvrir</option>#}
                     {% for link in search.links %}
-                        <option value="{{ link }}">{{ link }}</option>
+                        <option value="{{ path('app_search_lien', {'id':search.id, 'index':loop.index0}) }}">{{ link }}</option>
                     {% endfor %}
                 </select>
             </div>
