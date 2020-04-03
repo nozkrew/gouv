@@ -7,11 +7,19 @@
 
 {% block h1_complement %}
     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-    {% if search.links[index-1] is defined %}
-        <a href="{{ path('app_search_lien', {'id':search.id, 'index':index-1})}}" class="btn btn-primary"><i class="fas fa-angle-left"></i> Précédent</a>
+    {% if previous %}
+        {% if app.request.attributes.get('_route') == 'app_search_lien_1' %}
+            <a href="{{ path('app_search_lien_1', {'index':index-1})}}" class="btn btn-primary"><i class="fas fa-angle-left"></i> Précédent</a>
+        {% else %}
+            <a href="{{ path('app_search_lien', {'id':search.id, 'index':index-1})}}" class="btn btn-primary"><i class="fas fa-angle-left"></i> Précédent</a>
+        {% endif  %}
     {% endif %}
-    {% if search.links[index+1] is defined %}
-        <a href="{{ path('app_search_lien', {'id':search.id, 'index':index+1})}}" class="btn btn-primary">Suivant <i class="fas fa-angle-right"></i></a>
+    {% if next %}
+        {% if app.request.attributes.get('_route') == 'app_search_lien_1' %}
+            <a href="{{ path('app_search_lien_1', {'index':index+1})}}"id':search.id,  class="btn btn-primary">Suivant <i class="fas fa-angle-right"></i></a>
+        {% else %}
+            <a href="{{ path('app_search_lien', {'id':search.id, 'index':index+1})}}" class="btn btn-primary">Suivant <i class="fas fa-angle-right"></i></a>
+        {% endif  %}
     {% endif %}
     </div>
 {% endblock %}
@@ -22,7 +30,9 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Voir les dernières annonces <small>(<a href='{{ search.links[index] }}' target="_blank">{{ search.links[index] }}</a>)</small></h6>
-                    <a href="{{ path('app_search_edit_1', {'id':search.id}) }}" class="btn btn-sm btn-primary float-right"><i class="far fa-edit"></i></a>
+                    {% if app.request.attributes.get('_route') != 'app_search_lien_1' %}
+                        <a href="{{ path('app_search_edit_1', {'id':search.id}) }}" class="btn btn-sm btn-primary float-right"><i class="far fa-edit"></i></a>
+                    {% endif %}
                 </div>
                 <div class="card-body">
                     <div class="embed-responsive embed-responsive-16by9">

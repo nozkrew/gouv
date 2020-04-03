@@ -37,5 +37,6 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: recherche, role: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/recherche/demo, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/favoris, role: ROLE_USER }
         - { path: ^/recherche/[a-zA-Z0-9], role: ROLE_USER }
