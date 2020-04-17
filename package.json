@@ -2,6 +2,7 @@
   "devDependencies": {
     "@symfony/webpack-encore": "^0.27.0",
     "bootstrap": "^4.3.1",
+    "core-js": "^3.6.5",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
     "vue": "^2.6.11",
@@ -11,7 +12,6 @@
   },
   "dependencies": {
     "bootstrap-select": "^1.13.12",
-    "core-js": "^3.6.5",
     "datatables.net-bs4": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "jquery-mask-plugin": "^1.14.16",
