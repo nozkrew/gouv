@@ -35,7 +35,7 @@
 {% block title_h1 %}Calculateur{% endblock %}
 
 {% block body %}
-    <div class="row">
+    <div class="row" id=calculateur>
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-body row">
@@ -59,7 +59,7 @@
                         <div class="form-group row">
                             {{ form_label(form.loyer, "Loyer mensuel estimés <span data-toggle='tooltip' data-placement='right' title='Indiquez les loyers mensuels hors charge que vous estimez'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
-                                {{ form_widget(form.loyer, {'attr':{"class":'form-control updateCharge'}}) }}
+                                {{ form_widget(form.loyer, {'attr':{"class":'form-control ', 'v-model':'loyer'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">€</span>
                                 </div>
@@ -70,7 +70,7 @@
                         <div class="form-group row">
                             {{ form_label(form.prix, 'Prix <span data-toggle="tooltip" data-placement="right" title="Indiquez le prix frais d&#x2018;agence inclus ou le prix auquel vous estimez pouvoir avoir pour ce bien"><i class="fas fa-info-circle"></i></span>', {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
-                                {{ form_widget(form.prix, {'attr':{"class":'form-control'}}) }}
+                                {{ form_widget(form.prix, {'attr':{"class":'form-control', 'v-model':'prix'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">€</span>
                                 </div>
@@ -79,7 +79,7 @@
                         <div class="form-group row">
                             {{ form_label(form.metreCarre, "m² <span data-toggle='tooltip' data-placement='right' title='Indiquez le nombre de mètres carrés du bien'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
-                                {{ form_widget(form.metreCarre, {'attr':{"class":'form-control'}}) }}
+                                {{ form_widget(form.metreCarre, {'attr':{"class":'form-control', 'v-model':'mCarre'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">m²</span>
                                 </div>
@@ -88,7 +88,7 @@
                         <div class="form-group row">
                             {{ form_label(form.apport, "Apport <span data-toggle='tooltip' data-placement='right' title='Indiquez le montant de l&#x2018;apport que vous souhaitez faire. Il est conseillé de mettre le moins d&#x2018;apport possible pour profiter de l&#x2018;effet de levier de la banque'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
-                                {{ form_widget(form.apport, {'attr':{"class":'form-control'}}) }}
+                                {{ form_widget(form.apport, {'attr':{"class":'form-control', 'v-model':'apport'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">€</span>
                                 </div>
@@ -97,7 +97,7 @@
                         <div class="form-group row">
                             {{ form_label(form.ameublement, "Ameublement <span data-toggle='tooltip' data-placement='right' data-html=true title='Indiquez le montant des meubles (si vous faites du meublé).<br>A titre indicatif :<br>T1 entre 1000€ et 1500€<br>T2 entre 2000€ et 2500€<br>T3 entre 3000€ et 3500€'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
-                                {{ form_widget(form.ameublement, {'attr':{"class":'form-control'}}) }}
+                                {{ form_widget(form.ameublement, {'attr':{"class":'form-control', 'v-model':'ameublement'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">€</span>
                                 </div>
@@ -106,37 +106,37 @@
                         <div class="form-group row">
                             {{ form_label(form.fraisNotaire, "Frais de notaire <span data-toggle='tooltip' data-placement='right' title='Les frais de notaires représentent environ 8% du prix d&#x2018;achat. Nous calculons automatiquement le montant des frais de notaire. Vous pouvez indiquer un autre montant si besoin'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
-                                {{ form_widget(form.fraisNotaire, {'attr':{"class":'form-control'}}) }}
+                                {{ form_widget(form.fraisNotaire, {'attr':{"class":'form-control', 'v-model':'fraisNotaire'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">€</span>
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                {{ form_widget(form.fraisNotaireEstime, {'attr':{"class":'form-control-plaintext'}}) }}
+                                {{ form_widget(form.fraisNotaireEstime, {'attr':{"class":'form-control-plaintext', 'v-model':'fraisNotaireEstime'}}) }}
                             </div>
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.travaux, "Travaux <span data-toggle='tooltip' data-placement='right' title='Indiquez le montant des travaux. Nous vous proposons une estimation des travaux en fonction du type de travaux que vous avez à réaliser'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
-                                {{ form_widget(form.travaux, {'attr':{"class":'form-control'}}) }}
+                                {{ form_widget(form.travaux, {'attr':{"class":'form-control', 'v-model':'travaux'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">€</span>
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                {{ form_widget(form.travauxAide, {'attr':{"class":'form-control'}}) }}
+                                {{ form_widget(form.travauxAide, {'attr':{"class":'form-control', 'v-model':'travauxEchelle'}}) }}
                             </div>
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.garantie, "Garantie banque <span data-toggle='tooltip' data-placement='right' title='Lorsque vous contractez un prêt, la banque prend une garantie, il en existe différentes sortes. Nous calculons automatiquement une garantie par rapport au prix d&#x2018;achat. Vous pouvez iniquer un autre montant si besoin'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
-                                {{ form_widget(form.garantie, {'attr':{"class":'form-control'}}) }}
+                                {{ form_widget(form.garantie, {'attr':{"class":'form-control', 'v-model':'fraisGarantie'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">€</span>
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                {{ form_widget(form.garantieEstimation, {'attr':{"class":'form-control-plaintext'}}) }}
+                                {{ form_widget(form.garantieEstimation, {'attr':{"class":'form-control-plaintext', 'v-model':'fraisGarantieEstime'}}) }}
                             </div>
                         </div>
                         <hr>
@@ -144,14 +144,14 @@
                         <div class="form-group row">
                             {{ form_label(form.dureePret, "Durée du prêt <span data-toggle='tooltip' data-placement='right' title='Indiquez la durée du pret que vous souhaitez contracter. En général pour un investissement locatif, la banque ne dépasse pas les 20 ans'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
-                                {{ form_widget(form.dureePret, {'attr':{"class":'form-control updateCharge'}}) }}
+                                {{ form_widget(form.dureePret, {'attr':{"class":'form-control', 'v-model':'dureePret'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">ans</span>
                                 </div>
                             </div>
                             {{ form_label(form.tauxPret, "Taux bancaire <span data-toggle='tooltip' data-placement='right' title='Indiquez le taux du prêt'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-2 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
-                                {{ form_widget(form.tauxPret, {'attr':{"class":'form-control updateCharge'}}) }}
+                                {{ form_widget(form.tauxPret, {'attr':{"class":'form-control', 'v-model':'tauxPret'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">%</span>
                                 </div>
@@ -162,7 +162,7 @@
                         <div class="form-group row">
                             {{ form_label(form.taxeFonciere, "Taxe foncière <span data-toggle='tooltip' data-placement='right' title='La taxe foncière est à la charge de propriétaire. Vous devez la prendre en compte dans vos calculs. Si elle n&#x2018;est pas indiquée dans l&#x2018;annonce, demandez la auprès de l&#x2018;agence ou du vendeur'><i class='fas fa-info-circle' ></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
-                                {{ form_widget(form.taxeFonciere, {'attr':{"class":'form-control updateCharge'}}) }}
+                                {{ form_widget(form.taxeFonciere, {'attr':{"class":'form-control', 'v-model':'taxeFonciere'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">€</span>
                                 </div>
@@ -171,7 +171,7 @@
                         <div class="form-group row">
                             {{ form_label(form.chargesCopro, "Charges de copropriété <span data-toggle='tooltip' data-placement='right' title='Si vous êtes en copropriété, indiquez le montant des charges à l&#x2018;année'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
-                                {{ form_widget(form.chargesCopro, {'attr':{"class":'form-control updateCharge'}}) }}
+                                {{ form_widget(form.chargesCopro, {'attr':{"class":'form-control', 'v-model':'chargeCopro'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">€</span>
                                 </div>
@@ -180,31 +180,31 @@
                         <div class="form-group row">
                             {{ form_label(form.chargesBien, "Entretien du bien <span data-toggle='tooltip' data-placement='right' data-html='true' title='Indiquez un pourcentage des loyers qui seront utilisés pour l&#x2018;entretien du bien (petite réparation, peinture, ...). Je vous conseille <b>5%</b>'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
-                                {{ form_widget(form.chargesBien, {'attr':{"class":'form-control updateCharge'}}) }}
+                                {{ form_widget(form.chargesBien, {'attr':{"class":'form-control', 'v-model':'tauxEntretien'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">%</span>
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                {{ form_widget(form.chargesBienTotal, {'attr':{"class":'form-control-plaintext'}}) }}
+                                {{ form_widget(form.chargesBienTotal, {'attr':{"class":'form-control-plaintext', 'v-model':'entretien'}}) }}
                             </div>
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.gerance, "Frais de gérance <span data-toggle='tooltip' data-placement='right' title='Si vous comptez mettre votre bien en gérance, indiquez un pourcentage des loyers, en général entre 6% ou 8%'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-4 input-group">
-                                {{ form_widget(form.gerance, {'attr':{"class":'form-control updateCharge'}}) }}
+                                {{ form_widget(form.gerance, {'attr':{"class":'form-control', 'v-model':'tauxGerance'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">%</span>
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                {{ form_widget(form.geranceTotal, {'attr':{"class":'form-control-plaintext'}}) }}
+                                {{ form_widget(form.geranceTotal, {'attr':{"class":'form-control-plaintext', 'v-model':'gerance'}}) }}
                             </div>
                         </div>
                         <div class="form-group row">
                             {{ form_label(form.assurancePno, "Assurance PNO <span data-toggle='tooltip' data-placement='right' title='L&#x2018;assurance propriétaire non occupant est obligatoire dans lorsque vous mettez en location un bien. C&#x2018;est une sorte d&#x2018;assurance habitation pour les bailleurs'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
-                                {{ form_widget(form.assurancePno, {'attr':{"class":'form-control updateCharge'}}) }}
+                                {{ form_widget(form.assurancePno, {'attr':{"class":'form-control', 'v-model':'pno'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">€</span>
                                 </div>
@@ -213,7 +213,7 @@
                         <div class="form-group row">
                             {{ form_label(form.comptabilite, "Comptabilité <span data-toggle='tooltip' data-placement='right' title='Si vous faites du meublé ou que vous avez plusieurs investissement ou simplement que vous ne souhaitez pas vous occuper de la comptabilité, indiquez les honoraires du comptable.'><i class='fas fa-info-circle'></i></span>", {'label_attr':{'class':'col-sm-4 col-form-label'}}) }}
                             <div class="col-sm-8 input-group">
-                                {{ form_widget(form.comptabilite, {'attr':{"class":'form-control updateCharge'}}) }}
+                                {{ form_widget(form.comptabilite, {'attr':{"class":'form-control', 'v-model':'comptabilite'}}) }}
                                 <div class="input-group-append">
                                     <span class="input-group-text">€</span>
                                 </div>
@@ -232,42 +232,42 @@
                 <div class="card-body">
                     <dl class="row">
                         <dt class="col-sm-6">Prix au m²</dt>
-                        <dd class="col-sm-6" id="priceMeterCarre">N/A</dd>
+                        <dd class="col-sm-6">${prixMetreCarre | round}</dd>
                         
                         <dt class="col-sm-6">Rentabilité brute</dt>
-                        <dd class="col-sm-6" id="rentaBrute">N/A</dd>
+                        <dd class="col-sm-6"><span class="badge" :class="classRenta">${rentaBrute | round}</span></dd>
                         
                         <dt class="col-sm-6">Coût du projet</dt>
-                        <dd class="col-sm-6" id="totalProjet">N/A</dd>
+                        <dd class="col-sm-6">${coutProjet | round}</dd>
                     </dl>
                     <hr>
                     <dl class="row">
                         <dt class="col-sm-6">Annuités prêt</dt>
-                        <dd class="col-sm-6" id="annuitePret">N/A</dd>
+                        <dd class="col-sm-6">${cAnnuelPret | round}</dd>
                         
                         <dt class="col-sm-6">Mensualité prêt</dt>
-                        <dd class="col-sm-6" id="mensualitePret">N/A</dd>
+                        <dd class="col-sm-6">${cMensuelPret | round}</dd>
                     </dl>
                     <hr>
                     <dl class="row">
                         
                         <dt class="col-sm-6">Recette annuelle</dt>
-                        <dd class="col-sm-6" id="recetteAnnuelle">N/A</dd>
+                        <dd class="col-sm-6" >${recetteAnnuelle | round}</dd>
                         
                         <dt class="col-sm-6">Frais annuels</dt>
-                        <dd class="col-sm-6" id="fraisAnnuels">N/A</dd>
+                        <dd class="col-sm-6" >${chargeAnnuelle | round}</dd>
                         
                         <dt class="col-sm-6">Frais annuels avec emprunt</dt>
-                        <dd class="col-sm-6" id="fraisAnnuelsPlusEmprunt">N/A</dd>
+                        <dd class="col-sm-6" >${chargeAnnuelleAvecEmprunt | round}</dd>
                     </dl>
                     <hr>
                     <dl class="row">
                         
                         <dt class="col-sm-6">Cashflow annuel</dt>
-                        <dd class="col-sm-6" id="cashflowAnnuel">N/A</dd>
+                        <dd class="col-sm-6"><span class="badge" :class="classCashflow">${cashflowAnnuel | round}</span></dd>
                         
                         <dt class="col-sm-6">Cashflow mensuel</dt>
-                        <dd class="col-sm-6" id="cashflowMensuel">N/A</dd>
+                        <dd class="col-sm-6">${cashflowMensuel | round }</dd>
                     </dl>
                 </div>
             </div>
@@ -278,277 +278,5 @@
 
 {% block javascripts %}
     {{parent()}}
-    <script type="text/javascript">
-        $(function () {
-            
-            var total = 0;
-            var recetteAnnuelle = 0;
-            var pretAnnuel = 0;
-            
-            calculatePriceMeterCarre();
-            calculateRentaBrute();
-            calculateFraisNotaire();
-            calculateGarantie(),
-            calculateTravaux();
-            calculateTotal();
-            calculateEmprunt();
-            calculateCharge();
-            
-            $('#calculateur_prix, #calculateur_metreCarre').on('change', function(){
-                calculatePriceMeterCarre();
-            });
-            
-            $('#calculateur_prix, #calculateur_loyer').on('change', function(){
-                calculateRentaBrute();
-            });
-            
-            $('#calculateur_prix').on('change', function(){
-                calculateFraisNotaire();
-                calculateGarantie();
-            });
-            
-            $('#calculateur_metreCarre, #calculateur_travauxAide').on('change', function(){
-                calculateTravaux();
-            });
-            
-            $('#calculateur_prix, #calculateur_apport, #calculateur_fraisNotaire, #calculateur_fraisNotaireEstime, #calculateur_travaux, #calculateur_garantie, #calculateur_garantieEstimation, #calculateur_metreCarre, #calculateur_travauxAide, #calculateur_ameublement').on('change', function(){
-                calculateTotal();
-            });
-            
-            $('#calculateur_tauxPret, #calculateur_dureePret').on('change', function(){
-                calculateEmprunt();
-            });
-            
-            $('.updateCharge').on('change', function(){
-                calculateCharge();
-            });
-            
-            function calculateCharge(){
-                var taxeFonciere = parseInt($('#calculateur_taxeFonciere').val());
-                var chargeCopro = parseInt($('#calculateur_chargesCopro').val());
-                var entretien = parseInt($('#calculateur_loyer').val()) * 12 * (parseInt($('#calculateur_chargesBien').val()) / 100) ;
-                var gerance = parseInt($('#calculateur_loyer').val()) * 12 * (parseInt($('#calculateur_gerance').val()) / 100) ;
-                var pno = parseInt($('#calculateur_assurancePno').val());
-                var comptabilite = parseInt($('#calculateur_comptabilite').val());
-                
-                var totalCharges = 0;
-                if(!isNaN(taxeFonciere)){
-                    totalCharges = totalCharges + taxeFonciere;
-                }
-                if(!isNaN(chargeCopro)){
-                    totalCharges = totalCharges + chargeCopro;
-                }
-                if(!isNaN(entretien)){
-                    $('#calculateur_chargesBienTotal').val(Math.round(entretien));
-                    totalCharges = totalCharges + entretien;
-                }
-                else{
-                    $('#calculateur_chargesBienTotal').val('');
-                }
-                if(!isNaN(gerance)){
-                    $('#calculateur_geranceTotal').val(Math.round(gerance));
-                    totalCharges = totalCharges + gerance;
-                }
-                else{
-                    $('#calculateur_geranceTotal').val("");
-                }
-                if(!isNaN(pno)){
-                    totalCharges = totalCharges + pno;
-                }
-                if(!isNaN(comptabilite)){
-                    totalCharges = totalCharges + comptabilite;
-                }
-                
-                if(totalCharges > 0){
-                    $('#fraisAnnuels').text(totalCharges+" €");
-                }
-                else{
-                    $('#fraisAnnuels').text("N/A");
-                }
-                
-                var cashflow = 0;
-
-                //on rajoute le pret
-                totalCharges = totalCharges + pretAnnuel;
-                //calcul cashflow
-                cashflow = recetteAnnuelle - totalCharges;
-               
-                
-                if(totalCharges > 0){
-                    $('#fraisAnnuelsPlusEmprunt').text(totalCharges+" €");
-                }
-                else{
-                    $('#fraisAnnuelsPlusEmprunt').text("N/A");
-                }
-
-                if(cashflow < 0){
-                    var text = "<span class='badge bg-danger'>"+cashflow+" €</span>";
-                }
-                else if (cashflow == 0) {
-                    var text = "<span class='badge bg-warning'>"+cashflow+" €</span>";
-                }
-                else if (cashflow > 0) {
-                    var text = "<span class='badge bg-success'>"+cashflow+" €</span>";
-                }
-
-                $('#cashflowAnnuel').html(text);
-                $('#cashflowMensuel').text(Math.round(cashflow / 12) + " €");
-     
-                
-            }
-            
-            function calculateEmprunt(){
-                
-                var emprunt = total;
-                var taux = parseFloat($('#calculateur_tauxPret').val())/100;
-                var duree = parseInt($('#calculateur_dureePret').val());
-                
-                var annuel = 0;
-                
-                if(emprunt !== 0 && isFinite(taux) && !isNaN(taux) && taux !== 0 && isFinite(duree) && !isNaN(duree) && duree !== 0){
-                    annuel = (( emprunt *( taux /12))/( 1- Math.pow((1+( taux /12)), (-duree * 12)) ))*12;
-                }
-                
-                if(annuel !== 0 && !isNaN(annuel)){
-                    pretAnnuel = Math.round(annuel);
-                    $('#annuitePret').text(Math.round(annuel)+" €");
-                    $('#mensualitePret').text(Math.round(annuel / 12)+" €");
-                }
-                else{
-                    pretAnnuel = 0;
-                    $('#annuitePret').text("N/A");
-                    $('#mensualitePret').text("N/A");
-                }
-            }
-           
-        
-            function calculatePriceMeterCarre(){
-                var price = $('#calculateur_prix').val();
-                var meterCarre = $('#calculateur_metreCarre').val();
-                var priceMeter = price / meterCarre;
-                
-                if(isFinite(priceMeter) && !isNaN(priceMeter) && priceMeter !== 0){
-                    $('#priceMeterCarre').text(Math.round(priceMeter)+" €");
-                }
-                else{
-                    $('#priceMeterCarre').text("N/A");
-                }
-            }
-            
-            function calculateRentaBrute(){
-                
-                var price = $('#calculateur_prix').val();
-                var loyer = $('#calculateur_loyer').val();
-                
-                var renta = loyer * 12 / price * 100;
-                
-                if(isFinite(renta) && !isNaN(renta) && renta !== 0){
-                    
-                    var round = renta.toFixed(2);
-                    
-                    if(round > 10){
-                        var text = "<span class='badge bg-success'>"+round+" %</span>";
-                    }
-                    else if (round == 10) {
-                        var text = "<span class='badge bg-warning'>"+round+" %</span>";
-                    }
-                    else if (round < 10) {
-                        var text = "<span class='badge bg-danger'>"+round+" %</span>";
-                    }
-
-
-                    
-                    $('#rentaBrute').html(text);
-                }
-                else{
-                    $('#rentaBrute').text("N/A");
-                }
-                
-                var recette = parseInt($('#calculateur_loyer').val()) * 12;
-                if(!isNaN(recette)){
-                    recetteAnnuelle = recette;
-                    $('#recetteAnnuelle').text(recette+" €");
-                }
-                else{
-                    recetteAnnuelle = 0;
-                    $('#recetteAnnuelle').text("N/A");
-                }
-            }
-            
-            function calculateFraisNotaire(){
-                var price = $('#calculateur_prix').val();
-                
-                var notaire = price * 0.0822;
-                if(notaire !== 0){
-                    $('#calculateur_fraisNotaireEstime').val(Math.round(notaire));
-                }
-                else{
-                    $('#calculateur_fraisNotaireEstime').val('');
-                }
-            }
-            
-            function calculateTravaux(){
-                var metreCarre = $('#calculateur_metreCarre').val();
-                var typeTravaux = $('#calculateur_travauxAide').val();
-
-                var prixTravaux = metreCarre * typeTravaux;
-                $('#calculateur_travaux').val(prixTravaux);
-            }
-            
-            function calculateGarantie(){
-                var price = $('#calculateur_prix').val();
-                var garantie = price * 0.02715;
-                if(garantie !== 0){
-                    $('#calculateur_garantieEstimation').val(Math.round(garantie));
-                }
-                else{
-                    $('#calculateur_garantieEstimation').val('');
-                }
-            }
-            
-            function calculateTotal(){
-                var price = parseInt($('#calculateur_prix').val());
-                var apport = parseInt($('#calculateur_apport').val());
-                var fraisNotaire = parseInt($('#calculateur_fraisNotaire').val());
-                var travaux = parseInt($('#calculateur_travaux').val());
-                var garantie = parseInt($('#calculateur_garantie').val());
-                var ameublement = parseInt($('#calculateur_ameublement').val());
-                
-                if(fraisNotaire == 0 || isNaN(fraisNotaire)){
-                    fraisNotaire = parseInt($('#calculateur_fraisNotaireEstime').val());
-                }
-                
-                if(garantie == 0 || isNaN(garantie)){
-                    garantie = parseInt($('#calculateur_garantieEstimation').val());
-                }
-                
-                if(!isNaN(price)){                    
-                    total = price;
-                    if(!isNaN(apport)){
-                        total = total - apport;
-                    }
-                    if(!isNaN(travaux)){
-                        total = total + travaux;
-                    }
-                    if(!isNaN(fraisNotaire)){
-                        total = total + fraisNotaire;
-                    }
-                    if(!isNaN(garantie)){
-                        total = total + garantie;
-                    }
-                    if(!isNaN(ameublement)){
-                        total = total + ameublement;
-                    }
-                    
-                    calculateEmprunt();
-                    
-                    $('#totalProjet').text(Math.round(total)+" €");
-                }
-                else{
-                    $('#totalProjet').text("N/A");
-                }                
-            }
-            
-        });
-    </script>
+    {{ encore_entry_script_tags('calculateur') }}
 {% endblock %}
