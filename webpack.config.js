@@ -23,7 +23,7 @@ Encore
          //pattern: /\.(png|jpg|jpeg)$/
      })
 
-    .addEntry('app', './assets/js/app.js')
+    .addEntry('app', ['./assets/js/app.js', 'core-js'])
     .addEntry('detail', './assets/js/detail.js')
     .addEntry('recherche', './assets/js/recherche.js')
     .addEntry('calculateur', './assets/js/calculateur.js')

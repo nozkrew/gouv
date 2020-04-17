@@ -1,8 +1,6 @@
 
 import Vue from 'vue';
 
-import 'core-js';
-
 Vue.filter('round', function(value){
     if(!isNaN(value)){
         return value.toFixed(2);
