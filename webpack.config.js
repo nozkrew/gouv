@@ -26,6 +26,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('detail', './assets/js/detail.js')
     .addEntry('recherche', './assets/js/recherche.js')
+    .addEntry('calculateur', './assets/js/calculateur.js')
 
     .splitEntryChunks()
 
@@ -37,6 +38,8 @@ Encore
     // enables hashed filenames (e.g. app.abc123.css)
     //.enableVersioning(Encore.isProduction())
     .enableVersioning()
+
+    .enableVueLoader()
 
     // enables @babel/preset-env polyfills
     .configureBabel(() => {}, {
