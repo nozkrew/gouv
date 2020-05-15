@@ -27,6 +27,7 @@ Encore
     .addEntry('detail', './assets/js/detail.js')
     .addEntry('recherche', './assets/js/recherche.js')
     .addEntry('calculateur', './assets/js/calculateur.js')
+    .addEntry('index', './assets/js/index.js')
 
     .splitEntryChunks()
 

@@ -5,12 +5,28 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * Cities
  *
  * @ORM\Table(name="cities", indexes={@ORM\Index(name="cities_department_code_foreign", columns={"department_code"})})
  * @ORM\Entity(repositoryClass="App\Repository\CitiesRepository")
+ * 
+ * @ApiResource(
+ *      collectionOperations={"get"},
+ *      itemOperations={"get"},
+ *      
+ *      normalizationContext={"groups"={"read"}},
+ *      denormalizationContext={"groups"={"write"}}
+ *  )
+ * @ApiFilter(SearchFilter::class, properties={"departmentCode": "exact"})
+ * @ApiFilter(RangeFilter::class, properties={"population.total"})
  */
 class Cities
 {
@@ -20,6 +36,7 @@ class Cities
      * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"read"})
      */
     private $id;
 
@@ -27,6 +44,7 @@ class Cities
      * @var string|null
      *
      * @ORM\Column(name="insee_code", type="string", length=5, nullable=true)
+     * @Groups({"read"})
      */
     private $inseeCode;
 
@@ -34,6 +52,7 @@ class Cities
      * @var string|null
      *
      * @ORM\Column(name="zip_code", type="string", length=5, nullable=true)
+     * @Groups({"read"})
      */
     private $zipCode;
 
@@ -41,6 +60,7 @@ class Cities
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @Groups({"read"})
      */
     private $name;
 
@@ -48,6 +68,7 @@ class Cities
      * @var string
      *
      * @ORM\Column(name="slug", type="string", length=255, nullable=false)
+     * @Groups({"read"})
      */
     private $slug;
 
@@ -55,6 +76,7 @@ class Cities
      * @var float
      *
      * @ORM\Column(name="gps_lat", type="float", precision=16, scale=14, nullable=false)
+     * @Groups({"read"})
      */
     private $gpsLat;
 
@@ -62,6 +84,7 @@ class Cities
      * @var float
      *
      * @ORM\Column(name="gps_lng", type="float", precision=17, scale=14, nullable=false)
+     * @Groups({"read"})
      */
     private $gpsLng;
 
@@ -69,6 +92,7 @@ class Cities
      * @var string|null
      *
      * @ORM\Column(name="department_code", type="string", length=3)
+     * @Groups({"read"})
      */
     private $departmentCode;
     
@@ -76,6 +100,7 @@ class Cities
      * @var \Prices
      *
      * @ORM\OneToOne(targetEntity="Prices", mappedBy="city")
+     * @Groups({"read"})
      */
     private $price;
     
@@ -83,11 +108,13 @@ class Cities
      * @var \Population
      *
      * @ORM\OneToOne(targetEntity="Population", mappedBy="city")
+     * @Groups({"read"})
      */
     private $population;
     
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\IndicatorValue", mappedBy="city")
+     * @Groups({"read"})
      */
     private $indicatorValues;
     

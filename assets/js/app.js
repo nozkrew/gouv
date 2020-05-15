@@ -27,6 +27,9 @@ require("bootstrap-select/dist/css/bootstrap-select.min.css");
 
 require('../css/app.css');
 
+import Vue from 'vue'
+window.Vue = Vue
+window.axios = require('axios');
 //import { bootstrapMultiselect } from 'bootstrap-multiselect/dist/js/bootstrap-multiselect';
 //require('bootstrap-multiselect/dist/js/bootstrap-multiselect');
 
