@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Main;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,12 +22,12 @@ class IndicatorValue
     private $tabData = [];
     
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Cities", inversedBy="indicatorValues")
+     * @ORM\ManyToOne(targetEntity="Cities", inversedBy="indicatorValues")
      */
     private $city;
     
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Indicator", inversedBy="indicatorValues")
+     * @ORM\ManyToOne(targetEntity="Indicator", inversedBy="indicatorValues")
      */
     private $indicator;
 

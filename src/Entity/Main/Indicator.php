@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Main;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -34,7 +34,7 @@ class Indicator
     private $code;
     
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\IndicatorValue", mappedBy="indicator")
+     * @ORM\OneToMany(targetEntity="IndicatorValue", mappedBy="indicator")
      */
     private $indicatorValues;
     

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Main;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -87,7 +87,7 @@ class Cities
     private $population;
     
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\IndicatorValue", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="IndicatorValue", mappedBy="city")
      */
     private $indicatorValues;
     

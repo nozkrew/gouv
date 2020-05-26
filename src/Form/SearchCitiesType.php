@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\Departments;
+use App\Entity\Main\Departments;
 use App\Repository\DepartmentsRepository;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use App\Form\Part\FormattedNumberType;

@@ -9,14 +9,14 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use App\Entity\Cities;
-use App\Entity\Prices;
-use App\Entity\Population;
+use App\Entity\Main\Cities;
+use App\Entity\Main\Prices;
+use App\Entity\Main\Population;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
-use App\Entity\IndicatorValue;
-use App\Entity\Indicator;
+use App\Entity\Main\IndicatorValue;
+use App\Entity\Main\Indicator;
 
 class RecoverDataCommand extends Command
 {    

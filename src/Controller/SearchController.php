@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Cities;
+use App\Entity\Main\Cities;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\SearchType;
-use App\Entity\Search;
+use App\Entity\Main\Search;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**

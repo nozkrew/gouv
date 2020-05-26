@@ -2,14 +2,14 @@
 
 namespace App\Form;
 
-use App\Entity\Search;
+use App\Entity\Main\Search;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\Departments;
-use App\Entity\Cities;
+use App\Entity\Main\Departments;
+use App\Entity\Main\Cities;
 use Symfony\Component\Form\FormInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormEvents;

@@ -9,10 +9,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use App\Entity\Cities;
+use App\Entity\Main\Cities;
 use Goutte\Client;
 use Symfony\Component\Console\Helper\ProgressBar;
-use App\Entity\Prices;
+use App\Entity\Main\Prices;
 
 class RecoverPriceMeterCommand extends Command
 {

@@ -19,6 +19,8 @@
 
 /nbproject/
 
+/db/tmp/
+
 /node_modules/
 ###> symfony/webpack-encore-bundle ###
 /node_modules/

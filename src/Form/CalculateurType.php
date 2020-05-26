@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\ListTravaux;
+use App\Entity\Main\ListTravaux;
 
 class CalculateurType extends AbstractType
 {

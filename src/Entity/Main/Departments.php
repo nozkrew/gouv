@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Main;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Regions
+ * Departments
  *
- * @ORM\Table(name="regions", uniqueConstraints={@ORM\UniqueConstraint(name="regions_code_unique", columns={"code"})})
- * @ORM\Entity
+ * @ORM\Table(name="departments", indexes={@ORM\Index(name="departments_code_index", columns={"code"}), @ORM\Index(name="departments_region_code_foreign", columns={"region_code"})})
+ * @ORM\Entity(repositoryClass="App\Repository\DepartmentsRepository")
  */
-class Regions
+class Departments
 {
     /**
      * @var int
@@ -41,6 +43,13 @@ class Regions
      * @ORM\Column(name="slug", type="string", length=255, nullable=false)
      */
     private $slug;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="region_code", type="string", length=3)
+     */
+    private $regionCode;    
 
     public function getId(): ?int
     {
@@ -79,6 +88,18 @@ class Regions
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getRegionCode(): ?string
+    {
+        return $this->regionCode;
+    }
+
+    public function setRegionCode(string $regionCode): self
+    {
+        $this->regionCode = $regionCode;
 
         return $this;
     }

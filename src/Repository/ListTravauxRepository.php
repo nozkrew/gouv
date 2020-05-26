@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\ListTravaux;
+use App\Entity\Main\ListTravaux;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

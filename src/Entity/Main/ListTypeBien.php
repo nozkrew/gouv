@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Main;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ListTravauxRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ListTypeBienRepository")
  */
-class ListTravaux
+class ListTypeBien
 {
     /**
      * @ORM\Id()
@@ -26,16 +26,9 @@ class ListTravaux
     /**
      * @var \Strategy
      *
-     * @ORM\OneToMany(targetEntity="Strategy", mappedBy="travaux")
+     * @ORM\ManyToMany(targetEntity="Strategy", mappedBy="types")
      */
     private $strategies;
-    
-    /**
-     * @var integer
-     * 
-     * @ORM\Column(name="priceMeter", type="integer")
-     */
-    private $priceMeter;
     
     /**
      * @var string
@@ -48,7 +41,6 @@ class ListTravaux
     {
         $this->strategies = new ArrayCollection();
     }
-    
 
     public function getId(): ?int
     {
@@ -79,7 +71,7 @@ class ListTravaux
     {
         if (!$this->strategies->contains($strategy)) {
             $this->strategies[] = $strategy;
-            $strategy->setTravaux($this);
+            $strategy->addType($this);
         }
 
         return $this;
@@ -89,10 +81,7 @@ class ListTravaux
     {
         if ($this->strategies->contains($strategy)) {
             $this->strategies->removeElement($strategy);
-            // set the owning side to null (unless already changed)
-            if ($strategy->getTravaux() === $this) {
-                $strategy->setTravaux(null);
-            }
+            $strategy->removeType($this);
         }
 
         return $this;
@@ -106,18 +95,6 @@ class ListTravaux
     public function setText(string $text): self
     {
         $this->text = $text;
-
-        return $this;
-    }
-
-    public function getPriceMeter(): ?int
-    {
-        return $this->priceMeter;
-    }
-
-    public function setPriceMeter(int $priceMeter): self
-    {
-        $this->priceMeter = $priceMeter;
 
         return $this;
     }

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\ListTypeBien;
+use App\Entity\Main\ListTypeBien;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

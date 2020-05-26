@@ -8,11 +8,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use App\Form\Part\FormattedNumberType;
-use App\Entity\Strategy;
+use App\Entity\Main\Strategy;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\ListExploitation;
-use App\Entity\ListTypeBien;
-use App\Entity\ListTravaux;
+use App\Entity\Main\ListExploitation;
+use App\Entity\Main\ListTypeBien;
+use App\Entity\Main\ListTravaux;
 
 class StrategieType extends AbstractType
 {

@@ -9,9 +9,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use App\Entity\Cities;
+use App\Entity\Main\Cities;
 use Symfony\Component\Console\Helper\ProgressBar;
-use App\Entity\Population;
+use App\Entity\Main\Population;
 
 class RecoverPopulationCommand extends Command
 {

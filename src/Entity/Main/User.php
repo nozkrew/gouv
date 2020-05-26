@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Main;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -28,7 +28,7 @@ class User extends BaseUser
     private $cities;
     
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Search", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Search", mappedBy="user")
      */
     private $searches;
     

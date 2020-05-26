@@ -4,15 +4,15 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Cities;
-use App\Entity\Departments;
+use App\Entity\Main\Cities;
+use App\Entity\Main\Departments;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\SearchCitiesType;
-use App\Entity\IndicatorValue;
+use App\Entity\Main\IndicatorValue;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Form\CalculateurType;
 use App\Form\StrategieType;
-use App\Entity\Strategy;
+use App\Entity\Main\Strategy;
 
 class MainController extends AbstractController
 {    

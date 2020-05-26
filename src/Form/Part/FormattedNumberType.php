@@ -2,7 +2,7 @@
 
 namespace App\Form\Part;
 
-use App\Entity\Cities;
+use App\Entity\Main\Cities;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

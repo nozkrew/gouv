@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Population;
+use App\Entity\Main\Population;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

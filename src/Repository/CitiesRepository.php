@@ -2,10 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Cities;
+use App\Entity\Main\Cities;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use App\Entity\User;
+use App\Entity\Main\User;
 
 /**
  * @method Prices|null find($id, $lockMode = null, $lockVersion = null)
