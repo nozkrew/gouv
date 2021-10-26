@@ -15,7 +15,7 @@
     "datatables.net-bs4": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "jquery-mask-plugin": "^1.14.16",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.0",
     "knockout": "^3.5.1",
     "startbootstrap-sb-admin-2": "^4.0.7",
     "symfony-collection": "ninsuo/symfony-collection"
